@@ -1,10 +1,10 @@
+import HomePage from '@home/Home';
 import React from 'react';
-
 const Page = () => {
   return (
-    <div>
-      Site do Lafoca usando Next!
-    </div>
+    <>
+      <HomePage/>
+    </>
   );
 };
 

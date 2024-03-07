@@ -20,7 +20,6 @@ export const tokenService = {
   get(contexto = null) {
     const cookies = nookies.get(contexto);
     return cookies[ACCESS_TOKEN_KEY] || '';
-  
   },
 
   delete(contexto = null) {

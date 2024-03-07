@@ -1,4 +1,4 @@
-import { httpClient } from '../../infrastructure/httpClient/httpClient';
+import { httpClient } from '../../infrastructure/httpClient/httpClientLogin';
 import { tokenService } from './tokenService';
 
 /* eslint-disable no-undef */
@@ -36,8 +36,7 @@ export const authService = {
   },
 
   async getSession(contexto = null) {
-    
-    return httpClient(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth/check_token`, {
+    const chamada = await httpClient(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth/check_token`, {
       headers: {
         'Authorization': this.getbase64Credentials(),
       },
@@ -46,12 +45,14 @@ export const authService = {
       contexto,
     })
       .then((response) => {
+        
         if(!response.ok){
           throw new Error('Não autorizado');
         }
 
         return response;
       });
+    return chamada;
   },
 
   async getRegenerateToken(refreshToken) {
@@ -86,7 +87,6 @@ export const authService = {
     const token = tokenService.get(contexto);
     const formData = new URLSearchParams();
     formData.append('token', token);
-
     return formData;
   },
 

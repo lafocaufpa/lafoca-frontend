@@ -1,0 +1,42 @@
+{
+    "projects": [
+      {
+        "id": 1,
+        "fotoCapa": "assets/img/projects/artigo.png",
+        "tipo": "Artigo",
+        "linhaPesquisa": "IHC",
+        "titulo": "Lorem ipsum dolor sit amet, consectetur",
+        "descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh.",
+        "ano": "2023"
+      },
+      {
+        "id": 2,
+        "fotoCapa": "assets/img/projects/minicurso.png",
+        "tipo": "Minicurso",
+        "linhaPesquisa": "UI Design",
+        "titulo": "Introdução ao UI Design com Figma",
+        "descricao": "Como objetivo fornecer uma introdução prática ao UI Design utilizando a ferramenta Figma.",
+        "ano": "2022"
+      },
+      {
+        "id": 3,
+        "fotoCapa": "assets/img/projects/tcc.png",
+        "tipo": "TCC",
+        "linhaPesquisa": "Psicologia e Tecnologia",
+        "titulo": "Impacto das Redes Sociais na Saúde Mental de Adolescentes",
+        "descricao": "Este estudo tem como objetivo investigar o impacto do uso de redes sociais na saúde mental de adolescentes.",
+        "ano": "2021"
+      }
+      ,
+      {
+        "id": 4,
+        "fotoCapa": "assets/img/projects/tcc.png",
+        "tipo": "TCC",
+        "linhaPesquisa": "Psicologia e Tecnologia",
+        "titulo": "Impacto das Redes Sociais na Saúde Mental de Adolescentes",
+        "descricao": "Este estudo tem como objetivo investigar o impacto do uso de redes sociais na saúde mental de adolescentes.",
+        "ano": "2021"
+      }
+    ]
+  }
+  

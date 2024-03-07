@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { withSessionHOC } from '../../src/services/auth/session';
+import routes from '../../src/routes';
 
 function AuthPageStatic(props) {
 
@@ -11,7 +12,7 @@ function AuthPageStatic(props) {
       <pre>
         {JSON.stringify(props, null, 2)}
       </pre>
-      <Link href={'/logout'}>
+      <Link href={routes.logout}>
         logout
       </Link>
     </div>

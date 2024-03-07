@@ -1,0 +1,30 @@
+.header {
+  background-color: #14171b;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2.125rem;
+}
+
+.navbar {
+  display: flex;
+  gap: 42px;
+}
+
+.navbar a{
+  font-size: var(--font-size-12pxrem);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-white);
+  /* transition: .2s; */
+}
+
+.navbar a:hover{
+  color: var(--main-color);
+  transform: scale(1.2);
+}

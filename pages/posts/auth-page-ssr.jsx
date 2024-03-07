@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { withSession } from '../../src/services/auth/session';
+import routes from '../../src/routes';
 
 // export async function getServerSideProps(contexto){
 
@@ -28,6 +29,7 @@ export const getServerSideProps = withSession((contexto) => {
   return {
     props: {
       session: contexto.req.session,
+      data: 'Aqui serão os dados',
     }
   };
 });
@@ -42,7 +44,7 @@ function AuthPageSSR(props) {
       <pre>
         {JSON.stringify(props, null, 2)}
       </pre>
-      <Link href={'/logout'}>
+      <Link href={routes.logout}>
         logout
       </Link>
     </div>

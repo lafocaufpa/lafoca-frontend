@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import { authService } from '../../src/services/auth/authService';
-
+import routes from '../../src/routes';
 
 const Login = () => {
   
   const router = useRouter();
   const [values, setValues] = useState({
-    username: 'teste@gmail.com',
-    password: 'teste'
+    username: 'lafoca@gmail.com',
+    password: 'lafoca'
   });
 
   function handleSubmit(event) {
@@ -20,8 +20,7 @@ const Login = () => {
       password: values.password,
     })
       .then(()=>{
-        router.push('/posts/auth-page-ssr');
-        // router.push('/posts/auth-page-static');
+        router.push(routes.admin.configuracoes.index);
       })
       .catch((error)=> {
         alert(error);
@@ -66,15 +65,15 @@ const Login = () => {
           Entrar
         </button>
       </form>
-      <p>
-        <Link href='/posts/auth-page-ssr'>
+ 
+      <Link href={routes.posts.authPageSSR}>
           Auth-Page-SSR
-        </Link>
-        <span></span>
-        <Link href='/posts/auth-page-static'>
+      </Link>
+      <span></span>
+      <Link href={routes.posts.authPageStatic}>
           Auth-Page-Static
-        </Link>
-      </p>
+      </Link>
+   
     </div>
   );
 };

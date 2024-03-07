@@ -1,22 +1,25 @@
 import { useEffect, useState } from 'react';
 import { authService } from './authService';
 import { useRouter } from 'next/router';
+import { tokenService } from './tokenService';
 
 export function withSession(funcao) {
 
   return async (contexto) => {
-    
+  
     try{
       const session = await authService.getSession(contexto);
-  
+      const token = tokenService.get(contexto);
+
       const contextoModificado = {
         ...contexto,
         req: {
           ...contexto.req,
-          session
+          session,
+          token,
         }
       };
-  
+
       return funcao(contextoModificado);
     } catch(erro) {
       return {
