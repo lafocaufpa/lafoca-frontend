@@ -34,6 +34,8 @@ body {
   margin: 0 auto;
 }
 
+/*regra para aplicar nas laterais da página
+  envolve um conjunto de componentes*/
 .global-container {
   padding: var(--padding-default-page);
 }

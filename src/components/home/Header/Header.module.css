@@ -1,6 +1,6 @@
 .header {
   background-color: #14171b;
-  height: 100vh;
+  height: 80vh;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -10,6 +10,8 @@
   display: flex;
   justify-content: space-between;
   padding-top: 2.125rem;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .navbar {
@@ -27,4 +29,17 @@
 .navbar a:hover{
   color: var(--main-color);
   transform: scale(1.2);
+}
+
+.header__logo_Background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.header__logo_Background img {
+  object-fit: fill;
+  object-position: bottom;
+  max-width: 100%;
 }

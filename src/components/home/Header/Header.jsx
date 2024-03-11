@@ -1,6 +1,6 @@
 import styles from '@home/Header/Header.module.css';
-// import BackgroundImage from '@public/assets/img/header-banner/.png';
 import LogoLafoca from '@images/header-banner/logo-lafoca.svg';
+import LogoBackground from '@images/header-banner/logo-background-new.png';
 import Image from 'next/image';
 
 export default function Header() {
@@ -21,8 +21,8 @@ export default function Header() {
           </div>
         </div>
 
-        <div>
-        logo header
+        <div className={styles.header__logo_Background} data-aos="fade-up" data-aos-duration="2000">
+          <Image src={LogoBackground}/>
         </div>
       </div>
       
