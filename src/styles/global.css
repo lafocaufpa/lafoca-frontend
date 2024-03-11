@@ -14,6 +14,7 @@
   --padding-default-page: 0 8rem;
   --font-size-12pxrem: 0.75rem;
   --font-weight-semi-bold: 600;
+  --max-width: 1440px;
 }
 
 * {
@@ -34,8 +35,24 @@ body {
   margin: 0 auto;
 }
 
+span {
+  color: var(--main-color);
+}
+
+h2 {
+  text-transform: uppercase;
+  font-weight: 800;
+}
 /*regra para aplicar nas laterais da página
   envolve um conjunto de componentes*/
 .global-container {
   padding: var(--padding-default-page);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.global__paragraph_text {
+  line-height: 36.654px;
+  color: rgba(34, 34, 34, 0.65);
+  font-weight: 500;
 }
