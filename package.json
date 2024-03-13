@@ -1,11 +1,17 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.13",
+    "@mui/material": "^5.15.13",
     "aos": "^2.3.4",
     "axios": "^1.6.7",
     "next": "^14.1.0",
     "nookies": "^2.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-spring": "^9.7.3"
   },
   "scripts": {
     "dev": "next dev",
