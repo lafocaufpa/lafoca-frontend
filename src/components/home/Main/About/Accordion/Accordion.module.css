@@ -25,5 +25,11 @@
   font-size: 0.8rem;
   color: var(--text-color);
   margin-bottom: 1rem;
+}
 
+.accordion__header h4 {
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 700;
+  flex: 1;
+  margin-left: 1rem;
 }
