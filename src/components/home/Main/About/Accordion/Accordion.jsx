@@ -43,7 +43,6 @@ export const Accordion = ({ title, text, Icon }) => {
     config: { duration: '300' }
   });
 
-
   return (
     <animated.div className={styles.accordion__item} style={openAnimation} data-aos="fade-up">
       <animated.div className={styles.accordion__header} style={borderAn} onClick={toggleHandler} >

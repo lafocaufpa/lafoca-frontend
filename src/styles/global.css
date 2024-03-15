@@ -49,6 +49,7 @@ h2 {
   padding: var(--padding-default-page);
   max-width: var(--max-width);
   margin: 0 auto;
+  text-align: center;
 }
 
 .global__paragraph_text {
