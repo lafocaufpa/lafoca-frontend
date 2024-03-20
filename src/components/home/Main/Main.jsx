@@ -1,4 +1,6 @@
 import About from './About/About';
+import Projects from './Projects/Projects';
+import Results from './Results/Results';
 import Team from './Team/Team';
 
 export default function Main() {
@@ -6,6 +8,8 @@ export default function Main() {
     <main>
       <About/>
       <Team/>
+      {/* <Projects/> */}
+      <Results/>
     </main>
   );
 }

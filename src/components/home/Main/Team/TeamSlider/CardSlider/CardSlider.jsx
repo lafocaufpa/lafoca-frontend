@@ -1,23 +1,26 @@
 import Image from 'next/image';
 import styles from './CardSlider.module.css';
+import Link from 'next/link';
 
-export default function CardSlider({profile}) {
+export default function CardSlider({ profile: { nome, cargo, foto } }) {
   return (
-    <div className={`${styles['card']} ${'swiper-slide'}`}>
-      <div className={`${styles['image-content']}`}>
-        <span className={`${styles['overlay']}`}></span>
-        <div className={`${styles['card-image']}`}>
-          <Image src={profile} className={styles['card-img']}/>
+    <Link href={'#'}>
+      <div className={`${styles['card']} ${'swiper-slide'}`}>
+        <div className={`${styles['image-content']}`}>
+          <span className={`${styles['overlay']}`}></span>
+          <div className={`${styles['card-image']}`}>
+            <Image src={foto} className={styles['card-img']}/>
+          </div>
+        </div>
+        <div className={styles['card-content']}>
+          <h2 className={styles['name']}>{nome}</h2>
+          <p className={styles['description']}>
+            {cargo}
+          </p>
+          <button className={styles['button']}>{'>'}</button>
         </div>
       </div>
-      <div className={styles['card-content']}>
-        <h2 className={styles['name']}>David Dell</h2>
-        <p className={styles['description']}>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore
-                expedita aliquam, aut quia eum nihil.
-        </p>
-        <button className={styles['button']}>View More</button>
-      </div>
-    </div>
+    </Link>
+   
   );
 }

@@ -1,69 +1,78 @@
-import Profile from '@images/team/profile1.png';
+import Foto from '@images/team/taylor.jpeg';
 import styles from './TeamSlider.module.css';
-import { useEffect } from 'react';
-import Swiper from 'swiper';
 import 'swiper/css';
+import 'swiper/css/pagination';
 import 'swiper/css/bundle';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
 
 import CardSlider from './CardSlider/CardSlider';
 
 export default function TeamSlider() {
 
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    new Swiper('.slider-content', {
-      // slidesPerView: 3,
-      spaceBetween: 25,
-      loop: true,
-      // centerSlide: true,
-      // effect: 'fade',
-      // fadeEffect: {
-      //   crossFade: true
-      // },
-      // grabCursor: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        dynamicBullets: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        520: {
-          slidesPerView: 2,
-        },
-        950: {
-          slidesPerView: 3,
-        },
-      }
-    });
+  const customStyles = {
+    padding: '40px 0',
 
-  }, []);
+  };
+
+  function customPagination(index, className) {
+
+    return `<span class="${className}" style="background: #EE972D; opacity: 1"></span>`;
+  }
+
+  const pagination = {
+    clickable: true,
+    dynamicBullets: true, 
+    renderBullet: function (index, className) {
+      return customPagination(index, className);
+    },
+  };
+
+  const profile = {
+    nome: 'Taylor',
+    cargo: 'Designer',
+    foto: Foto
+  };
 
   return (
-    <div className={`${'swiper'} ${styles['slider-container']}`}>
-      <div className='slider-content'>
-        <div className={`${'card-wrapper'} ${'swiper-wrapper'}`}>
+    
+    <div>
+      <div className={`${styles['slider-content']}`}>
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={25} 
+          loop={true}
+          pagination={pagination}
+          navigation={false} 
+          modules={[Pagination, Navigation]} 
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            // spaceBetween: 20,
+            },
+            650: {
+              slidesPerView: 2,
+              // spaceBetween: 40,
+            },
+            950: {
+              slidesPerView: 3,
+            // spaceBetween: 50,
+            },
+          }} 
+          style={customStyles}
 
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-          <CardSlider profile={Profile}/>
-
-        </div>
+        >  
+          <SwiperSlide>
+            <CardSlider profile={profile}/>
+          </SwiperSlide>
+          <SwiperSlide><CardSlider profile={profile}/></SwiperSlide>
+          <SwiperSlide><CardSlider profile={profile}/></SwiperSlide>
+          <SwiperSlide><CardSlider profile={profile}/></SwiperSlide>
+          <SwiperSlide><CardSlider profile={profile}/></SwiperSlide>
+          <SwiperSlide><CardSlider profile={profile}/></SwiperSlide>
+          
+        </Swiper>
       </div>
-      <div className={`${'swiper-button-next'} ${'swiper-navBtn'}`}></div>
-      <div className={`${'swiper-button-prev'} ${'swiper-navBtn'}`}></div>
-      <div className={`${'swiper-pagination'}`}></div>
     </div>
   );
 }

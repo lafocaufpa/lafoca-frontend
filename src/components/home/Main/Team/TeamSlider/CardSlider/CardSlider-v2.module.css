@@ -1,0 +1,17 @@
+.componente {
+  background-color: #ffffff;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+.componente img {
+  width: 100%;
+  height: auto;
+}
+
+.componente h1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

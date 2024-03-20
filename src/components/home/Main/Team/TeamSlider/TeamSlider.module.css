@@ -1,13 +1,15 @@
-
+/* .swiper {
+  padding: 40px 0;
+}
 .slider-container{
   max-width: 1120px;
   width: 100%;
-  padding: 40px 0;
-}
+  padding: 40px 40px;
+} */
 .slider-content {
   overflow: hidden;
   border-radius: 25px;
-  margin: 0 40px;
+  /* margin: 0 40px; */
 }
 .swiper-navBtn{
   color: #6e93f7;
@@ -25,6 +27,9 @@
 }
 .swiper-button-prev{
   left: 0;
+}
+.swiper-pagination {
+  padding-bottom: 40px;
 }
 .swiper-pagination.bullet{
  background-color: #6e93f7;
