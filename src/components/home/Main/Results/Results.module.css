@@ -1,5 +1,5 @@
 .results_background {
-  background: #222;
+  background: var(--color-background-results);
   padding: 6.8125rem 0;
   margin: 6.25rem 0;
 }
@@ -15,6 +15,7 @@
   margin-bottom: 1.875rem;
   letter-spacing: 0.0525rem;
   line-height: 3.75rem;
+  width: 100%;
 }
 
 .results span {
@@ -58,4 +59,17 @@
   position: absolute;
   bottom: -210px;
   right: 0;
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.results_images :first-child {
+  animation: rotate360 10s linear infinite; /* ajuste a duração e o modo de animação conforme necessário */
 }

@@ -5,7 +5,8 @@
       "@components/*" :["./src/components/*"],
       "@home/*": ["./src/components/home/*"],
       "@public/*": ["./public/*"],
-      "@images/*": ["./public/assets/img/*"]
+      "@images/*": ["./public/assets/img/*"],
+      "@services/*": ["./src/services/*"]
     }
   }
 }

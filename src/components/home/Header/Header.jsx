@@ -22,7 +22,7 @@ export default function Header() {
         </div>
 
         <div className={styles.header__logo_Background} data-aos="fade-up" data-aos-duration="2000">
-          <Image src={LogoBackground}/>
+          <Image src={LogoBackground} alt='Logo Background'/>
         </div>
       </div>
       

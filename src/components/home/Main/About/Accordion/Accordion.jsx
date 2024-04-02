@@ -46,8 +46,7 @@ export const Accordion = ({ title, text, Icon }) => {
   return (
     <animated.div className={styles.accordion__item} style={openAnimation} data-aos="fade-up">
       <animated.div className={styles.accordion__header} style={borderAn} onClick={toggleHandler} >
-        {/* <Icon /> */}
-        <Image src={Icon}/>
+        <Image src={Icon} alt='' priority/>
         <h4>{title}</h4>
         <animated.i style={iconAnimation}>
           {iconOpen ? <RemoveIcon style={{ fontSize: 30 }} className={styles.iconAccordion} /> : <AddIcon style={{ fontSize: 30 }} className={styles.iconAccordion} />}

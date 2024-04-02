@@ -1,0 +1,22 @@
+.hover_animate {
+  transition: transform .4s;
+}
+
+.hover_animate:hover {
+  transform: translateY(-50px);
+}
+
+.card_link {
+  font-weight: 600;
+  margin-bottom: 1.40625rem; 
+  color: #EE972D;
+}
+
+.text_wrap {
+  display: -webkit-box; 
+  -webkit-box-orient: vertical; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  -webkit-line-clamp: 3; 
+  max-height: 3 * 1.2em; 
+}
