@@ -68,3 +68,7 @@
   gap: 2rem;
 
 }
+
+.footer_details_links > ul > li > a > img:hover {
+  color: var(--main-color);
+}

@@ -21,16 +21,18 @@ export default function Team() {
     fetchData();
   }, []);
 
+  
+
   return (
     <section>
       <div className='global-container'>
         <div>
-          <h2 data-aos="fade-up">Nossa <span>Equipe</span></h2>
-          <p data-aos="fade-up" className='global__paragraph_text'>Conheça a equipe que compõe o nosso laboratório de pesquisa e veja um pouco mais sobre  cada um deles e como eles contribuem para o sucesso das nossas atividades.</p>
+          <h2 data-aos="fade-up" data-aos-duration="2000" >Nossa <span>Equipe</span></h2>
+          <p data-aos="fade-up" data-aos-duration="1500" className='global__paragraph_text'>Conheça a equipe que compõe o nosso laboratório de pesquisa e veja um pouco mais sobre  cada um deles e como eles contribuem para o sucesso das nossas atividades.</p>
         </div>
         
-        <CustomSlider Slider={students.map((student) => (
-          <CardSlider key={student.id} student={student} />
+        <CustomSlider Slider={students.map((student, index) => (
+          <CardSlider key={index} student={student} />
         ))}/>
         
       </div>

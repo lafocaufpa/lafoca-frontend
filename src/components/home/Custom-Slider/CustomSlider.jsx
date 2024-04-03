@@ -6,10 +6,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 
 export default function CustomSlider({ Slider }) {
-  const customStyles = {
-    padding: '50px 0',
-
-  };
+  
+  function calculateSeconds(index) {
+    const intervals = [1100, 1500, 1900];
+    if (index >= 0 && index < intervals.length) {
+      return intervals[index];
+    } else {
+      return 2000;
+    }
+  }
 
   function customPagination(index, className) {
 
@@ -23,7 +28,11 @@ export default function CustomSlider({ Slider }) {
       return customPagination(index, className);
     },
   };
+  
+  const customStyles = {
+    padding: '50px 0',
 
+  };
 
   return (
 
@@ -56,7 +65,10 @@ export default function CustomSlider({ Slider }) {
     
           {Slider.map((Slide, index) => (
             <SwiperSlide key={index}>
-              {Slide}
+              <div  data-aos="fade-up" data-aos-duration={calculateSeconds(index)}>
+                {Slide}
+              </div>
+              
             </SwiperSlide>
           ))}
 

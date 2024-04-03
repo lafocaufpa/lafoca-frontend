@@ -21,7 +21,7 @@ export default function Menu () {
             </Link>
           </div>
           <div className={styles.menu_img}>
-            <Image src={Artigos}/>
+            <Image src={Artigos} alt='Artigos'/>
   
           </div>
         </div></li>
@@ -36,7 +36,7 @@ export default function Menu () {
             </Link>
           </div>
           <div className={styles.menu_img}>
-            <Image src={Tccs}/>
+            <Image src={Tccs}  alt='Tccs'/>
   
           </div>
         </div></li>
@@ -51,7 +51,7 @@ export default function Menu () {
             </Link>
           </div>
           <div className={styles.menu_img}>
-            <Image src={Projetos}/>
+            <Image src={Projetos}  alt='Projetos'/>
 
           </div>
         </div></li>

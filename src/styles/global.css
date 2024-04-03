@@ -56,6 +56,13 @@ h2 {
   text-transform: uppercase;
   font-weight: 800;
 }
+
+section {
+ 
+    data-aos: fade-up;
+    data-aos-duration: 2000;
+  
+}
 /*regra para aplicar nas laterais da página
   envolve um conjunto de componentes*/
 .global-container {

@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import '../src/styles/global.css';
 
 export default function App({ Component, pageProps }) {
@@ -6,6 +7,10 @@ export default function App({ Component, pageProps }) {
   </script>;
   return (
     <>
+      <Head>
+        <title>La Foca</title>
+        <link rel="icon" href="/assets/img/favicon.svg" />
+      </Head>
       <Component {...pageProps} />
     </>
 

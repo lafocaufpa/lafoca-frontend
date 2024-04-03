@@ -14,8 +14,7 @@ export default function About () {
     <section className={styles.about_lafoca}>
       <div className={`${styles.about_info} ${'global-container'}`}>
         <h2 data-aos="fade-up" data-aos-duration="2000">sobre o <span>lafoca</span></h2>
-        <p className='global__paragraph_text' data-aos="fade-up"
-          data-aos-duration="2000">Fundado em 2017, o LAFocA é formado por alunos e professores, além de parceiros de outras instituições de ensino e empresas do mercado de TI. Nosso foco é o aluno, buscando contribuir para o seu desenvolvimento pessoal, acadêmico e profissional. Esperamos ser reconhecidos como um grupo referência na formação de profissionais qualificados.</p>
+        <p className='global__paragraph_text' data-aos="fade-up" data-aos-duration="1500" >Fundado em 2017, o LAFocA é formado por alunos e professores, além de parceiros de outras instituições de ensino e empresas do mercado de TI. Nosso foco é o aluno, buscando contribuir para o seu desenvolvimento pessoal, acadêmico e profissional. Esperamos ser reconhecidos como um grupo referência na formação de profissionais qualificados.</p>
       </div>
       <div className={styles.appointments}>
         <div className={styles.appointments__menina} 
@@ -25,8 +24,8 @@ export default function About () {
           <Image src={Menina} alt='Girl Lafoca'/>
         </div>
         <div className={styles.container__accordion}>
-          <h2  data-aos="fade-up" > Compromissos que <br/> <span>desenvolvemos</span></h2>
-          <p className='global__paragraph_text' data-aos="fade-up" >Conheça os princípios que norteiam as atividades do laboratório e garantem a excelência nos projetos e resultados obtidos.
+          <h2 data-aos="fade-up" data-aos-duration="2000" > Compromissos que <br/> <span>desenvolvemos</span></h2>
+          <p className='global__paragraph_text' data-aos="fade-up" data-aos-duration="1600" >Conheça os princípios que norteiam as atividades do laboratório e garantem a excelência nos projetos e resultados obtidos.
           </p>
           <div className={styles.accordion}>
             

@@ -32,17 +32,17 @@ export default function Results () {
         <div className={styles.results}>
         
           <div>
-            <h2>RESULTADOS DE <br/> PESQUISAS</h2>
-            <div className={styles.results_counts}>
+            <h2 data-aos="fade-up" data-aos-duration="2000" >RESULTADOS DE <br/> PESQUISAS</h2>
+            <div data-aos="fade-up" data-aos-duration="1100"  className={styles.results_counts}>
               <div className={styles.container_count}>
                 <span>{lafoca.totalArticles}</span>
                 <p>Artigos Publicados</p>
               </div>
-              <div className={styles.container_count}>
+              <div data-aos="fade-up" data-aos-duration="1500"  className={styles.container_count}>
                 <span>{lafoca.totalTcc}</span>
                 <p>TCCs Defendidos</p>
               </div>
-              <div className={styles.container_count}>
+              <div data-aos="fade-up" data-aos-duration="1900" className={styles.container_count}>
                 <span>{lafoca.totalProjects}</span>
                 <p>Projetos</p>
               </div>
