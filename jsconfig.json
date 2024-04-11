@@ -6,7 +6,8 @@
       "@home/*": ["./src/components/home/*"],
       "@public/*": ["./public/*"],
       "@images/*": ["./public/assets/img/*"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@globalCss/*": ["./src/styles/*"]
     }
   }
 }
