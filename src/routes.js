@@ -1,4 +1,4 @@
-const STUDENTS = '/members';
+const MEMBERS = '/members';
 const PROJECTS = '/projects';
 const LAFOCA = '/info';
 
@@ -15,8 +15,9 @@ const routes = {
     authPageSSR: '/posts/auth-page-ssr',
     authPageStatic: '/posts/auth-page-static'
   },
-  students: {
-    listSummarized: `${STUDENTS}/summarized`
+  members: {
+    MEMBERS,
+    listSummarized: `${MEMBERS}/summarized`
   },
   projects:{
     listSummarized: `${PROJECTS}/summarized`

@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 
 import CardSlider from './CardSlider/CardSlider-v2';
-import { studentService } from '@/services/api/Students/StudentsService';
+import { studentService } from '@/services/api/mEMBERS/StudentsService';
 import { useEffect, useState } from 'react';
 
 
