@@ -1,4 +1,4 @@
-import Header from './Header/Header';
+import Header from '@home/Header/Header';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';

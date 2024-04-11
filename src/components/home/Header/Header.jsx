@@ -1,3 +1,4 @@
+'use client';
 import styles from '@home/Header/Header.module.css';
 import LogoLafoca from '@images/header-banner/logo-lafoca.svg';
 import LogoBackground from '@images/header-banner/logo-background-new.png';
