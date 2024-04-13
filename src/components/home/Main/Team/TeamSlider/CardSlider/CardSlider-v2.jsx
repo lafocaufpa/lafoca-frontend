@@ -7,7 +7,7 @@ import routes from '@/routes';
 export default function CardSlider({member}) {
 
   return (
-    <Link href={routes.members.MEMBERS}>
+    <Link href={routes.members.member(member.slug)}>
       <div>
         <div className={`${styles.card} ${stylesAnimate.hover_animate}`} >
           <div className={styles.card_content} >

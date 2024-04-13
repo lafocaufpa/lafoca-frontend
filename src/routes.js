@@ -1,3 +1,4 @@
+const HOME = '/';
 const MEMBERS = '/members';
 const PROJECTS = '/projects';
 const LAFOCA = '/info';
@@ -15,8 +16,12 @@ const routes = {
     authPageSSR: '/posts/auth-page-ssr',
     authPageStatic: '/posts/auth-page-static'
   },
+  home: {
+    HOME
+  },
   members: {
     MEMBERS,
+    member: (name) => `${MEMBERS}/search/${encodeURIComponent(name)}`,
     listSummarized: `${MEMBERS}/summarized`
   },
   projects:{

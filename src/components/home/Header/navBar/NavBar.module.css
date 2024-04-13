@@ -1,0 +1,25 @@
+.header__nav {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+  padding-top: 2.125rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.navbar {
+  display: flex;
+  gap: 42px;
+}
+
+.navbar a{
+  font-size: var(--font-size-12pxrem);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-white);
+  transition: .2s;
+}
+
+.navbar a:hover{
+  color: var(--main-color);
+  transform: scale(1.2);
+}

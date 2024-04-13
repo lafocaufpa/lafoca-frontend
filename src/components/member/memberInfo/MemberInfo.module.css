@@ -1,0 +1,53 @@
+.member {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.memberInfo {
+  text-align: left;
+}
+
+.memberPhoto {
+  margin-top: -6rem;
+  margin-bottom: 3.3125rem;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 6rem;
+  border: 0.1875rem solid #ffffff;
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1), 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.08); /* 4px / 16px = 0.25rem, 6px / 16px = 0.375rem, 1px / 16px = 0.0625rem, 3px / 16px = 0.1875rem */
+  overflow: hidden;
+}
+
+.memberPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memberName {
+  margin-bottom: 1.2rem;
+  font-size: 2rem;
+}
+
+.memberDescription {
+  opacity: 0.65;
+}
+
+.memberSocialMedia {
+  display: flex;
+  flex-direction: row-reverse; /* Isso garante que os botões estejam na mesma linha */
+  flex-wrap: wrap;
+  row-gap: 10px;
+  width: 33%;
+}
+
+.memberSocialMedia > div {
+  flex: 1;
+  margin: 5px;
+}
+
+.memberSocialMedia > div:last-child {
+  flex-basis: 100%; /* Isso faz com que o terceiro botão ocupe toda a largura da linha */
+}
+

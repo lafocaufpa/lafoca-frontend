@@ -21,8 +21,6 @@ export default function Team() {
     fetchData();
   }, []);
 
-  
-
   return (
     <section>
       <div className='global-container'>

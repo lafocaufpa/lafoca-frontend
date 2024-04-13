@@ -25,7 +25,7 @@
   /* --typography-responsive: clamp(1.125rem, 0.3043rem + 3.4783vw, 3rem); */
 }
 
-* {
+*, button {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -34,10 +34,13 @@
   outline: none;
   scroll-behavior: smooth;
   list-style: none;
+  padding-block: 0px;
+  padding-inline: 0px;
 }
 
 p {
   margin: 0;
+  font-size: 1.125rem;
 }
 
 body {
