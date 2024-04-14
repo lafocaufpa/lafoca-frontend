@@ -1,4 +1,3 @@
-import { useMember } from '@/contexts/member';
 import styles from './MemberInfo.module.css';
 import Link from 'next/link';
 import Linkedin from '@images/socialMedia/linkedin.svg';
@@ -7,9 +6,7 @@ import Email from '@images/socialMedia/e-mail.svg';
 import Image from 'next/image';
 import SocialMedia from '@/components/member/socialMedia/SocialMedia';
 
-export default function MemberInfo() {
-
-  const member = useMember();
+export default function MemberInfo({member}) {
 
   return (
     <section className={styles.member}>

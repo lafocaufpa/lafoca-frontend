@@ -15,3 +15,7 @@
 .cardContent_desc {
   font-weight: 400;
 }
+
+.cardLink {
+  margin-left: auto;
+}

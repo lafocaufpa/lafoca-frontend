@@ -44,7 +44,7 @@ export const Accordion = ({ title, text, Icon }) => {
   });
 
   return (
-    <animated.div className={styles.accordion__item} style={openAnimation} data-aos="fade-up" data-aos-duration="1600" >
+    <animated.div className={styles.accordion__item} style={openAnimation}>
       <animated.div className={styles.accordion__header} style={borderAn} onClick={toggleHandler} >
         <Image src={Icon} alt='' priority/>
         <h4>{title}</h4>

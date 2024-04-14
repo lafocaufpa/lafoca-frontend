@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Logo from '@images/footer/Logo_LaFocA.png';
 import Facebook from '@images/footer/facebook.svg';
 import Instagram from '@images/footer/instagram.svg';
-import Line from '@images/footer/line-footer.svg';
 
 export default function Footer() {
   return (

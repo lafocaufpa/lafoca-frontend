@@ -1,7 +1,9 @@
 import styles from './CardInfo.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
+import ButtonLink from '../buttonLink/ButtonLink';
 
-export default function CardInfo({icon, tittle, description}) {
+export default function CardInfo({icon, tittle, description, link}) {
   return (
     <div className={styles.cardInfo}>
       <div>
@@ -11,6 +13,16 @@ export default function CardInfo({icon, tittle, description}) {
         <p className={styles.cardContent_tittle}>{tittle}</p>
         <p className={styles.cardContent_desc}>{description}</p>
       </div>
+      {link && 
+      <Link 
+        href={'/'} 
+        target="_black"
+        rel="noopener noreferrer" 
+        className={styles.cardLink}
+      >
+        <ButtonLink/>
+      </Link>
+      }
     </div>
   );
 }

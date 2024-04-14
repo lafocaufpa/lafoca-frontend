@@ -1,11 +1,8 @@
-import { useMember } from '@/contexts/member';
 import stylesMember from '@components/member/Member.module.css';
 import CardInfo from '@components/member/cardInfo/CardInfo';
 import Icon from '@images/icons/icon-about.svg';
 
-export default function About () {
-
-  const member = useMember();
+export default function About ({member}) {
 
   return (
     <section className={`${stylesMember.globalPageMemberSection}`}>
