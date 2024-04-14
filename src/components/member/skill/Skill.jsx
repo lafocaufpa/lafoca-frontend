@@ -12,11 +12,8 @@ export default function Skill() {
       <div className={styles.skills}>
         {member.skills.map((skill, index) => (
           <CardSkill key={index} name={skill.name} />
-        
         ))}
       </div>
-     
-  
     </section>
   );
 }
