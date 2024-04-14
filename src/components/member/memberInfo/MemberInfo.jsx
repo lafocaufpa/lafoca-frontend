@@ -15,26 +15,33 @@ export default function MemberInfo() {
     <section className={styles.member}>
       <div className={styles.memberInfo}>
         <div className={styles.memberPhoto}>
-          <Image src={member.urlPhoto} alt={member.name} width={196} height={196} quality={100}/>
+          <Image src={member?.urlPhoto} alt={member?.name} width={196} height={196} quality={100}/>
         </div>
-        <h1 className={styles.memberName}>{member.name}</h1>
-        <p className={styles.memberDescription}>{member.description}</p>
-        {/* <h1>{JSON.stringify(member)}</h1> */}
+        <h1 className={styles.memberName}>{member?.name}</h1>
+        <p className='global__paragraph'>{member.description}</p>
       </div>
       <div className={styles.memberSocialMedia}>
-        <Link href={'/'}><SocialMedia icon={Email} name={'E-mail'} backgroundColor={'#E84A4A'}/></Link>
-
-        <Link href={'/'}><SocialMedia icon={Linkedin} name={'Linkedin'} backgroundColor={'#4866B4'}/></Link>
+        <Link 
+          href={'/'} 
+          target="_black"
+          rel="noopener noreferrer"
+        >
+          <SocialMedia icon={Email} name={'E-mail'} backgroundColor={'#E84A4A'}/></Link>
 
         <Link 
+          href={'/'} 
+          target="_black"
+          rel="noopener noreferrer"
+        >
+          <SocialMedia icon={Linkedin} name={'Linkedin'} backgroundColor={'#4866B4'}/></Link>
+
+        {member.linkPortifolio && <Link 
           href={member.linkPortifolio} 
           target="_black"
           rel="noopener noreferrer"
         >
-          <SocialMedia icon={Portifolio} name={'Portifolio'} backgroundColor={'#222'}/></Link>
-        
-        
-        
+          <SocialMedia icon={Portifolio} name={'Portifolio'} backgroundColor={'#222'}/></Link>}
+
       </div>
     </section>
   );

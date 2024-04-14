@@ -1,0 +1,26 @@
+.cardSkill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 50px;
+  border: 2px solid #EE972D;
+  margin-bottom: 2.25rem;
+}
+
+.cardSkillImg {
+  filter: drop-shadow(5px 0 6px rgba(0, 0, 0, 0.2));
+}
+
+.cardSkill > img {
+  margin-top: -3px;
+  margin-right: 0px;
+  margin-left: -3px;
+  margin-bottom: -3px;
+}
+
+
+.cardSkillName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-black);
+  margin: 1.625rem 6.25rem 1.625rem 1.625rem;
+}
