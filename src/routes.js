@@ -10,8 +10,11 @@ const routes = {
       usuarios: '/admin/configuracoes/usuarios'
     }
   },
-  login: '/login',
-  logout: '/logout',
+  auth: {
+    login: '/login',
+    logout: '/logout',
+    session: '/check-token',
+  },
   posts: {
     authPageSSR: '/posts/auth-page-ssr',
     authPageStatic: '/posts/auth-page-static'

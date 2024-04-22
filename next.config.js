@@ -4,16 +4,16 @@ module.exports = {
     return [
       // Basic redirect
       {
-        source: '/perguntas',
-        destination: '/faq',
+        source: '/lafoca-ufpa',
+        destination: '/',
         permanent: true,
       },
       // Wildcard path matching
-      {
-        source: '/blog/:slug',
-        destination: '/faq/:slug',
-        permanent: true,
-      },
+      // {
+      //   source: '/blog/:slug',
+      //   destination: '/faq/:slug',
+      //   permanent: true,
+      // },
     ];
   },
   images: {

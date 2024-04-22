@@ -8,7 +8,7 @@ export default function About ({member}) {
     <section className={`${stylesMember.globalPageMemberSection}`}>
       <h1 className={stylesMember.globalPageMemberTittle}>Sobre</h1>
       <p>{member.biography}</p>
-      <CardInfo icon={Icon} tittle={member.functionStudent.name} description={member.functionStudent.description}/>
+      <CardInfo icon={Icon} tittle={member.functionMember.name} description={member.functionMember.description}/>
     </section>
   );
 }

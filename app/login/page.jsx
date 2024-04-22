@@ -1,45 +1,16 @@
-'use client';
-
-import React, { useState } from 'react';
-import Link from 'next/link';
-import {useRouter} from 'next/navigation';
-import { authService } from '@services/auth/authService';
-import routes from '@/routes';
+// 'use client';
+import AuthService from '@/modules/auth/services/auth-service';
+// import React, {useState } from 'react';
 
 const Login = () => {
-  
-  const router = useRouter();
-  const [values, setValues] = useState({
-    username: 'lafoca@gmail.com',
-    password: 'lafoca'
-  });
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  // const [email, setEmail] = useState('lafoca@gmail.com');
+  // const [password, setPassword] = useState('');
 
-    authService.login({
-      username: values.username,
-      password: values.password,
-    })
-      .then(()=>{
-        router.push(routes.admin.configuracoes.index);
-      })
-      .catch((error)=> {
-        alert(error);
-      });    
-  }
-
-  function handleChange(event) {
-    const fieldValue = event.target.value;
-    const fieldName = event.target.name;
-
-    setValues((currentValues) => {
-      return {
-        ...currentValues,
-        [fieldName]: fieldValue
-      };
-    });
-  }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   AuthService.loginAccount(email, password);
+  // };
 
   return (
     <div>
@@ -49,9 +20,8 @@ const Login = () => {
           <label>Email:</label>
           <input
             type="email" 
-            name='username'
-            value={values.username}
-            onChange={handleChange}
+            name='email' 
+     
           />
         </div>
         <div>
@@ -59,23 +29,12 @@ const Login = () => {
           <input
             type="password" 
             name='password'
-            value={values.password}
-            onChange={handleChange}
           />
         </div>
         <button type="submit">
           Entrar
         </button>
-      </form>
- 
-      <Link href={routes.posts.authPageSSR}>
-          Auth-Page-SSR
-      </Link>
-      <span></span>
-      <Link href={routes.posts.authPageStatic}>
-          Auth-Page-Static
-      </Link>
-   
+      </form>   
     </div>
   );
 };
