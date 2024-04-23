@@ -9,24 +9,23 @@ export const config = {
 
 const publicRoutes = ['/', '/login/'];
 
-export function middleware(req, res) {
+export function middleware(req) {
 
 
   const pathname = req.nextUrl.pathname;
-
-  console.log('resposta :');
-  console.log(req);
 
   if(publicRoutes?.includes(pathname)) {
     return NextResponse.next();
   } 
 
 
-  const session = cookies().get('token');
+  // 
   
-  if(session) {
+  // eslint-disable-next-line no-constant-condition
+  if(true) {
     console.log('ha um cookie criado');
-    console.log(session);
+    console.log(cookies().getAll());
+    
     return NextResponse.next();
   }
 

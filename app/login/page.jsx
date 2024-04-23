@@ -1,16 +1,15 @@
-// 'use client';
+'use client';
 import AuthService from '@/modules/auth/services/auth-service';
-// import React, {useState } from 'react';
+import React, {useState } from 'react';
 
 const Login = () => {
 
-  // const [email, setEmail] = useState('lafoca@gmail.com');
-  // const [password, setPassword] = useState('');
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   AuthService.loginAccount(email, password);
-  // };
+  const [email, setEmail] = useState('lafoca@gmail.com');
+  const [password, setPassword] = useState('');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    AuthService.loginAccount(email, password);
+  };
 
   return (
     <div>
@@ -21,7 +20,8 @@ const Login = () => {
           <input
             type="email" 
             name='email' 
-     
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -29,6 +29,8 @@ const Login = () => {
           <input
             type="password" 
             name='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} 
           />
         </div>
         <button type="submit">

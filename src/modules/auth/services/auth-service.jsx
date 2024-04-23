@@ -1,6 +1,7 @@
 // import { cookies } from 'next/headers';
 import { setCookie } from 'nookies';
 import { AuthApiService } from '@/services/api/Auth/AuthService';
+import { cookies } from 'next/headers';
 
 
 async function openSession(tokenJwt) {
@@ -33,7 +34,7 @@ async function loginAccount(email, password){
 
 const AuthService = {
   openSession,
-  loginAccount
+  loginAccount 
 };
 
 export default AuthService;
