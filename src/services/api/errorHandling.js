@@ -1,9 +1,7 @@
 
 const handleRequestError = (error) => {
-  if (error.response && error.response.status === 401) {
-    console.error('Erro de autenticação: ');
-   
-    throw error.response.data;
+  if (error.response.status === 401) {
+    return error.response;
   }
 
   throw error.response.data;

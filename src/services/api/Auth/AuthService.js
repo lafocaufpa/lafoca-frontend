@@ -9,13 +9,9 @@ export const AuthApiService = {
       email,
       password
     };
-    try {
-      const response = await api.post(routes.auth.login, data );
-      return response?.data?.token;
-    } catch (error) {
-      console.error('Erro ao fazer login:', error.userMessage);
-      redirect(`?${error.path}`);
-    }
+    const response = await api.post(routes.auth.login, data );
+    return response?.data;
+   
   },
   session: async (token) => {
 
