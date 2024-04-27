@@ -22,19 +22,16 @@ const handler = NextAuth({
         }
 
         const session = await AuthApiService.login(credentials.email, credentials.password);
-        
   
         if(session?.status == 401) {
           return null;
         } else {
-         
+
           cookies().set('next-auth.token', session.token, {
             path: '/',
-          
-            secure: true,
             httpOnly: true,
             sameSite: 'strict',
-            expiresIn: process.env.NEXTAUTH_EXPIRES_TOKEN
+            maxAge: process.env.NEXTAUTH_EXPIRES_TOKEN,
           });
         
           return {
@@ -51,12 +48,6 @@ const handler = NextAuth({
 
     maxAge: process.env.NEXTAUTH_EXPIRES_TOKEN
   },
-  callbacks: {
-    session: {
-
-    }
-  }
-
 });
 
 export { handler as GET, handler as POST };

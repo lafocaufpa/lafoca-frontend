@@ -32,7 +32,6 @@ function Usuarios({session}){
   return (
     <div>
       Listando usuarios
-      {console.log(data)}
       {data.map((usuario) => {
         return <p key={usuario.id}>{usuario.name}</p>;
       })}

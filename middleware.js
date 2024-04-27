@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import deleteCookie from '@/components/auth/authorization/deleteCookie';
 
 export const config = {
   matcher: [
@@ -15,17 +16,22 @@ const dynamicPrivatesRoutesPattern = /^\/admin\//;
 export function middleware(req) {
   const pathname = req.nextUrl.pathname;
   
-  // Verifica se a rota é pública ou dinâmica
   if (publicRoutes?.includes(pathname) || dynamicPublicsRoutesPattern.test(pathname)) {
     return NextResponse.next();
   } 
   
-  // Verifica se a rota é privada
   if (dynamicPrivatesRoutesPattern.test(pathname)) {
-    // Redireciona para a página de login se a rota for privada
-    return NextResponse.redirect(new URL('/login', req.url));
+
+    const tokenBoolean = req.cookies.has('next-auth.token');
+    const sessionTokenBoolean = req.cookies.has('next-auth.session-token');
+    
+    if(!tokenBoolean || !sessionTokenBoolean) {
+      
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
+
+    return NextResponse.next();
   }
 
-  // Se nenhuma das condições acima for atendida, permite o acesso à rota e deixa a página 404 (Not Found) ser tratada pelo Next.js
   return NextResponse.next();
 }

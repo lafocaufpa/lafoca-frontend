@@ -1,4 +1,3 @@
-import Foto from '@images/team/gustavo.jpeg';
 import styles from './TeamSlider.module.css';
 import 'swiper/css';
 import 'swiper/css/pagination';

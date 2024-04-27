@@ -19,6 +19,6 @@ module.exports = {
   images: {
     domains: ['lafoca.s3.amazonaws.com'],
     unoptimized: true
-  }
+  },
 };
 

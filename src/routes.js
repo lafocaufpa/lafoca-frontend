@@ -2,22 +2,13 @@ const HOME = '/';
 const MEMBERS = '/members';
 const PROJECTS = '/projects';
 const LAFOCA = '/info';
+const USERS = '/users';
 
 const routes = {
-  admin: {
-    configuracoes: {
-      index: '/admin/configuracoes',
-      usuarios: '/admin/configuracoes/usuarios'
-    }
-  },
   auth: {
     login: '/login',
     logout: '/logout',
     session: '/check-token',
-  },
-  posts: {
-    authPageSSR: '/posts/auth-page-ssr',
-    authPageStatic: '/posts/auth-page-static'
   },
   home: {
     HOME
@@ -32,6 +23,9 @@ const routes = {
   },
   lafoca: {
     listInfo: `${LAFOCA}` 
+  },
+  users: {
+    list: `${USERS}`
   }
 };
 

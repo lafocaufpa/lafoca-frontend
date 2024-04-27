@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import CustomSlider from '../../Custom-Slider/CustomSlider';
 import { MemberService } from '@/services/api/Members/MembersService';

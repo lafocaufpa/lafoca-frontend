@@ -1,4 +1,4 @@
-import api from '@services/api/httpClienteService';
+import api from '@services/api/httpClientService';
 import routes from '@/routes';
 import { redirect } from 'next/navigation';
 

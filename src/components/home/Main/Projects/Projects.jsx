@@ -12,7 +12,6 @@ export default function Projects() {
     const fetchData = async () => {
       try {
         const response = await projectsService.listSummarized();
-        
         setProjects(response.content);
       } catch (error) {
         console.error('Erro ao buscar projetos:', error);

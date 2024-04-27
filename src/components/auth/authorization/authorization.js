@@ -1,20 +1,18 @@
+'use client';
 import { signIn, signOut } from 'next-auth/react';
-import { destroyCookie } from 'nookies';
+import deleteCookie from '@/components/auth/authorization/deleteCookie';
 
-function logout() {
+async function logout() {
+  await deleteCookie();
   signOut();
-  destroyCookie(null, 'tokenServer', {
-    path: '/',
-  });
+  
 }
 
-function login(e) {
-  e.preventDefault();
-  const formData = new FormData(e.currentTarget);
+function login(email, password) {
 
   const data = {
-    email: formData.get('email'), 
-    password: formData.get('password')
+    email,
+    password
   };
 
   signIn('credentials', {
@@ -24,9 +22,14 @@ function login(e) {
 
 }
 
+async function removeCookie(){
+  await deleteCookie();
+}
+
 const Authorization = {
   logout,
   login,
+  removeCookie
 };
 
 export default Authorization;
