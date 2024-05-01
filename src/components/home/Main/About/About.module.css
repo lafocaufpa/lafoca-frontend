@@ -2,30 +2,34 @@
   margin-top: 6.375rem;
 }
 
-.about_lafoca .about_info h2 {
+.about_lafoca h2 {
   margin-bottom: 2rem;
 }
 
 .appointments {
-  margin: 6.125rem 0 4.125rem 0;
+  margin: 10.125rem 0 4.125rem 0;
   display: flex;
-  flex-flow: wrap;
+  /* flex-flow: wrap; */
   justify-content: space-between;
 }
 
 .appointments__menina img {
   object-fit: contain;
   object-position: center center;
-  max-width: 90%;
-  height: auto;
-  margin-top: -4rem;
+  max-width: 100%;
+  min-width: 466px;
+  /* height: 82%; */
+  margin-top: -7.6rem;
 }
 
 .container__accordion {
-  margin-right: 8rem;
+  /* margin-right: 8rem; */
   margin: 0 auto;
   text-align: left;
-  width: 35%;
+  /* max-width: 40%; */
+  /* margin-right: 127px; */
+  padding: var(--padding-default-page);
+  max-width: 825px;
 }
 
 .accordion {

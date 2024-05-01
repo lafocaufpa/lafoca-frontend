@@ -8,16 +8,23 @@ async function logout() {
   
 }
 
-function login(email, password) {
+async function login(email, password) {
 
   const data = {
     email,
     password
   };
 
-  signIn('credentials', {
+  return await signIn('credentials', {
     ...data,
-    callbackUrl: '/admin'
+    redirect: false, // Using custom auth flow
+  }).then(res => {
+    if (res?.ok) {
+      // Handle successful login
+      return res.ok;
+    } else {
+      // Handle error
+    }
   });
 
 }

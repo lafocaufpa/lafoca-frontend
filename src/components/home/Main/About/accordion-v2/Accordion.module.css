@@ -1,0 +1,58 @@
+.accordion {
+}
+
+.item {
+  background: var(--bg-accordion);
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 2.8125rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.title {
+  color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content {
+  color: var(--text-color);
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 15px;
+
+  transition: max-height 0.3s cubic-bezier(0,1,0,1);
+  font-weight: 500;
+  font-size: 0.8rem;
+
+}
+
+.contentShow {
+  color: var(--text-color);
+  height: auto;
+  padding-top: 15px;
+
+  max-height: 99999px;
+  transition: max-height 0.5s cubic-bezier(1,0,1,0);
+  font-weight: 500;
+  font-size: 0.8rem;
+  /* margin: 1rem 0; */
+
+}
+
+
+.icon {
+  margin-right: 0.625rem; 
+}
+
+.button {
+  margin-left: auto;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.item:hover {
+  box-shadow: 0 2px 4px rgba(12, 0, 0, 0.1); /* Adiciona sombra suave ao passar o mouse */
+}
+

@@ -7,9 +7,49 @@ import IconMissao from '@images/sobre/icon-missao.svg';
 import IconValores from '@images/sobre/icon-valores.svg';
 import IconPesquisa from '@images/sobre/icon-linha_de_pesquisa.svg';
 
-import { Accordion } from './Accordion/Accordion';
+import Accordion from '@components/home/Main/About/accordion-v2/Accordion';
 
 export default function About () {
+
+  const data = [
+    {
+      icon: IconVisao,
+      title: 'VISÂO',
+      text: 'Ser reconhecido como um grupo de pesquisa referência na formação de profissionais qualificados.'
+    },
+    {
+      icon: IconMissao,
+      title: 'MISSÃO',
+      text: 'Propiciar um ambiente adequado que permita desenvolver pesquisas de qualidade, contribuindo para o desenvolvimento dos alunos.'
+    },
+    {
+      icon: IconPesquisa,
+      title: 'LINHA DE PESQUISA',
+      text: <>
+                            
+      • Engenharia de Software e Metodologias Ágeis<br /><br />
+      • Interação Humano-Computador (IHC) e User eXperience(UX)<br /><br />
+      • Jogos e Gameficação<br /><br />
+      • Marketing Digital e Midias Sociais<br /><br />
+      • Programação e Testes de Software
+  
+      </>
+    }, 
+    {
+      icon: IconValores,
+      title: 'VALORES',
+      text: 
+      <>
+        <strong>Comunicação</strong> – Compartilhar informações, buscando transmitir conhecimento e valores.<br />
+        <strong>Proatividade</strong> – Tomar iniciativa e decisões na realização das suas atividades.<br />
+        <strong>Colaboração</strong> – Trabalhar ou cooperar com as atividades de uma ou mais pessoas do grupo.<br />
+        <strong>Protagonismo</strong> – Aceitar os méritos e resultados da realização das suas atividades.<br />
+        <strong>Comprometimento</strong> – Empenhar seus esforços e dedicação nas atividades das quais participa.<br />
+        <strong>Pertencimento</strong> – Fazer parte de um grupo, se identificando com a linha de pesquisa.
+      </>
+    },
+  ];
+
   return (
     <section className={styles.about_lafoca}>
       <div className={`${styles.about_info} ${'global-container'}`}>
@@ -28,48 +68,8 @@ export default function About () {
           <p className='global__paragraph_text' data-aos="fade-up" data-aos-duration="1600" >Conheça os princípios que norteiam as atividades do laboratório e garantem a excelência nos projetos e resultados obtidos.
           </p>
           <div className={styles.accordion}>
-            
-            <Accordion
-              Icon={IconVisao}
-              title="VISÃO"
-              text="Ser reconhecido como um grupo de pesquisa referência na
-                    formação de profissionais qualificados."
-            />
-            <Accordion
-              Icon={IconMissao}
-              title="MISSÃO"
-              text="Propiciar um ambiente adequado que permita desenvolver
-                    pesquisas de qualidade, contribuindo para o desenvolvimento dos
-                    alunos."
-            />
-            <Accordion
-              Icon={IconPesquisa}
-              title="LINHA DE PESQUISA"
-              text={
-                <>
-                            
-                                • Engenharia de Software e Metodologias Ágeis<br /><br />
-                                • Interação Humano-Computador (IHC) e User eXperience(UX)<br /><br />
-                                • Jogos e Gameficação<br /><br />
-                                • Marketing Digital e Midias Sociais<br /><br />
-                                • Programação e Testes de Software
-                            
-                </>}
-            />
-            <Accordion
-              Icon={IconValores}
-              title="VALORES"
-              text={
-                <>
-                  <strong>Comunicação</strong> – Compartilhar informações, buscando transmitir conhecimento e valores.<br />
-                  <strong>Proatividade</strong> – Tomar iniciativa e decisões na realização das suas atividades.<br />
-                  <strong>Colaboração</strong> – Trabalhar ou cooperar com as atividades de uma ou mais pessoas do grupo.<br />
-                  <strong>Protagonismo</strong> – Aceitar os méritos e resultados da realização das suas atividades.<br />
-                  <strong>Comprometimento</strong> – Empenhar seus esforços e dedicação nas atividades das quais participa.<br />
-                  <strong>Pertencimento</strong> – Fazer parte de um grupo, se identificando com a linha de pesquisa.
-                </>
-              }
-            />
+                        
+            <Accordion data={data}/>
             
           </div>
           

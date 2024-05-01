@@ -1,12 +1,13 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Authorization from '../authorization/authorization';
 import { useEffect } from 'react';
 
 export default function Login() {
 
   const searchParams = useSearchParams();
+  const router = useRouter();
   const error = searchParams.get('error');
 
   useEffect(() => {
@@ -17,13 +18,17 @@ export default function Login() {
     removeCookie();
   }, []);
 
-  function login(e){
+  async function login(e){
     e.preventDefault();
     
     const email = e.target.email.value;
     const password = e.target.password.value;
     
-    Authorization.login(email, password);
+    const res = await Authorization.login(email, password);
+
+    if(res) {
+      router.push('/admin');
+    }
   }
   
   return (
