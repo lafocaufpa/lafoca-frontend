@@ -22,7 +22,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <section className='global-container'>
+    <section className={`${styles.projects_container} global-container`}>
       <div className={`${styles.projects_container}`} >
         <h2 data-aos="fade-up" data-aos-duration="1000" >Nossos <span>Projetos</span></h2>
         <p data-aos="fade-up" data-aos-duration="2000" className='global__paragraph_text'>

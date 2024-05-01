@@ -1,7 +1,7 @@
 .results_background {
   background: var(--color-background-results);
   padding: 6.8125rem 0;
-  margin: 6.25rem 0;
+  margin-bottom: 6.375rem;
 }
 
 .results h2,

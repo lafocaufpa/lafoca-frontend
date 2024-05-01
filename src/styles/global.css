@@ -68,12 +68,6 @@ h1 {
   font-size: var(--typography-responsive-tittle);
 }
 
-section {
- 
-    data-aos: fade-up;
-    data-aos-duration: 2000;
-  
-}
 /*regra para aplicar nas laterais da página
   envolve um conjunto de componentes*/
 .global-container {
@@ -87,6 +81,5 @@ section {
   line-height: 36.654px;
   color: rgba(34, 34, 34, 0.65);
   font-weight: 500;
-  /* font-size: ; */
   font-size: var(--typography-responsive-paragraph);
 }

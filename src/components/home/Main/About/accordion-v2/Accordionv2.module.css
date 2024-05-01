@@ -1,0 +1,38 @@
+.accordion__item {
+  width: 100%;
+  max-height: 60px;
+  padding: 0 3rem;
+  color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 1rem 0;
+  background-color: var(--bg-accordion);
+  border-radius: 0.3rem;
+}
+
+.accordion__header {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.iconAccordion {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.accordion__content {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0,1,0,1);
+}
+
+.accordion__header h4 {
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 700;
+  flex: 1;
+  margin-left: 1rem;
+}

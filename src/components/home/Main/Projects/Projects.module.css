@@ -1,7 +1,8 @@
-.projects_container  {
-  margin-top: 5rem;
+
+.projects_container h2 {
+  margin-bottom: 2rem;
 }
 
-.projects_container > h2 {
-  margin: 4rem 0;
+.projects_container {
+  margin-bottom: 6.375rem;
 }

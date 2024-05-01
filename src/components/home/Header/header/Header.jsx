@@ -1,4 +1,4 @@
-import styles from './Header.module.css';
+import styles from '@components/home/Header/header/Header.module.css';
 
 export default function Header ({background, height, children}) {
   return (
