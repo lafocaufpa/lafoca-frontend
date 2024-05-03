@@ -1,28 +1,10 @@
 import CardProject from './CardProject';
 import styles from './Projects.module.css';
-import CustomSlider from '@home/Custom-Slider/CustomSlider';
-import { useEffect, useState } from 'react';
-import { projectsService } from '@/services/api/Projects/ProjectsService';
 import Artigos from '@images/menu/artigos.png';
 import Tccs from '@images/menu/tccs.png';
 import Projetos from '@images/menu/projetos.png';
 
 export default function Projects() {
-
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await projectsService.listSummarized();
-        setProjects(response.content);
-      } catch (error) {
-        console.error('Erro ao buscar projetos:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <section className={`${styles.projects_container} global-container`}>
@@ -33,16 +15,7 @@ export default function Projects() {
         </p>
       </div>
       <div className={styles.projects_card}>
-        {/* <CustomSlider Slider={projects.map((project, index) => (
-          <CardProject 
-            key={index}
-            title={'Artigos Publicados'} 
-            description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
-            image={Artigos} 
-            link={'/artigos'}
-          />
-        ))}/> */}
-
+    
         <CardProject 
           title={'Artigos Publicados'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
