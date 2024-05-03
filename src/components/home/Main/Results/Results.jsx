@@ -35,15 +35,15 @@ export default function Results () {
             <h2 data-aos="fade-up" data-aos-duration="2000" >RESULTADOS DE <br/> PESQUISAS</h2>
             <div data-aos="fade-up" data-aos-duration="1100"  className={styles.results_counts}>
               <div className={styles.container_count}>
-                <span>{lafoca.totalArticles}</span>
+                <span>{lafoca.numberOfPublishedArticles}</span>
                 <p>Artigos Publicados</p>
               </div>
               <div data-aos="fade-up" data-aos-duration="1500"  className={styles.container_count}>
-                <span>{lafoca.totalTcc}</span>
+                <span>{lafoca.numberOfDefendedTCCs}</span>
                 <p>TCCs Defendidos</p>
               </div>
               <div data-aos="fade-up" data-aos-duration="1900" className={styles.container_count}>
-                <span>{lafoca.totalProjects}</span>
+                <span>{lafoca.numberOfProjects}</span>
                 <p>Projetos</p>
               </div>
             </div>

@@ -6,3 +6,8 @@
 .projects_container {
   margin-bottom: 6.375rem;
 }
+
+.projects_card {
+  display: flex;
+  gap: 1.4375rem;
+}

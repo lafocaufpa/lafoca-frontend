@@ -3,6 +3,9 @@ import styles from './Projects.module.css';
 import CustomSlider from '@home/Custom-Slider/CustomSlider';
 import { useEffect, useState } from 'react';
 import { projectsService } from '@/services/api/Projects/ProjectsService';
+import Artigos from '@images/menu/artigos.png';
+import Tccs from '@images/menu/tccs.png';
+import Projetos from '@images/menu/projetos.png';
 
 export default function Projects() {
 
@@ -29,12 +32,36 @@ export default function Projects() {
         Conheça os projetos que desenvolvemos em nosso grupo, na forma de extensão universitária, pesquisas acadêmicas e parcerias com o mercado.
         </p>
       </div>
-      <div>
-        <CustomSlider Slider={projects.map((project, index) => (
-          <CardProject key={index} project={project} />
-        ))}/>
-      </div>
-      
+      <div className={styles.projects_card}>
+        {/* <CustomSlider Slider={projects.map((project, index) => (
+          <CardProject 
+            key={index}
+            title={'Artigos Publicados'} 
+            description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+            image={Artigos} 
+            link={'/artigos'}
+          />
+        ))}/> */}
+
+        <CardProject 
+          title={'Artigos Publicados'} 
+          description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+          image={Artigos} 
+          link={'/artigos'}
+        />
+        <CardProject 
+          title={'Tccs Defendidos'} 
+          description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+          image={Tccs} 
+          link={'/tccs'}
+        />
+        <CardProject 
+          title={'Projetos'} 
+          description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+          image={Projetos} 
+          link={'/projetos'}
+        />
+      </div>     
     </section>
   );
 }
