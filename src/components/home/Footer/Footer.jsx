@@ -4,9 +4,13 @@ import Logo from '@images/footer/Logo_LaFocA.png';
 import Facebook from '@images/footer/facebook.svg';
 import Instagram from '@images/footer/instagram.svg';
 
-export default function Footer() {
+export default function Footer({ marginTop, ...props }) {
+  const footerStyle = {
+    ...(marginTop !== undefined && { marginTop: `${marginTop}rem` }),
+  };
+
   return (
-    <footer className={styles.footer_background}>
+    <footer className={styles.footer_background} style={footerStyle}>
 
       <div className={`${styles.footer_container} ${'global-container'}`}>
 
@@ -62,9 +66,6 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-
-      
-
     </footer>
   );
 }

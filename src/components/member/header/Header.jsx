@@ -5,7 +5,9 @@ export default function Header () {
   return (
     <HeaderPage 
       background={'/assets/img/header-banner/BG.png'} 
-      height={30}> 
+      height={30} 
+      marginBotton={0}
+    > 
       <NavBar/>
     </HeaderPage>
   );

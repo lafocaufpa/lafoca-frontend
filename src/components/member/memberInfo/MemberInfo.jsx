@@ -15,29 +15,35 @@ export default function MemberInfo({member}) {
           <Image src={member?.urlPhoto} alt={member?.name} width={196} height={196} quality={100}/>
         </div>
         <h1 className={styles.memberName}>{member?.name}</h1>
-        <p className='global__paragraph'>{member.description}</p>
+        <p className='global__paragraph'>{member?.description}</p>
       </div>
+
       <div className={styles.memberSocialMedia}>
-        <Link 
+        
+        {(!member?.linkLinkedin) && <Link 
           href={'/'} 
           target="_black"
           rel="noopener noreferrer"
         >
-          <SocialMedia icon={Email} name={'E-mail'} backgroundColor={'#E84A4A'}/></Link>
+          <SocialMedia icon={Email} name={'E-mail'} backgroundColor={'#E84A4A'}/></Link>}
 
-        <Link 
-          href={'/'} 
+        
+
+        {member?.linkLinkedin && <Link 
+          href={member.linkLinkedin} 
           target="_black"
           rel="noopener noreferrer"
         >
           <SocialMedia icon={Linkedin} name={'Linkedin'} backgroundColor={'#4866B4'}/></Link>
+        }
 
-        {member.linkPortifolio && <Link 
+        {member?.linkPortifolio && <Link 
           href={member.linkPortifolio} 
           target="_black"
           rel="noopener noreferrer"
         >
-          <SocialMedia icon={Portifolio} name={'Portifolio'} backgroundColor={'#222'}/></Link>}
+          <SocialMedia icon={Portifolio} name={'Portifolio'} backgroundColor={'#222'}/></Link>
+        }
 
       </div>
     </section>

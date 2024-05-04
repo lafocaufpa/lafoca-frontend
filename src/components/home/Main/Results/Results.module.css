@@ -70,6 +70,21 @@
   }
 }
 
+@media (width <= 1280px) {
+  .results_images :last-child {
+    display: none;
+  }
+
+  .results {
+    justify-content: center;
+  }
+
+  .results h2 {
+    text-align: center;
+  }
+  
+}
+
 .results_images :first-child {
   animation: rotate360 10s linear infinite;
 }

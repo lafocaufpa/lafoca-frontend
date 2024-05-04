@@ -17,9 +17,9 @@ export default function Main () {
         <About member={member}/>
         <Skill member={member}/>
         <Tcc member={member}/>
-        {member.projects.length > 0 &&  <Projects member={member}/>}
-        {member.articles.length > 0 && <Articles member={member}/>}
+        {member?.projects.length > 0 &&  <Projects member={member}/>}
+        {member?.articles.length > 0 && <Articles member={member}/>}
       </div>
     </main>
-  );
+  );  
 }
