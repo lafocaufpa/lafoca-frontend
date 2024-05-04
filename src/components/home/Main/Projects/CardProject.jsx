@@ -3,9 +3,9 @@ import styles from './CardProject.module.css';
 import stylesAnimate from '@components/home/Custom-Slider/Animate.module.css';
 import Link from 'next/link';
 
-export default function CardProject({title, image, description, link}) {
+export default function CardProject({title, image, description, link, durationFade}) {
   return (
-    <div className={`${styles.card_project} ${stylesAnimate.hover_animate} `}>
+    <div data-aos="fade-up" data-aos-duration={durationFade} className={`${styles.card_project} ${stylesAnimate.hover_animate} `}>
       
       <div className={styles.card_content}>
         

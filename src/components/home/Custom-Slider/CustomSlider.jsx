@@ -36,44 +36,44 @@ export default function CustomSlider({ Slider }) {
 
   return (
 
-    <div>
-      <div className={`${styles['slider-content']}`}>
-        <Swiper
-          slidesPerView={3}
-          spaceBetween={23}
-          loop={true}
-          pagination={pagination}
-          navigation={false}
-          modules={[Pagination, Navigation]}
-          breakpoints={{
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            650: {
-              slidesPerView: 2,
-              spaceBetween: 80,
-            },
-            950: {
-              slidesPerView: 3,
-              spaceBetween: 23,
-            },
-          }}
-          style={customStyles}
-
-        >
+    <div className={`${styles['slider-content']}`}>
+      <Swiper
+        slidesPerView={3}
+        spaceBetween={23}
+        loop={true}
+        pagination={pagination}
+        navigation={{ nextEl: `.${styles.customNext}`, prevEl: `.${styles.customPrev}` }}
+        modules={[Pagination, Navigation]}
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          650: {
+            slidesPerView: 2,
+            spaceBetween: 80,
+          },
+          950: {
+            slidesPerView: 3,
+            spaceBetween: 23,
+          },
+        }}
+        style={customStyles}
+      >
     
-          {Slider.map((Slide, index) => (
-            <SwiperSlide key={index}>
-              <div  data-aos="fade-up" data-aos-duration={calculateSeconds(index)}>
-                {Slide}
-              </div>
+        {Slider.map((Slide, index) => (
+          <SwiperSlide key={index}>
+            <div  data-aos="fade-up" data-aos-duration={calculateSeconds(index)}>
+              {Slide}
+            </div>
               
-            </SwiperSlide>
-          ))}
+          </SwiperSlide>
+        ))}
 
-        </Swiper>
-      </div>
+      </Swiper>
+      <button className={`${styles.customPrev} arrow`}>{'<'}</button> 
+      <button className={`${styles.customNext} arrow`}>{'>'}</button>
+  
     </div>
   );
 }

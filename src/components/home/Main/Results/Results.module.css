@@ -40,6 +40,11 @@
   align-items: center;
 }
 
+.container_count > span {
+  
+}
+
+
 .results_images {
   display: flex;
   flex-direction: column;

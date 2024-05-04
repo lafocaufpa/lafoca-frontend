@@ -23,6 +23,7 @@
   text-align: left;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
 }
  
@@ -53,6 +54,7 @@
   color: var(--color-white);
   font-weight: 900;
   border-radius: 0.9rem;
+  height: min-content;
 }
 
 @keyframes scroll {

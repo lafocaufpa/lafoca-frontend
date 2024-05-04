@@ -20,19 +20,22 @@ export default function Projects() {
           title={'Artigos Publicados'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
           image={Artigos} 
-          link={'/artigos'}
+          link={'/artigos'} 
+          durationFade={1000}
         />
         <CardProject 
           title={'Tccs Defendidos'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
           image={Tccs} 
-          link={'/tccs'}
+          link={'/tccs'} 
+          durationFade={1500}
         />
         <CardProject 
           title={'Projetos'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
           image={Projetos} 
-          link={'/projetos'}
+          link={'/projetos'} 
+          durationFade={2000}
         />
       </div>     
     </section>
