@@ -1,4 +1,4 @@
-import CardProject from './CardProject';
+import CardProject from '@components/home/Main/Projects/CardProject';
 import styles from './Projects.module.css';
 import Artigos from '@images/menu/artigos.png';
 import Tccs from '@images/menu/tccs.png';

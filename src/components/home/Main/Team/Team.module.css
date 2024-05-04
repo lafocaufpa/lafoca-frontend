@@ -5,3 +5,7 @@
 .team {
   margin-bottom: 6.375rem;
 }
+
+.team > div > a {
+  text-align: right;
+}

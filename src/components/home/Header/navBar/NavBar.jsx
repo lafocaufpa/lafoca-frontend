@@ -2,7 +2,6 @@ import Image from 'next/image';
 import LogoLafoca from '@images/header-banner/logo-lafoca.svg';
 import styles from './NavBar.module.css';
 import Link from 'next/link';
-import routes from '@/routes';
 
 export default function NavBar() {
   return(
