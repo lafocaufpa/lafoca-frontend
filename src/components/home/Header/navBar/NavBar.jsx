@@ -14,10 +14,10 @@ export default function NavBar() {
       </div>
       <div> 
         <nav className={styles.navbar}>
-          <a href="#sobre">SOBRE</a>
-          <a href="#equipe">EQUIPE</a>
-          <a href="#projetos">PROJETOS</a>
-          <a href="#resultados">RESULTADOS</a>
+          <Link href="#sobre">SOBRE</Link>
+          <Link href="#equipe">EQUIPE</Link>
+          <Link href="#resultados">RESULTADOS</Link>
+          <Link href="#pesquisas">PESQUISAS</Link>
         </nav>
       </div>
     </div>

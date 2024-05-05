@@ -7,9 +7,9 @@ import Projetos from '@images/menu/projetos.png';
 export default function Projects() {
 
   return (
-    <section className={`${styles.projects_container} global-container`}>
+    <section id='pesquisas' className={`${styles.projects_container} global-container`}>
       <div className={`${styles.projects_container}`} >
-        <h2 data-aos="fade-up" data-aos-duration="1000" >Nossos <span>Projetos</span></h2>
+        <h2 data-aos="fade-up" data-aos-duration="1000" >Nossas <span>Pesquisas</span></h2>
         <p data-aos="fade-up" data-aos-duration="2000" className='global__paragraph_text'>
         Conheça os projetos que desenvolvemos em nosso grupo, na forma de extensão universitária, pesquisas acadêmicas e parcerias com o mercado.
         </p>

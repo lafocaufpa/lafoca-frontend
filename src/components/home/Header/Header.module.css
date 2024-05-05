@@ -1,6 +1,13 @@
-.header__logo_Background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
+.header__logo img {
+  width: clamp(100px, 100%, 788px);
+  height: auto;
+  margin: 42px 0 10% 0;
+}
+
+@media (width <= 1366px) {
+  .header__logo img {
+    width: clamp(100px, 60%, 788px);
+    height: auto;
+    margin: 42px 0 6% 0;
+  }
 }

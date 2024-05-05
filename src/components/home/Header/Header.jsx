@@ -12,7 +12,7 @@ export default function Header() {
       background={'/assets/img/header-banner/BG.png'} 
       height={40}>
       <NavBar/>
-      <div className={styles.header__logo_Background} data-aos="fade-up" data-aos-duration="2000">
+      <div className={styles.header__logo} data-aos="fade-up" data-aos-duration="2000">
         <Image src={LogoBackground} alt='Logo Background'/>
       </div>
     </HeaderPage>

@@ -51,7 +51,7 @@ export default function About () {
   ];
 
   return (
-    <section className={styles.about_lafoca}>
+    <section id='sobre' className={styles.about_lafoca}>
       <div className='global-container'>
         <h2 data-aos="fade-up" data-aos-duration="2000">sobre o <span>lafoca</span></h2>
         <p className='global__paragraph_text' data-aos="fade-up" data-aos-duration="1500" >Fundado em 2017, o LAFocA é formado por alunos e professores, além de parceiros de outras instituições de ensino e empresas do mercado de TI. Nosso foco é o aluno, buscando contribuir para o seu desenvolvimento pessoal, acadêmico e profissional. Esperamos ser reconhecidos como um grupo referência na formação de profissionais qualificados.</p>

@@ -26,7 +26,7 @@ export default function Results () {
 
 
   return (
-    <section className={styles.results_background} >
+    <section id='resultados' className={styles.results_background} >
 
       <div className='global-container'>
         <div className={styles.results}>
