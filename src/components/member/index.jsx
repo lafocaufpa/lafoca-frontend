@@ -10,7 +10,7 @@ export default function Member({ member }) {
     
     <MemberProvider member={member}>
       <>
-        <Header/>
+        <Header paddingBottom={27.25}/>
         <Main/>
         <Footer marginTop={6.375}/>
       </>
