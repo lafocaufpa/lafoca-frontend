@@ -4,11 +4,8 @@ import Skill from '@components/member/skill/Skill';
 import Tcc from '@/components/member/tcc/Tcc';
 import Projects from '@/components/member/projects/Projects';
 import Articles from '@/components/member/articles/Articles';
-import { useMember } from '@/contexts/member';
 
-export default function Main () {
-
-  const member = useMember();
+export default function Main ({member}) {
 
   return (
     <main>

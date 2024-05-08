@@ -1,0 +1,67 @@
+.pageLogin {
+  background-image: url('/assets/img/header-banner/BG.png') ;
+  height: 100%;
+  min-height: 100vh;
+  background-color: #14171b;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pageLogin p, .pageLogin label{
+color: var(--color-ghost-white-a065);
+font-size: 18px;
+}
+
+.pageLogin p {
+  line-height: 30.7px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.containerLoginForm {
+  background: rgba(23,23,23, 0.7);
+  /* padding: 202px 60px 0 60px; */
+  padding: 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.containerLoginForm > .formLogin {
+  margin-bottom: 80px;
+}
+
+.welcomeLogin {
+  margin-bottom: 79px;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.welcomeLogin h2 {
+  font-size: 32px;
+  color: var(--color-ghost-white);
+}
+
+.formLogin {
+
+}
+
+.formLogin form {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.restorePassword {
+display: flex;
+gap: 23px;
+align-items: center;
+}
+
+.restorePassword a {
+  color: var(--main-color-a065);
+}

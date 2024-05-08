@@ -18,14 +18,14 @@ export default function Accordion({data}) {
     <div className={styles.wrapper}>
       <div className={styles.accordion}>
 
-        {data.map((item, key) => (
-          <div  data-aos="fade-up" data-aos-duration="2000" key={key}className={styles.item} onClick={() => toggle(key)}>
+        {data.map((item, index) => (
+          <div  data-aos="fade-up" data-aos-duration="2000" key={index} className={styles.item} onClick={() => toggle(index)}>
             <div className={styles.title}>
               <Image className={styles.icon} src={item.icon} alt=''/> 
               <h4>{item.title}</h4>
-              <span className={styles.button}>{selected === key ? '-' : '+'}</span>
+              <span className={styles.button}>{selected === index ? '-' : '+'}</span>
             </div>
-            <div className={selected === key ? styles.contentShow : styles.content}>{item.text}</div>
+            <div className={selected === index ? styles.contentShow : styles.content}>{item.text}</div>
           </div>
         ))}
       </div>

@@ -3,9 +3,13 @@
 :root{
   --color-white: #FFFFFF;
   --color-black: #000000;
+  --color-ghost-white: #F6F7FB;
+  --color-ghost-white-a065: rgba(246, 247, 251, 0.65);
+  --color-ghost-white-a087: rgba(246, 247, 251, 0.87);
   --color-background-results: #222;
   --bg-color: #F6F7FB;
   --main-color: #EE972D;
+  --main-color-a065: rgba(238,151,45, 0.65);
   --title-color:#222222;
   --text-color: #222222A6;
   --bg-accordion: #EBEBEB;
@@ -23,9 +27,28 @@
   --typography-max: 1.125rem; /*18px*/
   --typography-min: 1.125rem; 
   --typography-responsive-paragraph: clamp(0.875rem, 0.5901rem + 0.5944vw, 1.125rem);
-  --typography-responsive-tittle: clamp(1.75rem, 1.4651rem + 0.5944vw, 2rem);
+  --typography-responsive-title: clamp(1.75rem, 1.4651rem + 0.5944vw, 2rem);
 
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main-color); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ec8406;
+
+}
+
 
 *, button {
   margin: 0;
@@ -50,7 +73,7 @@ p {
 body {
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
-  background: var(--bg-color);
+  background: var(--color-ghost-white);
   color: var(--title-color);
   margin: 0 auto;
 }
@@ -65,7 +88,7 @@ h2 {
 }
 
 h1 {
-  font-size: var(--typography-responsive-tittle);
+  font-size: var(--typography-responsive-title);
 }
 
 /*regra para aplicar nas laterais da página
@@ -82,4 +105,13 @@ h1 {
   color: rgba(34, 34, 34, 0.65);
   font-weight: 500;
   font-size: var(--typography-responsive-paragraph);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active { 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
 }

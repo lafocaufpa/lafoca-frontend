@@ -6,8 +6,8 @@ export default function Tcc({member}) {
 
   return (
     member?.tcc && <section className={stylesMember.globalPageMemberSection}>
-      <h1 className={stylesMember.globalPageMemberTittle}>TCC defendido</h1>
-      <CardInfo icon={IconTcc} tittle={member?.tcc?.name} description={member?.tcc?.date} />
+      <h1 className={stylesMember.globalPageMemberTitle}>TCC defendido</h1>
+      <CardInfo icon={IconTcc} title={member?.tcc?.name} description={member?.tcc?.date} />
     </section>
   );
 }

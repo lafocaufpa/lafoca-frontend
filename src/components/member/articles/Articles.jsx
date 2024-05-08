@@ -5,10 +5,10 @@ import Icon from '@images/icons/icon-about.svg';
 export default function Articles({member}) {
   return (
     <section className={stylesMember.globalPageMemberSection}>
-      <h1 className={stylesMember.globalPageMemberTittle}>
+      <h1 className={stylesMember.globalPageMemberTitle}>
         Artigos Publicados
       </h1>
-      {member.articles.map((a) => <CardInfo key={a.articleId} icon={Icon} tittle={a.name} description={a.journal} link={a.url}/> )}
+      {member.articles.map((a) => <CardInfo key={a.id} icon={Icon} title={a.name} description={a.journal} link={a.url}/> )}
      
     </section>
   );

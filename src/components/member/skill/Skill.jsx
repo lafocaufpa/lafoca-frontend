@@ -6,7 +6,7 @@ export default function Skill({member}) {
 
   return (
     <section className={`${styles.memberContainerSkill} ${stylesMember.globalPageMemberSection}`}>
-      <h1 className={stylesMember.globalPageMemberTittle}>Habilidades</h1>
+      <h1 className={stylesMember.globalPageMemberTitle}>Habilidades</h1>
       <div className={styles.skills}>
         {member?.skills.map((skill, index) => (
           <CardSkill key={index} name={skill.name} />

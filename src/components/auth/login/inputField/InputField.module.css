@@ -1,0 +1,29 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.inputWrapper input {
+  background: transparent;
+  width: 100%;
+  color: var(--color-ghost-white-a087);
+  padding: 14.5px 0;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.inputWrapper img {
+  cursor: pointer;
+}
+
+.inputWrapper {
+  background-color: #323232;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10px 0 24px;
+  border-radius: 5px;
+  gap: 10px;
+}
