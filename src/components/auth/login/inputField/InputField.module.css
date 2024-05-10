@@ -1,17 +1,16 @@
 .input {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.938rem;
 }
-
 
 .inputWrapper input {
   background: transparent;
   width: 100%;
   color: var(--color-ghost-white-a087);
-  padding: 14.5px 0;
+  padding: 0.906rem 0;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .inputWrapper img {
@@ -23,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0 10px 0 24px;
-  border-radius: 5px;
-  gap: 10px;
+  padding: 0 0.625rem 0 1.5rem;
+  border-radius: 0.313rem;
+  gap: 0.625rem;
 }

@@ -21,7 +21,6 @@ export default async function adminPage(){
       <p>Bem vindo, <span>{JSON.stringify(session)}</span></p>
       <LogoutButton/>
       <h2>Lista de usuários cadastrados no sistema</h2>
-      {/* {JSON.stringify(membros)} */}
       {JSON.stringify(users)}
       <Team/>
     </div>

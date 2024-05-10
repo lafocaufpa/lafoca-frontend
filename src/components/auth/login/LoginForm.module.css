@@ -1,64 +1,84 @@
+
+/*Para adicionar imagens como background em vez de vídeo*/
 .pageLogin {
-  background-image: url('/assets/img/header-banner/BG.png') ;
-  height: 100%;
-  min-height: 100vh;
-  background-color: #14171b;
+  /* background-image: url('/assets/img/header-banner/BG.png') ; */
+  /* height: 100%;*/
+  min-height: 100vh; 
+  /* background-color: #14171b;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   display: flex;
   justify-content: flex-end;
 }
 
 .pageLogin p, .pageLogin label{
 color: var(--color-ghost-white-a065);
-font-size: 18px;
+font-size: 1.125rem;
 }
 
 .pageLogin p {
-  line-height: 30.7px;
-  font-size: 18px;
+  line-height: 1.919rem;
+  font-size: 1.125rem;
   font-weight: 500;
 }
 
 .containerLoginForm {
-  background: rgba(23,23,23, 0.7);
-  /* padding: 202px 60px 0 60px; */
-  padding: 0 60px;
+  background: rgba(23, 23, 23, 0.7);
+  padding: 1.25rem 3.75rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 100%;
+  max-width: 36.643rem;
+  gap: 5%;
 }
 
-.containerLoginForm > .formLogin {
-  margin-bottom: 80px;
+.logoContainer {
+  margin: auto auto;
 }
 
 .welcomeLogin {
-  margin-bottom: 79px;
   display: flex;
   flex-direction: column;
-  gap: 19px;
+  gap: 1.188rem;
 }
 
 .welcomeLogin h2 {
-  font-size: 32px;
+  font-size: 2rem;
   color: var(--color-ghost-white);
 }
 
-.formLogin {
+.error {
+  color: var(--color-ghost-white-a065);
+  border-radius: 0.313rem;
+  padding: 0.625rem 0 0.625rem 0.625rem;
+  font-size: 0.75rem;
+  border: 0.063rem solid rgba(238, 151, 45, 0.10);
+  background: rgba(238, 151, 45, 0.23);
+  -webkit-backdrop-filter: blur(0.6rem);
+  backdrop-filter: blur(0.6rem);
+  position: absolute;
+  width: 100%;
+  bottom: 3.719rem;
+  transition: opacity 0.2s ease-in-out; 
+  opacity: 1;
+}
 
+.error.hidden {
+  opacity: 0;
 }
 
 .formLogin form {
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 3.5rem;
+  position: relative;
 }
 
 .restorePassword {
 display: flex;
-gap: 23px;
+gap: 1.438rem;
 align-items: center;
 }
 

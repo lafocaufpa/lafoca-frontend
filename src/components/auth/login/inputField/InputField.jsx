@@ -15,10 +15,10 @@ const InputField = ({ label, type, name }) => {
     <div className={styles.input}>
       <label>{label}</label>
       <div className={styles.inputWrapper}>
-        <input type={type === 'password' && showPassword ? 'text' : type} name={name} />
+        <input type={type === 'password' && showPassword ? 'text' : type} name={name} required />
         {type === 'password' && (
        
-          <Image src={showPassword ? EyeHide : EyeOpen} onClick={togglePasswordVisibility}/>
+          <Image src={showPassword ? EyeHide : EyeOpen} onClick={togglePasswordVisibility} alt=''/>
         )}
       </div>
     </div>

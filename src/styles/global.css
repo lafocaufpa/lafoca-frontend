@@ -31,7 +31,7 @@
 
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -47,7 +47,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #ec8406;
 
-}
+} */
 
 
 *, button {

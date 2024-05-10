@@ -1,18 +1,21 @@
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Authorization from '@/components/auth/authorization/authorization';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './LoginForm.module.css';
 import Link from 'next/link';
 import InputField from './inputField/InputField';
 import Button from './submitButton/Button';
+import BackgroundVideo from '@/components/backgroundVideo/BackgroundVideo';
+import Image from 'next/image';
+import logoLaFocA from '@images/icons/LogoLAFocA.png';
 
 export default function Login() {
-
-  const searchParams = useSearchParams();
+ 
   const router = useRouter();
-  const error = searchParams.get('error');
+  const [toggle, setToggle] = useState(false);
+  const [renderRestorePassword, setRenderRestorePassword] = useState(false);
 
   useEffect(() => {
     const removeCookie = async () => {
@@ -22,6 +25,16 @@ export default function Login() {
     removeCookie();
   }, []);
 
+  useEffect(() => {
+    let errorTimeout;
+    if (toggle) {
+      errorTimeout = setTimeout(() => {
+        setToggle(!toggle);
+      }, 2000);
+    }
+    return () => clearTimeout(errorTimeout);
+  }, [toggle]);
+
   async function login(e){
     e.preventDefault();
     const email = e.target.email.value;
@@ -30,14 +43,40 @@ export default function Login() {
     const res = await Authorization.login(email, password);
     
     if(res) {
-      console.log(res);
       router.push('/admin');
+    } else {
+      setToggle(!toggle);
+    }
+  }
+
+  function handleToggleRestorePassword() {
+    setRenderRestorePassword(!renderRestorePassword);
+    // if(renderRestorePassword){
+    //   console.log('renderizar tela de restore password');
+    // }
+  }
+
+  async function restorePassword(e) {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+
+    // todo: criar lógica para recuperar senha
+    // const res = await Authorization.restorePassword(email);
+    const res= true;
+    if(res) {
+      setToggle(!toggle);
     }
   }
   
   return (
     <div className={styles.pageLogin}>
-      <div className={styles.containerLoginForm}>
+      <BackgroundVideo/>
+      <div className={styles.logoContainer}>
+        <Image src={logoLaFocA} alt="Logo LA FocA" priority/>
+      </div>
+
+      {!renderRestorePassword && (<div className={styles.containerLoginForm}>
         <div className={styles.welcomeLogin}>
           <h2>Login</h2>
           <div>
@@ -49,15 +88,40 @@ export default function Login() {
           <form onSubmit={login}>
             <InputField label="E-mail" type="email" name="email" />
             <InputField label="Senha" type="password" name="password" />
+            {(
+              <span className={`${styles.error} ${toggle ? '' : styles.hidden}`}>Credenciais inválidas</span>
+            )}
             <Button>Faça o Login no sistema</Button>
-            {error === 'CredentialsSignin' && <span>Credenciais inválidas</span> }
           </form> 
         </div>
         <div className={styles.restorePassword}>
           <p>Esqueceu a senha?</p>
-          <Link href={'/restore'}>Redefinir Senha</Link>
+          <a style={{cursor: 'pointer'}} onClick={handleToggleRestorePassword}>Redefinir Senha</a>
         </div>
-      </div>     
+      </div> )}
+
+      {renderRestorePassword && (<div className={styles.containerLoginForm}>
+        <div className={styles.welcomeLogin}>
+          <h2>REDEFINIR SENHA</h2>
+          <div>
+            <p>Por favor, digite seu endereço de e-mail para redefinir sua senha.</p>
+          </div>
+        </div>
+        <div className={styles.formLogin}>
+          <form onSubmit={restorePassword}>
+            <InputField label="E-mail" type="email" name="email" />
+            {(
+              <span className={`${styles.error} ${toggle ? '' : styles.hidden}`}>Verifique sua caixa de mensagem</span>
+            )}
+            <Button>Enviar email</Button>
+          </form> 
+        </div>
+        <div className={styles.restorePassword}>
+          <p>Já tem uma conta?</p>
+          <a style={{cursor: 'pointer'}} onClick={() => setRenderRestorePassword(!renderRestorePassword)}>Fazer Login</a>
+        </div>
+      </div> )}
+          
     </div>
   );
 }
