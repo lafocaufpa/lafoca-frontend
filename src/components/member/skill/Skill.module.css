@@ -1,6 +1,6 @@
 .skills {
   display: grid;
-  grid-gap: 20px;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1.125rem;
+  gap: 1.125rem;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
 }

@@ -49,12 +49,6 @@ export default function Login() {
     }
   }
 
-  function handleToggleRestorePassword() {
-    setRenderRestorePassword(!renderRestorePassword);
-    // if(renderRestorePassword){
-    //   console.log('renderizar tela de restore password');
-    // }
-  }
 
   async function restorePassword(e) {
     e.preventDefault();
@@ -96,7 +90,7 @@ export default function Login() {
         </div>
         <div className={styles.restorePassword}>
           <p>Esqueceu a senha?</p>
-          <a style={{cursor: 'pointer'}} onClick={handleToggleRestorePassword}>Redefinir Senha</a>
+          <a style={{cursor: 'pointer'}} onClick={() => setRenderRestorePassword(!renderRestorePassword)}>Redefinir Senha</a>
         </div>
       </div> )}
 
