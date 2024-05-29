@@ -68,7 +68,7 @@
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .results_background {
     padding: 3.375rem 0;
   }
@@ -93,7 +93,7 @@
   }
 
   .results_images :last-child {
-    width: 20.375rem;
+    width: 21.375rem;
     height: auto;
     bottom: -6.625rem;
     z-index: 1;
@@ -104,7 +104,7 @@
     width: 3.5rem;
     height: auto;
     top: -5.5rem;
-    right: 18.75rem;
+    right: 19.75rem;
   }
 
 }
