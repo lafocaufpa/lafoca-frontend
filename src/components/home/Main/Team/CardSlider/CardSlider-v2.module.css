@@ -10,10 +10,11 @@
   height: 100%;
   object-fit: cover;
 }
+
 .card_content {
   position: absolute;
   width: 80%;
-  padding: 1.5625rem;
+  padding: 17px 20px;
   background-color: var(--color-white);
   border-radius: 1.1931875rem;
   left: 0;
@@ -26,7 +27,7 @@
   align-items: center;
 
 }
- 
+
 .card_content_name {
   font-size: 1rem;
   font-weight: 800;
@@ -35,8 +36,9 @@
 }
 
 .text_container {
- white-space: nowrap;
-  overflow: hidden; 
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 0.5rem;
 }
 
 .card_content_function {
@@ -61,7 +63,15 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@media (width <=768px) {
+  .card {
+    height: 22.25rem;
+
   }
 }
