@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import Authorization from '@/components/auth/authorization/authorization';
 import { useEffect, useState } from 'react';
 import styles from './LoginForm.module.css';
-import Link from 'next/link';
 import InputField from './inputField/InputField';
 import Button from './submitButton/Button';
 import BackgroundVideo from '@/components/backgroundVideo/BackgroundVideo';

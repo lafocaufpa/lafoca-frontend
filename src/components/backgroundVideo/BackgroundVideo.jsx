@@ -4,7 +4,7 @@ const BackgroundVideo = () => {
   return (
     <div className={styles.backgroundVideo}>
       <video autoPlay loop muted>
-        <source src="/assets/video/mock3.mp4" type="video/mp4" />
+        <source src="/assets/video/background-lafoca2.mp4" type="video/mp4" />
       </video>
     </div>
   );

@@ -3,5 +3,5 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; 
-  margin-bottom: 6.375rem;
+  margin-bottom: var(--margin-default-bottom-section);
 }

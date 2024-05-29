@@ -6,8 +6,14 @@
 
 @media (width <= 1366px) {
   .header__logo img {
-    width: clamp(100px, 60%, 788px);
+    width: clamp(100px, 70%, 788px);
     height: auto;
     margin: 42px 0 6% 0;
+  }
+}
+
+@media (width <= 768px) {
+  .header__logo {
+    text-align: center;
   }
 }

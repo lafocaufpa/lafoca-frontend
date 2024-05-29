@@ -19,14 +19,20 @@
   --function: rgba(34, 34, 34, 0.65);
   --button: #222222;
 
-  --padding-default-page: 0 8rem;
+  --padding-default-page-right: 8rem;
+  --padding-default-page-left: 8rem;
+  --padding-default-page-top: 0rem;
+  --padding-default-page-bottom: 0rem;
+  --margin-default-bottom-section: 6.275rem;
+  /* --margin-default-bottom-section: 6.375rem; */
+  --padding-default-page: var(--padding-default-page-top) var(--padding-default-page-right) var(--padding-default-page-bottom) var(--padding-default-page-left);
   --font-size-12pxrem: 0.75rem;
   --font-weight-semi-bold: 600;
   --max-width: 1440px;
 
   --typography-max: 1.125rem; /*18px*/
   --typography-min: 1.125rem; 
-  --typography-responsive-paragraph: clamp(0.875rem, 0.5901rem + 0.5944vw, 1.125rem);
+  --typography-responsive-paragraph: clamp(0.875rem, 1.125em, 1.125rem);
   --typography-responsive-title: clamp(1.75rem, 1.4651rem + 0.5944vw, 2rem);
 
 }
@@ -114,4 +120,16 @@ input:-webkit-autofill:active {
     -webkit-background-clip: text;
     -webkit-text-fill-color: #ffffff;
     transition: background-color 5000s ease-in-out 0s;
+}
+
+@media (width <= 768px) {
+
+  :root {
+    --padding-default-page: 0 2rem;
+  }
+
+  .global-container {
+    text-align: left;
+  }
+
 }

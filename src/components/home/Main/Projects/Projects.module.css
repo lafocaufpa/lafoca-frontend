@@ -4,10 +4,28 @@
 }
 
 .projects_container {
-  margin-bottom: 6.375rem;
+  margin-bottom: var(--margin-default-bottom-section);
 }
 
 .projects_card {
   display: flex;
+  /* flex-flow: wrap; */
   gap: 1.4375rem;
+}
+
+@media (width <= 1100px) {
+  .projects_card {
+    /* display: flex; */
+    flex-wrap: wrap;
+    /* justify-content: space-between;  */
+  }
+  
+  .projects_card > * {
+    flex: 1 1 calc(50% - 1rem); /* Adjusts the width of each item */
+    margin-bottom: 1rem; /* Adds some space below each item */
+  }
+  
+  .projects_card > *:nth-child(3) {
+    flex: 1 1 100%; /* Makes the third item take the full width */
+  }
 }
