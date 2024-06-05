@@ -40,7 +40,7 @@ export default function Login() {
     const password = e.target.password.value;
     
     const res = await Authorization.login(email, password);
-    
+
     if(res) {
       router.push('/admin');
     } else {
@@ -49,17 +49,15 @@ export default function Login() {
   }
 
 
-  async function restorePassword(e) {
+  async function resetPassword(e) {
     e.preventDefault();
 
     const email = e.target.email.value;
 
-    // todo: criar lógica para recuperar senha
-    // const res = await Authorization.restorePassword(email);
-    const res= true;
-    if(res) {
-      setToggle(!toggle);
-    }
+    await Authorization.resetPassword(email);
+
+    setToggle(!toggle);
+    
   }
   
   return (
@@ -101,7 +99,7 @@ export default function Login() {
           </div>
         </div>
         <div className={styles.formLogin}>
-          <form onSubmit={restorePassword}>
+          <form onSubmit={resetPassword}>
             <InputField label="E-mail" type="email" name="email" />
             {(
               <span className={`${styles.error} ${toggle ? '' : styles.hidden}`}>Verifique sua caixa de mensagem</span>

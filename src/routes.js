@@ -25,7 +25,8 @@ const routes = {
     listInfo: `${LAFOCA}` 
   },
   users: {
-    list: `${USERS}`
+    list: `${USERS}`,
+    resetPassword: `${USERS}/reset-password` 
   }
 };
 

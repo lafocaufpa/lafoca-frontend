@@ -1,6 +1,7 @@
 'use client';
 import { signIn, signOut } from 'next-auth/react';
 import deleteCookie from '@/components/auth/authorization/deleteCookie';
+import {userService} from '@services/api/Users/UserService';
 
 
 async function logout() {
@@ -27,6 +28,16 @@ async function login(email, password) {
 
 }
 
+async function resetPassword(email){
+
+  const data = {
+    email
+  };
+
+  userService.resetPassword(data);
+
+}
+
 async function removeCookie(){
   await deleteCookie();
 }
@@ -34,7 +45,8 @@ async function removeCookie(){
 const Authorization = {
   logout,
   login,
-  removeCookie
+  removeCookie,
+  resetPassword
 };
 
 export default Authorization;

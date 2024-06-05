@@ -12,7 +12,7 @@ export default function CardSlider({member}) {
       <div className={`${styles.card} ${stylesAnimate.hover_animate}`} >
         <div className={styles.card_content} >
           <div className={styles.text_container}>
-            <h2 className={styles.card_content_name}>{member.name}</h2>
+            <h2 className={styles.card_content_name}>{member.firstName}</h2>
             <p
               className={
                 `${styles.card_content_function} 
@@ -24,7 +24,7 @@ export default function CardSlider({member}) {
           
           <button className={styles.card_content_button}>{'>'}</button>
         </div>
-        <Image src={member.photo} alt={member.name} width={100} height={100} quality={100}/>
+        <Image src={member.photo} alt={member.firstName} width={100} height={100} quality={100}/>
       </div>
       
     </Link>

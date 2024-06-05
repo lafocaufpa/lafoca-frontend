@@ -10,6 +10,8 @@ export default async function adminPage(){
 
   
   if(!session) {
+    console.log('sessao ');
+    console.log(session);
     redirect('/login'); 
   }
 
