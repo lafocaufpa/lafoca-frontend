@@ -69,6 +69,11 @@ export default function Login() {
 
       {!renderRestorePassword && (<div className={styles.containerLoginForm}>
         <div className={styles.welcomeLogin}>
+
+          <div className={styles.logoContainerMobile}>
+            <Image src={logoLaFocA} alt="Logo LA FocA" priority/>
+          </div>
+          
           <h2>Login</h2>
           <div>
             <p>Bem vindo(a) ao LA FocA!</p>
@@ -76,6 +81,7 @@ export default function Login() {
           </div>
         </div>
         <div className={styles.formLogin}>
+
           <form onSubmit={login}>
             <InputField label="E-mail" type="email" name="email" />
             <InputField label="Senha" type="password" name="password" />

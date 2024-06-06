@@ -1,9 +1,17 @@
 .button {
-    padding: 0.90625rem 0rem 0.90625rem 1.5rem;
+    padding: 0.90625rem 1.5rem 0.90625rem 1.5rem;
     font-weight: 600;
     font-size: 1.125rem;
     border-radius: 0.325rem;
     color: var(--color-ghost-white-a087);
     background-color: var(--main-color);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+@media (width <=600px) {
+    .button {
+        font-size: 0.8rem;
+    }
 }

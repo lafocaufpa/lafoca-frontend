@@ -38,6 +38,17 @@ font-size: 1.125rem;
   margin: auto auto;
 }
 
+.logoContainerMobile {
+  display: none;
+  margin: auto auto;
+
+}
+
+.logoContainerMobile img {
+  display: none;
+  margin: auto auto;
+}
+
 .welcomeLogin {
   display: flex;
   flex-direction: column;
@@ -84,4 +95,46 @@ align-items: center;
 
 .restorePassword a {
   color: var(--main-color-a065);
+}
+
+@media (width <= 865px) {
+  .logoContainer img {
+    width: 100%;
+    height: auto;
+    
+  }
+}
+
+@media (width <= 600px) {
+
+  .pageLogin p {
+    font-size: 0.8rem;
+  }
+
+  .restorePassword {
+    gap: 1rem;
+    }
+
+  .restorePassword a {
+    font-size: 0.8rem;
+  }
+
+  .b
+
+  .logoContainer {
+    display: none;
+  }
+  .logoContainer img {
+    display: none;
+  }
+
+  .logoContainerMobile {
+    margin: 2.5rem auto;
+    display: block !important;
+  }
+  .logoContainerMobile img {
+    width: 70%;
+    height: auto;
+    display: block !important;
+  }
 }
