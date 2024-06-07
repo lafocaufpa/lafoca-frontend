@@ -15,7 +15,7 @@
 .footer_lafoca_info {
   display: flex;
   justify-content: space-between;
-  flex-flow: wrap;
+  /* flex-flow: wrap; */
 }
 
 .footer_lafoca_info > div:first-child {
@@ -27,6 +27,7 @@
   font-weight: 500;
   letter-spacing: 0.2px;
   line-height: 20px;
+  color: aliceblue;
 }
 
 .footer_nav {
@@ -71,4 +72,29 @@
 
 .footer_details_links > ul > li > a > img:hover {
   color: var(--main-color);
+}
+
+@media (width <= 768px){
+  .footer_nav {
+    margin-top: 4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: flex-start;
+  }
+  .footer_lafoca_info {
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: flex-start;
+  }
+  .footer_nav .footer_nav_column:last-child {
+    margin-top: 3rem;
+  }
+}
+
+@media (width <= 480px) {
+  .footer_nav {
+    flex-flow: wrap;
+  }
+
+  
 }

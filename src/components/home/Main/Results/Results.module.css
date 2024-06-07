@@ -111,16 +111,17 @@
 
 }
 
-@media (width <= 1200px){
+@media (width <=1200px) {
   .results_counts {
     gap: 1.6875rem;
   }
+
   .results p {
     font-size: 0.8rem;
   }
 }
 
-@media (width <= 1000px) {
+@media (width <=1000px) {
   .results_images :last-child {
     position: absolute;
     bottom: -14.125rem;
@@ -138,4 +139,58 @@
 
 .results_images :first-child {
   animation: rotate360 10s linear infinite;
+}
+
+@media (width <=768px) {
+
+  .results {
+    justify-content: center;
+  }
+
+  .results span {
+    font-size: 2. 25rem;
+  }
+
+  .results_background {
+    padding-bottom: 17rem;
+  }
+
+  .results_images :last-child {
+    display: block !important;
+    width: 19.375rem !important;
+    height: auto !important;
+    bottom: -21.625rem !important;
+    right: -10px !important;
+    z-index: 1 !important;
+  }
+
+  .results_images :first-child {
+    z-index: 2 !important;
+    width: 3.5rem !important;
+    height: auto !important;
+    top: 8.5rem !important;
+    right: 1.75rem !important;
+  }
+
+}
+
+@media (width <=370px) {
+
+  .results_images :last-child {
+    display: block !important;
+    width: 17.375rem !important;
+    height: auto !important;
+    bottom: -21.625rem !important;
+    right: 3px !important;
+    z-index: 1 !important;
+  }
+
+  .results_images :first-child {
+    z-index: 2 !important;
+    width: 3.5rem !important;
+    height: auto !important;
+    top: 10.5rem !important;
+    right: 2.75rem !important;
+  }
+
 }

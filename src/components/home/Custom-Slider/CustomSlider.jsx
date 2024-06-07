@@ -49,9 +49,9 @@ export default function CustomSlider({ Slider }) {
             slidesPerView: 1,
             spaceBetween: 20,
           },
-          650: {
+          480: {
             slidesPerView: 2,
-            spaceBetween: 80,
+            spaceBetween: 20,
           },
           950: {
             slidesPerView: 3,

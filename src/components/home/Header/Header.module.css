@@ -1,19 +1,22 @@
 .header__logo img {
-  width: clamp(100px, 100%, 788px);
+  width: clamp(100px, 70%, 788px);
   height: auto;
-  margin: 42px 0 10% 0;
+  margin: clamp(0px, 3% + .8056vw, 36px) 0 10% 0;
 }
 
-@media (width <= 1366px) {
-  .header__logo img {
-    width: clamp(100px, 70%, 788px);
-    height: auto;
-    margin: 42px 0 6% 0;
-  }
-}
-
-@media (width <= 768px) {
-  .header__logo {
+.header__logo {
     text-align: center;
   }
-}
+
+  @media (width <= 768px) {
+    .header__logo img {
+      margin-top: 1rem;
+    }
+  }
+
+  @media (width <= 480px) {
+    .header__logo img {
+      width: clamp(100px, 70%, 354px);
+      margin: clamp(0px, 3% + .8056vw, 36px) 0 10% 0;
+    }
+  }

@@ -12,13 +12,17 @@ export default function CardSlider({member}) {
       <div className={`${styles.card} ${stylesAnimate.hover_animate}`} >
         <div className={styles.card_content} >
           <div className={styles.text_container}>
-            <h2 className={styles.card_content_name}>{member.firstName}</h2>
+            <h2 className={`${styles.card_content_name} 
+            ${member.firstName.length > 21 ? styles.horizontally_animated_text : ''}
+            `}>
+              {member.firstName}
+            </h2>
             <p
               className={
                 `${styles.card_content_function} 
                ${member.function.length > 21 ? styles.horizontally_animated_text : ''}`
-              }
-            >
+              }>
+
               {member.function}</p>
           </div>
           

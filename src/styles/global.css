@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-:root{
+:root {
   --color-white: #FFFFFF;
   --color-black: #000000;
   --color-ghost-white: #F6F7FB;
@@ -9,11 +9,12 @@
   --color-background-results: #222;
   --bg-color: #F6F7FB;
   --main-color: #EE972D;
-  --main-color-a065: rgba(238,151,45, 0.65);
-  --title-color:#222222;
+  --main-color-a065: rgba(238, 151, 45, 0.65);
+  --title-color: #222222;
+  --background-nav-mobile: #222222;
   --text-color: #222222A6;
   --bg-accordion: #EBEBEB;
-  
+
 
   /*NOSSA EQUIPE*/
   --function: rgba(34, 34, 34, 0.65);
@@ -23,16 +24,16 @@
   --padding-default-page-left: 8rem;
   --padding-default-page-top: 0rem;
   --padding-default-page-bottom: 0rem;
-  --margin-default-bottom-section: 6.275rem;
-  /* --margin-default-bottom-section: 6.375rem; */
+  /* --margin-default-bottom-section: 6.275rem; */
+  --margin-default-bottom-section: 6.375rem;
   --padding-default-page: var(--padding-default-page-top) var(--padding-default-page-right) var(--padding-default-page-bottom) var(--padding-default-page-left);
   --font-size-12pxrem: 0.75rem;
   --font-weight-semi-bold: 600;
   --max-width: 1440px;
 
-  --typography-max: 1.125rem; /*18px*/
-  --typography-min: 1.125rem; 
-  --typography-responsive-paragraph: clamp(0.875rem, 1.125em, 1.125rem);
+  --typography-max: 1.125rem;
+  --typography-min: 1.125rem;
+  --typography-responsive-paragraph: clamp(0.875rem, 2.5vw, 1.125rem);
   --typography-responsive-title: clamp(1.75rem, 1.4651rem + 0.5944vw, 2rem);
 
 }
@@ -56,7 +57,8 @@
 } */
 
 
-*, button {
+*,
+button {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -91,10 +93,16 @@ span {
 h2 {
   text-transform: uppercase;
   font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 h1 {
   font-size: var(--typography-responsive-title);
+}
+
+li {
+  font-size: 0.875rem;
 }
 
 /*regra para aplicar nas laterais da página
@@ -116,13 +124,13 @@ h1 {
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active { 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: #ffffff;
-    transition: background-color 5000s ease-in-out 0s;
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
 
   :root {
     --padding-default-page: 0 2rem;
@@ -131,5 +139,24 @@ input:-webkit-autofill:active {
   .global-container {
     text-align: left;
   }
+
+}
+
+@media (width <= 480px) {
+  :root {
+    --margin-default-bottom-section: 4.0625rem;
+    --padding-default-page: 0 1rem;
+  }
+
+  p {
+    line-height: 25px !important;
+    letter-spacing: 0.56px;
+  }
+
+  h2 {
+    margin-bottom: 1.25rem !important;
+  }
+
+  
 
 }

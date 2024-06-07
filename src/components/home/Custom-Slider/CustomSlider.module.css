@@ -29,3 +29,9 @@
   box-shadow: -1px 12px 12px 1px rgba(0, 0, 0, .1);
  }
  
+ @media (width <= 480px) {
+  .slider-content {
+    width: 70%;
+    margin: 0 auto;
+  }
+ }

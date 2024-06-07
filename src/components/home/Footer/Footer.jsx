@@ -42,7 +42,7 @@ export default function Footer({ marginTop, ...props }) {
             </div>
 
             <div  className={styles.footer_nav_column}>
-              <h3>Alguma dúvida? Mande um email</h3>
+              <h3>Alguma dúvida? Nos mande um e-mail! 😉🚩</h3>
               <ul>
                 <li>lafoca@ufpa.com.br</li>
               </ul>

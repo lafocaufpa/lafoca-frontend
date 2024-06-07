@@ -1,11 +1,11 @@
 .card_project {
   max-width: 23.6875rem;
-  min-width: 17.3rem;
+  min-width: 15.3rem;
 }
 
 .card_content_img {
   max-width: 23.6875rem;
-  min-width: 17.3rem;
+  min-width: 15.3rem;
   max-height: 15.8125rem;
   width: 100%;
   height: auto;
@@ -28,6 +28,10 @@
   text-align: left;
 }
 
+.card_info p, .card_info a {
+  font-size: 1rem;
+}
+
 .card_info>span {
   color: rgba(34, 34, 34, 0.65);
 }
@@ -48,15 +52,15 @@
   line-height: 1.5rem;
 }
 
-@media (width: 768px) {
+@media (width <= 850px) {
   .card_project {
-    max-width: 20.6875rem;
-    min-width: 17.3rem;
+    max-width: 15.3rem;
+    min-width: 15.3rem;
   }
   
   .card_content_img {
-    max-width: 20.6875rem;
-    min-width: 17.3rem;
+    max-width: 15.3rem;
+    min-width: 15.3rem;
     max-height: 15.8125rem;
     
   }

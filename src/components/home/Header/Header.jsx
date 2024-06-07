@@ -1,7 +1,7 @@
 'use client';
 import styles from '@home/Header/Header.module.css';
 
-import LogoBackground from '@images/header-banner/logo-background-new.png';
+import LogoBackground from '@images/header-banner/LAFocA.png';
 import Image from 'next/image';
 import NavBar from '@home/Header/navBar/NavBar';
 import HeaderPage from '@home/Header/header/Header';

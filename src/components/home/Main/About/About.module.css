@@ -2,12 +2,8 @@
   margin-bottom: var(--margin-default-bottom-section);
 }
 
-.about_lafoca h2 {
-  margin-bottom: 2rem;
-}
-
 .appointments {
-  margin: 10.125rem 0 4.125rem 0;
+  margin-top: 10.125rem;
   display: flex;
   justify-content: space-between;
 }
@@ -15,8 +11,10 @@
 .appointments__menina img {
   object-fit: contain;
   object-position: center center;
-  max-width: 100%;
-  min-width: 580px;
+  width: clamp(290px, calc(30.5833vw + 240px), 680px);
+
+
+  height: auto;
   margin-top: -7.6rem;
 }
 
@@ -37,7 +35,7 @@
 }
 
 
-@media(width <= 1200px) {
+@media(width <=1200px) {
   .appointments {
     flex-flow: wrap;
   }
@@ -47,10 +45,41 @@
   }
 
   .appointments__menina img {
-    max-width: 65%;
+
+    /* width: clamp(290px, calc(40.41vw + 270px), 680px) !important; */
+
   }
 
   .container__accordion {
     padding: var(--padding-default-page);
+  }
+}
+
+@media (width <=480px) {
+  .appointments__menina img {
+
+    width: clamp(200px, calc(1.41vw + 249px), 680px) !important;
+
+  }
+}
+
+@media (max-width: 480px) {
+  
+  .about_lafoca h2::before {
+    content: "";
+    display: block;
+  }
+
+  .about_lafoca h2, .about_lafoca span {
+    display: block;
+    text-transform: uppercase; /* Faz o texto "O LAFOCA" maiúsculo */
+  }
+
+  .about_lafoca h2 {
+    text-transform: uppercase; /* Faz o texto "SOBRE" maiúsculo */
+  }
+
+  .container__accordion span {
+    font-size: 1.8rem;
   }
 }
