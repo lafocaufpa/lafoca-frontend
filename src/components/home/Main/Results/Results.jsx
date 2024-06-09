@@ -47,9 +47,9 @@ export default function Results () {
               </div>
             </div>
           </div>
-          <div className={styles.results_images}>
-            <Image data-aos="fade-up" data-aos-duration="2000" src={Selo} alt='Selo-Lafoca'/>
-            <Image data-aos="fade-up" data-aos-duration="2000"  src={ResultsBg} alt='Equipe'/>
+          <div  data-aos="fade-up" data-aos-duration="2000" className={styles.results_images}>
+            <Image src={Selo} alt='Selo-Lafoca'/>
+            <Image src={ResultsBg} alt='Equipe'/>
           </div>
         </div>
       </div>

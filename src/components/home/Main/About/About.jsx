@@ -14,7 +14,7 @@ export default function About () {
   const data = [
     {
       icon: IconVisao,
-      title: 'VISÂO',
+      title: 'VISÃO',
       text: 'Ser reconhecido como um grupo de pesquisa referência na formação de profissionais qualificados.'
     },
     {

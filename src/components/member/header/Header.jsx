@@ -1,4 +1,4 @@
-import NavBar from '@/components/home/Header/navBar/NavBar';
+import Logo from '@/components/home/Logo/Logo';
 import HeaderPage from '@home/Header/header/Header';
 
 export default function Header({paddingBottom}) {
@@ -9,7 +9,7 @@ export default function Header({paddingBottom}) {
       marginBotton={0} 
       paddingBottom={paddingBottom}
     > 
-      <NavBar/>
+      <Logo/>
     </HeaderPage>
   );
 }

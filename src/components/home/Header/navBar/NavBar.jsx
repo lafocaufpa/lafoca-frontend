@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import LogoLafoca from '@images/header-banner/logo-lafoca.svg';
+import Logo from '@home/Logo/Logo';
 import styles from './NavBar.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -17,14 +16,10 @@ export default function NavBar() {
 
   return (
     <div className={styles.header__nav}>
-      <div>
-        <Link href="/">
-          <Image src={LogoLafoca} alt="Logo Lafoca" />
-        </Link>
-      </div>
-      
+      <Logo/>
       <div> 
         <nav className={`${styles.navbar} ${isActive ? styles.active : ''}`}>
+          <div className={styles.hamburguerLine}></div>
           <Link href="#sobre" onClick={closeMenu}>
             SOBRE
           </Link>
@@ -39,6 +34,7 @@ export default function NavBar() {
           </Link>
         </nav>
         <button className={styles.MenuHamburger} onClick={toggleMenu}></button>
+        
       </div>
     </div>
   );

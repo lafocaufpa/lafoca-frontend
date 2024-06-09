@@ -24,7 +24,7 @@
   --padding-default-page-left: 8rem;
   --padding-default-page-top: 0rem;
   --padding-default-page-bottom: 0rem;
-  /* --margin-default-bottom-section: 6.275rem; */
+  --padding-top-body-default: 2.5rem;
   --margin-default-bottom-section: 6.375rem;
   --padding-default-page: var(--padding-default-page-top) var(--padding-default-page-right) var(--padding-default-page-bottom) var(--padding-default-page-left);
   --font-size-12pxrem: 0.75rem;

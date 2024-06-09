@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.title > h4 {
+  font-size: 0.625rem;
+}
+
 .content {
   color: var(--text-color);
   max-height: 0;

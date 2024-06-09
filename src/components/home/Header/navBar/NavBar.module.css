@@ -1,15 +1,14 @@
 .header__nav {
   display: flex;
-  /* flex-flow: wrap; */
   justify-content: space-between;
   align-items: center;
-  padding-top: 2.125rem;
   margin: 0 auto;
 }
 
 .navbar {
   display: flex;
   gap: 42px;
+  align-items: center;
 }
 
 .navbar a{
@@ -44,6 +43,17 @@
   transition: 0.3s;
 }
 
+.hamburguerLine {
+  position: relative;
+  margin-top: 60px;
+  width: 94%;
+  margin: 5.3125rem auto 0 auto;
+  height: 1.6px;
+  display: none;
+  opacity: 0.2;
+  background: #FFF;
+}
+
 @media (width <= 650px) {
   .navbar {
     gap: 25px;
@@ -68,13 +78,15 @@
     transition: 1s ease-out;
 
     flex-direction: column;
-    justify-content: space-around;
     align-items: flex-start;
     gap: 0;
     pointer-events: all;
   }
 
   .navbar a {
+    font-size: 0.9375rem;
+    margin-left: 1.375rem;
+    margin-top: 2.375rem;
     opacity: 0;
     transition: opacity 0.5s ease;
   }
@@ -83,19 +95,19 @@
     opacity: 1;
   }
 
-  .navbar.active a:nth-child(1) {
+  .navbar.active a:nth-child(2) {
     transition-delay: 0.2s;
   }
   
-  .navbar.active a:nth-child(2) {
+  .navbar.active a:nth-child(3) {
     transition-delay: 0.4s;
   }
 
-  .navbar.active a:nth-child(3) {
+  .navbar.active a:nth-child(4) {
     transition-delay: 0.6s;
   }
 
-  .navbar.active a:nth-child(4) {
+  .navbar.active a:nth-child(5) {
     transition-delay: 0.8s;
   }
 
