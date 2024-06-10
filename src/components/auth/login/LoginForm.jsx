@@ -9,6 +9,7 @@ import Button from './submitButton/Button';
 import BackgroundVideo from '@/components/backgroundVideo/BackgroundVideo';
 import Image from 'next/image';
 import logoLaFocA from '@images/icons/LogoLAFocA.png';
+import routes from '@/routes';
 
 export default function Login() {
  
@@ -42,7 +43,7 @@ export default function Login() {
     const res = await Authorization.login(email, password);
 
     if(res) {
-      router.push('/admin');
+      router.push(routes.admin.ADMIN);
     } else {
       setToggle(!toggle);
     }

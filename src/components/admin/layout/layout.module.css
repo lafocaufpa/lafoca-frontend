@@ -1,0 +1,19 @@
+/* src/components/admin/layout.module.css */
+.container {
+  display: flex;
+}
+
+.sideBar {
+  width: 200px; /* ou qualquer largura desejada */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #f4f4f4; /* ou qualquer cor de fundo desejada */
+}
+
+.content {
+  margin-left: 200px; /* deve ser igual à largura da sidebar */
+  padding: 20px;
+  flex-grow: 1;
+}

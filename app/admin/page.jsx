@@ -1,3 +1,5 @@
+import AdminLayout from '@/components/admin/layout/layout';
+import SideBar from '@/components/admin/sidebar/sidebar';
 import LogoutButton from '@/components/auth/logout/LogoutButton';
 import Team from '@/components/home/Main/Team/Team';
 import { userService } from '@/services/api/Users/UserService';
@@ -10,21 +12,15 @@ export default async function adminPage(){
 
   
   if(!session) {
-    console.log('sessao ');
-    console.log(session);
     redirect('/login'); 
   }
 
-  const users = await userService.list();
+
 
   return (
-    <div>
-      <h1>Area restrita do administrdor</h1>
-      <p>Bem vindo, <span>{JSON.stringify(session)}</span></p>
-      <LogoutButton/>
-      <h2>Lista de usuários cadastrados no sistema</h2>
-      {JSON.stringify(users)}
-      <Team/>
-    </div>
+    <AdminLayout>
+      {/* Conteúdo inicial da página admin pode ir aqui */}
+      <h1>Bem-vindo à área administrativa</h1>
+    </AdminLayout>
   );
 }
