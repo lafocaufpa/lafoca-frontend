@@ -2,12 +2,18 @@
 import { signIn, signOut } from 'next-auth/react';
 import deleteCookie from '@/components/auth/authorization/deleteCookie';
 import {userService} from '@services/api/Users/UserService';
+import getCookie from '@components/auth/authorization/getCookie';
 
 
 async function logout() {
   await deleteCookie();
   signOut();
   
+}
+
+async function getToken() {
+  const token = await getCookie();
+  return token;
 }
 
 async function login(email, password) {
@@ -46,7 +52,8 @@ const Authorization = {
   logout,
   login,
   removeCookie,
-  resetPassword
+  resetPassword,
+  getToken
 };
 
 export default Authorization;
