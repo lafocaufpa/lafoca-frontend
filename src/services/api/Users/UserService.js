@@ -4,10 +4,10 @@ import getCookie from '@/components/auth/authorization/getCookie';
 
 export const userService = {
 
-  list: async () => {
+  list: async (page = 0) => {
     try {
       const token = await getCookie();
-      const response = await api.get(routes.users.list, {
+      const response = await api.get(`${routes.users.list}?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -18,12 +18,34 @@ export const userService = {
       throw error;
     }
   },
-  resetPassword: async (data) => {
+
+  delete: async (userId) => {
     try {
-      const response = await api.put(routes.users.resetPassword, data);
-      return response.data; 
+      const token = await getCookie();
+      const response = await api.delete(`${routes.users.list}/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
     } catch (error) {
-      console.error('Erro ao buscar usuários: ', error);
+      console.error('Erro ao deletar usuário: ', error);
+      throw error;
+    }
+  },
+
+  // Adicione sua função de edição aqui
+  edit: async (userId, data) => {
+    try {
+      const token = await getCookie();
+      const response = await api.put(`${routes.users.list}/${userId}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao editar usuário: ', error);
       throw error;
     }
   }

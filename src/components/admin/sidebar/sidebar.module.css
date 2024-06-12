@@ -1,0 +1,47 @@
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  width: 250px;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+}
+
+.sideBarNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.barItem {
+  margin-bottom: 10px;
+}
+
+.barLink {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.userSection {
+  margin-top: auto;
+  text-align: center;
+}
+
+.userSection h3 {
+  margin: 10px 0 5px;
+}
+
+.userSection p {
+  margin: 0 0 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.userImage {
+  border-radius: 50%;
+  width: 80px;  /* Adjust the width to a larger size */
+  height: 80px; /* Adjust the height to a larger size */
+  object-fit: cover; /* Ensure the image covers the area */
+}
