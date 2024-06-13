@@ -4,6 +4,7 @@ const PROJECTS = '/projects';
 const LAFOCA = '/info';
 const USERS = '/users';
 const ADMIN = '/admin';
+const GROUPS = '/groups';
 
 const routes = {
   auth: {
@@ -26,8 +27,12 @@ const routes = {
     listInfo: `${LAFOCA}`
   },
   users: {
+    USERS,
     list: `${USERS}`,
     resetPassword: `${USERS}/reset-password`
+  },
+  groups: {
+    list: GROUPS
   },
   admin: {
     ADMIN,

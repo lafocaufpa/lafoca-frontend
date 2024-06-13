@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
 
 :root {
   --color-white: #FFFFFF;
@@ -119,15 +121,6 @@ li {
   color: rgba(34, 34, 34, 0.65);
   font-weight: 500;
   font-size: var(--typography-responsive-paragraph);
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #ffffff;
-  transition: background-color 5000s ease-in-out 0s;
 }
 
 @media (width <=768px) {

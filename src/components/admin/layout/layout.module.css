@@ -1,19 +1,22 @@
 /* src/components/admin/layout.module.css */
 .container {
   display: flex;
+  height: 100vh;
 }
 
 .sideBar {
-  width: 200px; /* ou qualquer largura desejada */
+  width: 250px;
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
-  background-color: #f4f4f4; /* ou qualquer cor de fundo desejada */
+  background-color: #343a40;
+  color: #fff;
 }
 
 .content {
-  margin-left: 200px; /* deve ser igual à largura da sidebar */
-  padding: 20px;
   flex-grow: 1;
+  overflow-y: auto;
+  height: 100vh;
+  box-sizing: border-box;
 }

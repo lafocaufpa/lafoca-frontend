@@ -9,11 +9,9 @@ export default async function SideBar() {
 
   const session = await getServerSession();
 
-  
-  if(!session) {
-    redirect('/login'); 
+  if (!session) {
+    redirect('/login');
   }
-
 
   return (
     <div className={styles.sideBar}>
@@ -31,13 +29,13 @@ export default async function SideBar() {
       </nav>
       <div className={styles.userSection}>
         <h3>{session.user.name}</h3>
-        <p>{session.user.email}</p> 
+        <p>{session.user.email}</p>
         <Image
           className={styles.userImage}
           src={session.user.image}
           alt={session.user.name}
-          width={50}
-          height={50}
+          width={80}
+          height={80}
         />
       </div>
     </div>

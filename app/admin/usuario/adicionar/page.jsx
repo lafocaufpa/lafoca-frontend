@@ -1,10 +1,10 @@
 import AdminLayout from '@/components/admin/layout/layout';
+import AddUser from '@/components/admin/user/addUser';
 
-export default async function adminPage(){
-
+export default function AddUserPage() {
   return (
     <AdminLayout>
-      <h1>Bem-vindo à área administrativa</h1>
+      <AddUser/>
     </AdminLayout>
   );
 }
