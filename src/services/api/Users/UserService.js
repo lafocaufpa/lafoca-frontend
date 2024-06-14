@@ -13,7 +13,19 @@ export const userService = {
     });
     return response.data; 
   },
+  addPhoto: async (userId, file) => {
+    const token = await getCookie();
+    const formData = new FormData();
+    formData.append('file', file);
 
+    const response = await api.post(routes.users.addPhoto(userId), formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      },
+    });
+    return response.data; 
+  },
   list: async (page = 0, resultsPerPage = 10, sort) => {
     const token = await getCookie();
     const response = await api.get(`${routes.users.list}?page=${page}&size=${resultsPerPage}`, {

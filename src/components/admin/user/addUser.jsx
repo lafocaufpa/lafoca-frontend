@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
 import Select from 'react-select';
@@ -12,8 +12,17 @@ export default function AddUser() {
   const [password, setPassword] = useState('');
   const [groups, setGroups] = useState([]);
   const [selectedGroups, setSelectedGroups] = useState([]);
+  const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  
+  const photoInputRef = useRef(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -29,6 +38,38 @@ export default function AddUser() {
     fetchGroups();
   }, []);
 
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasUpperCase = /[A-Z]/;
+    const hasSpecialChar = /[@!#$%&*-]/;
+
+    if (password.length < minLength) {
+      return 'A senha deve ter no mínimo 8 caracteres.';
+    }
+    if (!hasNumber.test(password)) {
+      return 'A senha deve conter pelo menos um número.';
+    }
+    if (!hasUpperCase.test(password)) {
+      return 'A senha deve conter pelo menos uma letra maiúscula.';
+    }
+    if (!hasSpecialChar.test(password)) {
+      return 'A senha deve conter pelo menos um caractere especial (@!#$%&*-).';
+    }
+    return null;
+  };
+
+  const handlePasswordIsValid = (password) => {
+    if (password) {
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        setError(passwordError);
+        return;
+      }
+    }
+    setError(null);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
@@ -42,12 +83,23 @@ export default function AddUser() {
     };
 
     try {
-      await userService.add(userData);
+      const newUser = await userService.add(userData);
+      if (photo) {
+        await userService.addPhoto(newUser.id, photo);
+      }
       setSuccess(true);
       setEmail('');
       setName('');
       setPassword('');
       setSelectedGroups([]);
+      setPhoto(null);
+      
+      if (photoInputRef.current) {
+        photoInputRef.current.value = '';
+        photoInputRef.current.type = 'text';
+        photoInputRef.current.type = 'file';
+      }
+
     } catch (error) {
       setError(error.userMessage || 'Erro ao adicionar usuário.');
     }
@@ -55,6 +107,10 @@ export default function AddUser() {
 
   const handleGroupChange = (selectedOptions) => {
     setSelectedGroups(selectedOptions);
+  };
+
+  const handlePhotoChange = (event) => {
+    setPhoto(event.target.files[0]);
   };
 
   return (
@@ -88,26 +144,51 @@ export default function AddUser() {
         <div className="form-group">
           <label htmlFor="password">Senha</label>
           <input
-            type="password"
-            className="form-control"
+            type={showPassword ? "text" : "password"}
+            className="form-control w-50"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)} 
+            onBlur={(e) => handlePasswordIsValid(e.target.value)}
             required
           />
         </div>
+        <div className="form-group form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="showPassword"
+            checked={showPassword}
+            onChange={() => setShowPassword(!showPassword)}
+          />
+          <label className="form-check-label" htmlFor="showPassword">
+            Mostrar Senha
+          </label>
+        </div>
+        {isClient && (
+          <div className="form-group">
+            <label htmlFor="groups">Grupos</label>
+            <Select
+              isMulti
+              name="groups"
+              options={groups.map(group => ({ value: group.id, label: group.name }))}
+              className="basic-multi-select w-50"
+              classNamePrefix="select"
+              onChange={handleGroupChange}
+              value={selectedGroups}
+              id="groups"
+              required
+            />
+          </div>
+        )}
         <div className="form-group">
-          <label htmlFor="groups">Grupos</label>
-          <Select
-            isMulti
-            name="groups"
-            options={groups.map(group => ({ value: group.id, label: group.name }))}
-            className="basic-multi-select w-50"
-            classNamePrefix="select"
-            onChange={handleGroupChange}
-            value={selectedGroups}
-            id="groups"
-            required
+          <label htmlFor="photo">Foto</label>
+          <input
+            type="file"
+            className="form-control"
+            id="photo"
+            onChange={handlePhotoChange}
+            ref={photoInputRef}
           />
         </div>
         <button type="submit" className="btn btn-primary mt-3">Adicionar Usuário</button>

@@ -29,7 +29,8 @@ const routes = {
   users: {
     USERS,
     list: `${USERS}`,
-    resetPassword: `${USERS}/reset-password`
+    addPhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
+    resetPassword: `${USERS}/reset-password`,
   },
   groups: {
     list: GROUPS
