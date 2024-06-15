@@ -35,7 +35,15 @@ export const userService = {
     });
     return response.data; 
   },
-
+  read: async (userId) => {
+    const token = await getCookie();
+    const response = await api.get(`${routes.users.list}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data; 
+  },
   delete: async (userId) => {
     const token = await getCookie();
     const response = await api.delete(`${routes.users.list}/${userId}`, {

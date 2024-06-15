@@ -8,14 +8,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageCropProvider from '@/providers/ImageCropProvider';
 import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
 
-export default function AddUser() {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+export default function EditUser({ user }) {
+  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState(user.name);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [groups, setGroups] = useState([]);
-  const [selectedGroups, setSelectedGroups] = useState([]);
-  const [photo, setPhoto] = useState(null);
+  const [selectedGroups, setSelectedGroups] = useState(user.groups.map(group => ({ value: group.id, label: group.name })));
+  const [photo, setPhoto] = useState(user.photo || null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -89,29 +89,18 @@ export default function AddUser() {
     const userData = {
       email,
       name,
-      password,
+      password: password ? password : undefined, // Only update password if provided
       groups: selectedGroups.map(group => group.value),
     };
 
     try {
-      const newUser = await userService.add(userData);
-      if (photo) {
-        await userService.addPhoto(newUser.id, photo);
+      const updatedUser = await userService.edit(user.id, userData);
+      if (photo && photo !== user.photo) {
+        await userService.addPhoto(updatedUser.id, photo);
       }
       setSuccess(true);
-      setEmail('');
-      setName('');
-      setPassword('');
-      setConfirmPassword('');
-      setSelectedGroups([]);
-      setPhoto(null);
-
-      if (imageCropRef.current) {
-        imageCropRef.current.resetImageCrop();
-      }
-
     } catch (error) {
-      setError(error.userMessage || 'Erro ao adicionar usuário.');
+      setError(error.userMessage || 'Erro ao atualizar usuário.');
     }
   };
 
@@ -122,9 +111,9 @@ export default function AddUser() {
   return (
     <div className="container mt-5">
       <div className="card mx-auto p-4" style={{ maxWidth: '600px' }}>
-        <h2 className="text-center mb-4">Adicionar Usuário</h2>
+        <h2 className="text-center mb-4">Editar Usuário</h2>
         {error && <div className="alert alert-danger mb-3">{error}</div>}
-        {success && <div className="alert alert-success mb-3">Usuário adicionado com sucesso!</div>}
+        {success && <div className="alert alert-success mb-3">Usuário atualizado com sucesso!</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="email" className="fw-bold mb-1">Email</label>
@@ -157,7 +146,6 @@ export default function AddUser() {
               value={password}
               onChange={(e) => setPassword(e.target.value)} 
               onBlur={(e) => handlePasswordIsValid(e.target.value)}
-              required
             />
           </div>
           <div className="form-group mb-3">
@@ -169,7 +157,6 @@ export default function AddUser() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)} 
               onBlur={handleConfirmPasswordBlur}
-              required
             />
           </div>
           <div className="form-group form-check mb-3">
@@ -192,7 +179,6 @@ export default function AddUser() {
               options={groups.map(group => ({ value: group.id, label: group.name }))}
               className="basic-multi-select"
               classNamePrefix="select"
-              placeholder='Selecione um grupo para o usuário'
               onChange={handleGroupChange}
               value={selectedGroups}
               id="groups"
@@ -208,7 +194,7 @@ export default function AddUser() {
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">Adicionar Usuário</button>
+          <button type="submit" className="btn btn-primary w-100">Atualizar Usuário</button>
         </form>
       </div>
     </div>

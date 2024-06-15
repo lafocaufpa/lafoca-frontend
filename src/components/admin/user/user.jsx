@@ -42,8 +42,8 @@ export default function UserPage() {
     setCurrentPage(0); 
   };
 
-  const handleEdit = (userId) => {
-    console.log('Editar usuário com ID:', userId);
+  const handleEdit = (user) => {
+    console.log('Redirecionar para um componente de edição de usuários e preencher os campos os dados existentes:', user);
   };
 
   const handleDelete = async (userId) => {
@@ -127,7 +127,7 @@ export default function UserPage() {
                     <button
                       className="btn btn-primary btn-sm"
                       style={{marginRight:'0.5rem'}}
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => handleEdit(user)}
                     >
                       Editar
                     </button>
