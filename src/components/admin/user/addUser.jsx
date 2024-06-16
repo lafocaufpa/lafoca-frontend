@@ -25,8 +25,8 @@ export default function AddUser() {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const data = await groupService.list();
-        setGroups(data.content);
+        const data = await groupService.listWithoutPag();
+        setGroups(data);
       } catch (error) {
         console.log(error);
         setError(error.userMessage);

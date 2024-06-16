@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useState, useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import user1 from '@images/default_user.png';
 import Modal from '@components/admin/ImageCropModal/Modal';
 import { readFile } from '@components/utils/HelperCropImage';
@@ -10,17 +10,25 @@ import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // eslint-disable-next-line react/display-name
-const ImageCrop = forwardRef(({ setPhoto }, ref) => {
+const ImageCrop = forwardRef(({ photo, setPhoto }, ref) => {
   const [openModal, setOpenModal] = useState(false);
   const [preview, setPreview] = useState(user1);
   const fileInputRef = useRef(null);
 
   const { getProcessedImage, setImage, resetStates } = useImageCropContext();
 
+  useEffect(() => {
+    if (photo && typeof photo === 'string') {
+      setPreview(photo);
+    } else if (photo) {
+      setPreview(URL.createObjectURL(photo));
+    }
+  }, [photo]);
+
   const handleDone = async () => {
     const avatar = await getProcessedImage();
     setPhoto(avatar);
-    setPreview(window.URL.createObjectURL(avatar));
+    setPreview(URL.createObjectURL(avatar));
     resetStates();
     setOpenModal(false);
     resetFileInput();
@@ -29,7 +37,7 @@ const ImageCrop = forwardRef(({ setPhoto }, ref) => {
   const handleFileChange = async ({ target: { files } }) => {
     const file = files && files[0];
     if (!file) return;
-    
+
     const imageDataUrl = await readFile(file);
     setImage(imageDataUrl);
     setOpenModal(true);

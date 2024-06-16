@@ -5,7 +5,8 @@ import {
   ArrowUturnLeftIcon,
   ArrowUturnRightIcon,
   MinusIcon,
-  PlusIcon
+  PlusIcon,
+  AcademicCapIcon
 } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,9 +17,7 @@ export const ZoomSlider = ({ className }) => {
 
   return (
     <div className={classNames(className, 'd-flex align-items-center justify-content-center gap-2')}>
-      <button className="p-1 btn btn-outline-secondary" onClick={handleZoomOut}>
-        <MinusIcon className="text-secondary w-4" />
-      </button>
+      <MinusIcon className="p-1 btn btn-outline-secondary"  width={25} onClick={handleZoomOut} />
       <input
         type="range"
         name="zoomRange"
@@ -31,9 +30,7 @@ export const ZoomSlider = ({ className }) => {
         }}
         className="form-range"
       />
-      <button className="p-1 btn btn-outline-secondary" onClick={handleZoomIn}>
-        <PlusIcon className="text-secondary w-4" />
-      </button>
+      <PlusIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleZoomIn} />
     </div>
   );
 };
@@ -51,9 +48,7 @@ export const RotationSlider = ({ className }) => {
 
   return (
     <div className={classNames(className, 'd-flex align-items-center justify-content-center gap-2')}>
-      <button className="p-1 btn btn-outline-secondary" onClick={handleRotateAntiCw}>
-        <ArrowUturnLeftIcon className="text-secondary w-4" />
-      </button>
+      <ArrowUturnLeftIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleRotateAntiCw}/>
       <input
         type="range"
         name="rotationRange"
@@ -66,9 +61,7 @@ export const RotationSlider = ({ className }) => {
         }}
         className="form-range"
       />
-      <button className="p-1 btn btn-outline-secondary" onClick={handleRotateCw}>
-        <ArrowUturnRightIcon className="text-secondary w-4" />
-      </button>
+      <ArrowUturnRightIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleRotateCw}/>
     </div>
   );
 };

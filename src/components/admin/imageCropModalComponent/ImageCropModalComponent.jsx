@@ -51,12 +51,12 @@ const ImageCropModalContent = ({ handleDone, handleClose }) => {
         <Button variant="light" className="shadow w-50 mb-4 hover-shadow">
           <label htmlFor="avatarInput" className="d-block mb-0">Escolha outra foto</label>
         </Button>
-        <div className="d-flex gap-2">
+        <div className="d-flex gap-2  justify-content-end">
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" className="w-100" onClick={handleSave}>
-            Concluir e Salvar
+          <Button variant="primary" onClick={handleSave}>
+            Salvar
           </Button>
         </div>
       </div>

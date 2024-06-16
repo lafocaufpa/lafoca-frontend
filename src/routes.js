@@ -30,10 +30,14 @@ const routes = {
     USERS,
     list: `${USERS}`,
     addPhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
+    removePhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
     resetPassword: `${USERS}/reset-password`,
+    updatePassword: (userId) => `${USERS}/${encodeURIComponent(userId)}/password`,
+    readByEmail: (userEmail) => `${USERS}/read-by-email/${encodeURIComponent(userEmail)}`
   },
   groups: {
-    list: GROUPS
+    list: GROUPS,
+    listWithoutPag: `${GROUPS}/list`
   },
   admin: {
     ADMIN,

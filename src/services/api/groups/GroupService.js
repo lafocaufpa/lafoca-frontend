@@ -3,9 +3,9 @@ import routes from '@/routes';
 import api from '@services/api/httpClientService';
 
 export const groupService = {
-  list: async (size, resultsPerPage, sort) => {
+  listWithoutPag: async () => {
     const token = await getCookie();
-    const response = await api.get(routes.groups.list, {
+    const response = await api.get(routes.groups.listWithoutPag, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

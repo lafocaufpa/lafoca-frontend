@@ -43,7 +43,7 @@ export default function UserPage() {
   };
 
   const handleEdit = (user) => {
-    console.log('Redirecionar para um componente de edição de usuários e preencher os campos os dados existentes:', user);
+    router.push(`editar/${user.id}`);
   };
 
   const handleDelete = async (userId) => {

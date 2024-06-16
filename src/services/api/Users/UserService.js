@@ -25,6 +25,14 @@ export const userService = {
       },
     });
     return response.data; 
+  },removePhoto: async (userId) => {
+    const token = await getCookie();
+
+    await api.delete(routes.users.removePhoto(userId), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   list: async (page = 0, resultsPerPage = 10, sort) => {
     const token = await getCookie();
@@ -43,6 +51,23 @@ export const userService = {
       },
     });
     return response.data; 
+  },
+  readByEmail: async (userEmail) => {
+    const token = await getCookie();
+    const response = await api.get(routes.users.readByEmail(userEmail), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data; 
+  },
+  updatePassword: async (userId, formData) => {
+    const token = await getCookie();
+    await api.put(`${routes.users.updatePassword(userId)}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   delete: async (userId) => {
     const token = await getCookie();
