@@ -1,11 +1,10 @@
 import SideBar from '@components/admin/sidebar/sidebar';
-import styles from './layout.module.css';
 
 export default function AdminLayout({ children }) {
   return (
-    <div className={styles.container}>
+    <div className='d-flex h-100'>
       <SideBar />
-      <div className={styles.content}>
+      <div className='flex-grow-1 overflow-auto' style={{height:'100vh'}}>
         {children}
       </div>
     </div>

@@ -64,7 +64,7 @@ const ImageCrop = forwardRef(({ photo, setPhoto }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    resetImageCrop
+    resetImageCrop,
   }));
 
   return (

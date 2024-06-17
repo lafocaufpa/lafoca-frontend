@@ -36,7 +36,7 @@ export const userService = {
   },
   list: async (page = 0, resultsPerPage = 10, sort) => {
     const token = await getCookie();
-    const response = await api.get(`${routes.users.list}?page=${page}&size=${resultsPerPage}`, {
+    const response = await api.get(routes.users.paginatedList(page, resultsPerPage, sort), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +45,7 @@ export const userService = {
   },
   read: async (userId) => {
     const token = await getCookie();
-    const response = await api.get(`${routes.users.list}/${userId}`, {
+    const response = await api.get(routes.users.readByUserId(userId), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -71,7 +71,7 @@ export const userService = {
   },
   delete: async (userId) => {
     const token = await getCookie();
-    const response = await api.delete(`${routes.users.list}/${userId}`, {
+    const response = await api.delete(routes.users.delete(userId), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -81,7 +81,7 @@ export const userService = {
 
   edit: async (userId, data) => {
     const token = await getCookie();
-    const response = await api.put(`${routes.users.list}/${userId}`, data, {
+    const response = await api.put(routes.users.edit(userId), data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

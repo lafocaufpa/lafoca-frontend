@@ -1,11 +1,12 @@
 import routes from '@/routes';
-import styles from './sidebar.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import UserDefault from '@images/default_user.png';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { userService } from '@/services/api/Users/UserService';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LogoutButton from '@/components/auth/logout/LogoutButton';
 
 export default async function SideBar() {
   const session = await getServerSession();
@@ -20,36 +21,35 @@ export default async function SideBar() {
   } catch (error) {
     console.log('Erro ao buscar usuário:', error);
     return (
-      <div className={styles.sideBar}>
+      <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
         <p>Erro ao carregar dados do usuário.</p>
       </div>
     );
   }
 
   return (
-    <div className={styles.sideBar}>
-      <nav className={styles.sideBarNav}>
-        <div className={styles.barItem}>
-          <Link className={styles.barLink} href={routes.admin.user}>
-            Usuário
-          </Link>
-        </div>
-        <div className={styles.barItem}>
-          <Link className={styles.barLink} href={routes.admin.member}>
-            Membro
-          </Link>
-        </div>
+    <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
+      <nav className="nav flex-column mb-auto">
+        <Link className="nav-link text-white" href={routes.admin.user}>Usuário</Link>
+        <Link className="nav-link text-white" href={routes.admin.member}>Membro</Link>
+        {/* Adicione os demais links aqui */}
       </nav>
-      <div className={styles.userSection}>
-        <h3>{user.name}</h3>
-        <p>{user.email}</p>
-        <Image
-          className={styles.userImage}
-          src={user.urlPhoto || UserDefault}
-          alt={user.name}
-          width={80}
-          height={80}
-        />
+      
+      <div className="mt-auto">
+        <div className="text-center border-top border-secondary pt-4 pb-3">
+          <div className="mb-3">
+            <Image
+              className="rounded-circle"
+              src={user.urlPhoto || UserDefault}
+              alt={user.name}
+              width={80}
+              height={80}
+            />
+          </div>
+          <h5 className="mb-1">{user.name}</h5>
+          <p className="mb-0 text-white fs-6">{user.email}</p>
+        </div>
+        <LogoutButton/>
       </div>
     </div>
   );

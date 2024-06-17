@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import user1 from '@images/default_user.png';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
 import Select from 'react-select';
@@ -116,7 +117,7 @@ export default function EditUser({ userId }) {
       }
 
       setSuccess(true);
-      router.push('/admin/usuario'); // Redirect to users list after success
+      router.push('/admin/usuario'); 
     } catch (error) {
       setError(error.userMessage || 'Erro ao editar usuário.');
     }
@@ -161,11 +162,10 @@ export default function EditUser({ userId }) {
     try {
       await userService.removePhoto(userId);
       setPhoto(null);
-     
-      imageCropRef.current.value = '';
-      imageCropRef.current.type = 'text';
-      imageCropRef.current.type = 'file';
-      
+
+      if (imageCropRef.current) {
+        imageCropRef.current.resetImageCrop();
+      }
     } catch (error) {
       setError(error.userMessage || 'Erro ao remover a foto.');
     }

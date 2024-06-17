@@ -29,11 +29,15 @@ const routes = {
   users: {
     USERS,
     list: `${USERS}`,
+    paginatedList: (page = 0, resultsPerPage = 10, sort = '') => `${USERS}?page=${page}&size=${resultsPerPage}&sort=${sort}`,
     addPhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
     removePhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
     resetPassword: `${USERS}/reset-password`,
     updatePassword: (userId) => `${USERS}/${encodeURIComponent(userId)}/password`,
-    readByEmail: (userEmail) => `${USERS}/read-by-email/${encodeURIComponent(userEmail)}`
+    readByUserId: (userId) => `${USERS}/${encodeURIComponent(userId)}`,
+    readByEmail: (userEmail) => `${USERS}/read-by-email/${encodeURIComponent(userEmail)}`,
+    edit: (userId) => `${USERS}/${encodeURIComponent(userId)}`,
+    delete: (userId) => `${USERS}/${encodeURIComponent(userId)}`,
   },
   groups: {
     list: GROUPS,

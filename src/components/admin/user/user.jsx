@@ -1,7 +1,7 @@
 'use client';
 
 import { userService } from '@/services/api/Users/UserService';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 
@@ -15,6 +15,7 @@ export default function UserPage() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const router = useRouter();
+  const deleteButtonRef = useRef(null); // Referência para o botão de exclusão no modal
 
   const fetchData = async (page = 0, resultsPerPage = 10) => {
     try {
@@ -30,6 +31,13 @@ export default function UserPage() {
   useEffect(() => {
     fetchData(currentPage, resultsPerPage);
   }, [currentPage, resultsPerPage]);
+
+  // Efeito para focar no botão de exclusão quando o modal é aberto
+  useEffect(() => {
+    if (showConfirmModal) {
+      deleteButtonRef.current.focus(); // Foca no botão de exclusão
+    }
+  }, [showConfirmModal]);
 
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
@@ -83,10 +91,16 @@ export default function UserPage() {
     setUserToDelete(null);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleConfirmDelete();
+    }
+  };
+
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1>Configurações de Usuário</h1>
+        <h1 className="mb-0">Configurações de Usuário</h1>
         <button className="btn btn-success" onClick={handleAddUser}>Adicionar Usuário</button>
       </div>
       {error ? (
@@ -94,54 +108,55 @@ export default function UserPage() {
       ) : (
         <div>
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <label htmlFor="resultsPerPage" className="d-inline-block" style={{fontSize:'0.75rem'}}>Mostrando</label>
+            <div className="d-flex align-items-center">
+              <label htmlFor="resultsPerPage" className="d-inline-block mb-0 me-2">Mostrando</label>
               <input
                 type="number"
                 id="resultsPerPage"
                 value={resultsPerPage}
                 onChange={handleResultsPerPageChange}
-                className="form-control d-inline-block mx-2"
-                style={{ width: '60px', fontSize:'0.75rem'} }
+                className="form-control d-inline-block me-2"
+                style={{ width: '60px' }}
               />
-              <span className="ml-2 text-reset" style={{fontSize:'0.75rem'}}>resultados por página</span>
+              <span className="text-reset">resultados por página</span>
             </div>
-            <span className="mb-0 text-reset" style={{fontSize:'0.75rem'}}>{getResultMessage()}</span>
+            <span className="text-reset">{getResultMessage()}</span>
           </div>
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Grupos</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.groups.map((group) => group.name).join(', ')}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary btn-sm"
-                      style={{marginRight:'0.5rem'}}
-                      onClick={() => handleEdit(user)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(user.id)}
-                    >
-                      Deletar
-                    </button>
-                  </td>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Grupos</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.groups.map((group) => group.name).join(', ')}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(user)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(user.id)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className="d-flex justify-content-between align-items-center">
             <nav aria-label="Page navigation">
               <ul className="pagination mb-0">
@@ -181,7 +196,15 @@ export default function UserPage() {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>Cancelar</button>
-                <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Excluir</button>
+                <button
+                  ref={deleteButtonRef} // Referência para o botão de exclusão
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleConfirmDelete}
+                  onKeyDown={handleKeyDown} // Captura a tecla "Enter"
+                >
+                  Excluir
+                </button>
               </div>
             </div>
           </div>
