@@ -7,8 +7,7 @@ import getCookie from '@components/auth/authorization/getCookie';
 
 async function logout() {
   await deleteCookie();
-  signOut();
-  
+  signOut(); 
 }
 
 async function getToken() {

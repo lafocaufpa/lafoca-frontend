@@ -6,6 +6,7 @@ import CustomSlider from '@components/home/Custom-Slider/CustomSlider';
 import { MemberService } from '@/services/api/Members/MembersService';
 import CardSlider from '@components/home/Main/Team/CardSlider/CardSlider-v2';
 import Link from 'next/link';
+import url from '@/routes/url';
 
 export default function Team() {
 
@@ -15,7 +16,6 @@ export default function Team() {
     const fetchData = async () => {
       try {
         const response = await MemberService.listSummarized();
-        
         setMembers(response.content);
       } catch (error) {
         console.error('Erro ao buscar membros: ', error);
@@ -36,7 +36,7 @@ export default function Team() {
           <CardSlider key={index} member={member} />
         ))}/>
         <div style={{textAlign:'right'}}>
-          <Link data-aos="fade-up" data-aos-duration="1500" href="/outra-pagina" className={stylesAnimate.card_link}> Ver mais {'>'}</Link>
+          <Link data-aos="fade-up" data-aos-duration="1500" href={url.membros.listarMembros} className={stylesAnimate.card_link}> Ver mais {'>'}</Link>
         </div>
       </div>
     </section>

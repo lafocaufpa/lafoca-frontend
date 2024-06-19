@@ -3,6 +3,7 @@ import styles from './Projects.module.css';
 import Artigos from '@images/menu/artigos.png';
 import Tccs from '@images/menu/tccs.png';
 import Projetos from '@images/menu/projetos.png';
+import url from '@/routes/url';
 
 export default function Projects() {
 
@@ -20,21 +21,21 @@ export default function Projects() {
           title={'Artigos Publicados'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
           image={Artigos} 
-          link={'/artigos'} 
+          link={url.artigos.listarArtigos} 
           durationFade={1000}
         />
         <CardProject 
           title={'Tccs Defendidos'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
           image={Tccs} 
-          link={'/tccs'} 
+          link={url.tccs.listarTccs} 
           durationFade={1500}
         />
         <CardProject 
           title={'Projetos'} 
           description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
           image={Projetos} 
-          link={'/projetos'} 
+          link={url.projetos.listarProjetos} 
           durationFade={2000}
         />
       </div>     

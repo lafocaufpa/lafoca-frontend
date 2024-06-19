@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import user1 from '@images/default_user.png';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageCropProvider from '@/providers/ImageCropProvider';
 import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
+import url from '@/routes/url';
 
 export default function EditUser({ userId }) {
   const [email, setEmail] = useState('');
@@ -34,14 +34,13 @@ export default function EditUser({ userId }) {
         const data = await groupService.listWithoutPag();
         setGroups(data);
       } catch (error) {
-        console.log(error);
         setError(error.userMessage);
       }
     };
 
     const fetchUser = async () => {
       try {
-        const user = await userService.read(userId);
+        const user = await userService.readByUserId(userId);
         setEmail(user.email);
         setName(user.name);
         setSelectedGroups(user.groups.map(group => ({ value: group.id, label: group.name })));
@@ -49,7 +48,6 @@ export default function EditUser({ userId }) {
           setPhoto(user.urlPhoto);
         }
       } catch (error) {
-        console.log(error);
         setError(error.userMessage);
       }
     };
@@ -117,7 +115,7 @@ export default function EditUser({ userId }) {
       }
 
       setSuccess(true);
-      router.push('/admin/usuario'); 
+      router.push(url.admin.usuario.home); 
     } catch (error) {
       setError(error.userMessage || 'Erro ao editar usuário.');
     }

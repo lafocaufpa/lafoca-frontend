@@ -1,27 +1,27 @@
 'use client';
 
-import { userService } from '@/services/api/Users/UserService';
+import { MemberService } from '@/services/api/Members/MembersService';
 import { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import url from '@/routes/url';
 
-export default function UserPage() {
-  const [users, setUsers] = useState([]);
+export default function MemberPage() {
+  const [members, setMembers] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [userToDelete, setUserToDelete] = useState(null);
+  const [memberToDelete, setMemberToDelete] = useState(null);
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
   const fetchData = async (page = 0, resultsPerPage = 10) => {
     try {
-      const data = await userService.list(page, resultsPerPage);
-      setUsers(data.content);
+      const data = await MemberService.list(page, resultsPerPage);
+      setMembers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
@@ -50,13 +50,13 @@ export default function UserPage() {
     setCurrentPage(0); 
   };
 
-  const handleEdit = (user) => {
-    router.push(url.admin.usuario.editar(user.id));
+  const handleEdit = (member) => {
+    router.push(url.admin.member.edit(member.id));
   };
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (memberId) => {
     try {
-      await userService.delete(userId);
+      await memberService.delete(memberId);
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
       setError(error.message);
@@ -66,29 +66,29 @@ export default function UserPage() {
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} usuários de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} membros de ${totalResults} resultados`;
   };
 
-  const handleAddUser = () => {
-    router.push(url.admin.usuario.adicionar);
+  const handleAddMember = () => {
+    router.push(url.admin.member.add);
   };
 
-  const confirmDelete = (userId) => {
-    setUserToDelete(userId);
+  const confirmDelete = (memberId) => {
+    setMemberToDelete(memberId);
     setShowConfirmModal(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirmModal(false);
-    if (userToDelete) {
-      await handleDelete(userToDelete);
-      setUserToDelete(null);
+    if (memberToDelete) {
+      await handleDelete(memberToDelete);
+      setMemberToDelete(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
-    setUserToDelete(null);
+    setMemberToDelete(null);
   };
 
   const handleKeyDown = (event) => {
@@ -100,11 +100,11 @@ export default function UserPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Configurações de Usuário</h1>
-        <button className="btn btn-success" onClick={handleAddUser}>Adicionar Usuário</button>
+        <h1 className="mb-0">Configurações de Membros</h1>
+        <button className="btn btn-success" onClick={handleAddMember}>Adicionar Membro</button>
       </div>
       {error ? (
-        <div className="alert alert-danger">Erro ao buscar usuários: {error}</div>
+        <div className="alert alert-danger">Erro ao buscar membros: {error}</div>
       ) : (
         <div>
           <div className="d-flex justify-content-between align-items-center mb-3">
@@ -126,28 +126,30 @@ export default function UserPage() {
             <table className="table table-striped table-hover">
               <thead className="thead-dark">
                 <tr>
-                  <th>Nome</th>
+                  <th>Nome Completo</th>
+                  <th>Função</th>
                   <th>Email</th>
-                  <th>Grupos</th>
+                  <th>Ano de Entrada</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.groups.map((group) => group.name).join(', ')}</td>
+                {members.map((member) => (
+                  <tr key={member.id}>
+                    <td>{member.fullName}</td>
+                    <td>{member.function}</td>
+                    <td>{member.email}</td>
+                    <td>{member.yearClass}</td>
                     <td>
                       <button
                         className="btn btn-primary btn-sm me-1"
-                        onClick={() => handleEdit(user)}
+                        onClick={() => handleEdit(member)}
                       >
                         Editar
                       </button>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => confirmDelete(user.id)}
+                        onClick={() => confirmDelete(member.id)}
                       >
                         Deletar
                       </button>
@@ -192,16 +194,16 @@ export default function UserPage() {
                 <h5 className="modal-title">Confirmar Exclusão</h5>
               </div>
               <div className="modal-body">
-                <p>Tem certeza que deseja excluir este usuário?</p>
+                <p>Tem certeza que deseja excluir este membro?</p>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>Cancelar</button>
                 <button
-                  ref={deleteButtonRef} // Referência para o botão de exclusão
+                  ref={deleteButtonRef}
                   type="button"
                   className="btn btn-danger"
                   onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown} // Captura a tecla "Enter"
+                  onKeyDown={handleKeyDown}
                 >
                   Excluir
                 </button>

@@ -1,5 +1,5 @@
 import api from '@services/api/httpClientService';
-import routes from '@/routes';
+import routes from '@/routes/routes';
 import { redirect } from 'next/navigation';
 
 export const AuthApiService = {

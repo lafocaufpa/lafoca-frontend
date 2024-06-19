@@ -1,7 +1,7 @@
 'use client';
 
 import Authorization from '@components/auth/authorization/authorization';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importe o CSS do Bootstrap aqui
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function LogoutButton() {
   const handleLogout = async () => {

@@ -9,14 +9,14 @@ import Button from './submitButton/Button';
 import BackgroundVideo from '@/components/backgroundVideo/BackgroundVideo';
 import Image from 'next/image';
 import logoLaFocA from '@images/icons/LogoLAFocA.png';
-import routes from '@/routes';
+import url from '@/routes/url';
 
 export default function Login() {
  
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const [renderRestorePassword, setRenderRestorePassword] = useState(false);
-
+  
   useEffect(() => {
     const removeCookie = async () => {
       await Authorization.removeCookie();
@@ -43,7 +43,7 @@ export default function Login() {
     const res = await Authorization.login(email, password);
 
     if(res) {
-      router.push(routes.admin.ADMIN);
+      router.push(url.admin.home);
     } else {
       setToggle(!toggle);
     }

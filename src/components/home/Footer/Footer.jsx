@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Logo from '@images/footer/Logo_LaFocA.png';
 import Facebook from '@images/footer/facebook.svg';
 import Instagram from '@images/footer/instagram.svg';
+import url from '@/routes/url';
 
 export default function Footer({ marginTop, ...props }) {
   const footerStyle = {
@@ -61,8 +62,8 @@ export default function Footer({ marginTop, ...props }) {
           Lafoca 2017 - {new Date().getFullYear()}
         <div className={styles.footer_details_links}>
           <ul>
-            <li><a href='#'><Image src={Facebook} alt='Facebook'/></a></li>
-            <li><a href='#'><Image src={Instagram} alt='Instagram'/></a></li>
+            <li><a href={url.redes.facebook} target='_blank' rel="noreferrer"><Image src={Facebook} alt='Facebook'/></a></li>
+            <li><a href={url.redes.instagram} target='_blank' rel="noreferrer"><Image src={Instagram} alt='Instagram'/></a></li>
           </ul>
         </div>
       </div>

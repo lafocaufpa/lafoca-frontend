@@ -1,4 +1,3 @@
-import routes from '@/routes';
 import Link from 'next/link';
 import Image from 'next/image';
 import UserDefault from '@images/default_user.png';
@@ -7,19 +6,19 @@ import { redirect } from 'next/navigation';
 import { userService } from '@/services/api/Users/UserService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LogoutButton from '@/components/auth/logout/LogoutButton';
+import url from '@/routes/url';
 
 export default async function SideBar() {
   const session = await getServerSession();
 
   if (!session) {
-    redirect('/login');
+    redirect(url.auth.login);
   }
 
   let user;
   try {
     user = await userService.readByEmail(session.user.email);
   } catch (error) {
-    console.log('Erro ao buscar usuário:', error);
     return (
       <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
         <p>Erro ao carregar dados do usuário.</p>
@@ -30,9 +29,8 @@ export default async function SideBar() {
   return (
     <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
       <nav className="nav flex-column mb-auto">
-        <Link className="nav-link text-white" href={routes.admin.user}>Usuário</Link>
-        <Link className="nav-link text-white" href={routes.admin.member}>Membro</Link>
-        {/* Adicione os demais links aqui */}
+        <Link className="nav-link text-white" href={url.admin.usuario.home}>Usuário</Link>
+        <Link className="nav-link text-white" href={url.admin.membro.home}>Membro</Link>
       </nav>
       
       <div className="mt-auto">

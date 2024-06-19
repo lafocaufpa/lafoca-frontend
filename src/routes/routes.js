@@ -1,24 +1,25 @@
-const HOME = '/';
 const MEMBERS = '/members';
 const PROJECTS = '/projects';
 const LAFOCA = '/info';
 const USERS = '/users';
-const ADMIN = '/admin';
 const GROUPS = '/groups';
 
 const routes = {
   auth: {
     login: '/login',
-    logout: '/logout',
     session: '/check-token',
   },
-  home: {
-    HOME
-  },
   members: {
-    MEMBERS,
-    member: (name) => `${MEMBERS}/search/${encodeURIComponent(name)}`,
-    listSummarized: `${MEMBERS}/summarized`
+    list: (page = 0, resultsPerPage = 10, sort = '') => `${MEMBERS}/resumed?page=${page}&size=${resultsPerPage}&sort=${sort}`,
+    addPhoto: (memberId) => `${MEMBERS}/${encodeURIComponent(memberId)}/photo`,
+    removePhoto: (memberId) => `${MEMBERS}/${encodeURIComponent(memberId)}/photo`,
+    add: `${MEMBERS}`,
+    update: (memerId) => `${MEMBERS}/${encodeURIComponent(memerId)}`,
+    readById: (memberId) => `${MEMBERS}/${encodeURIComponent(memberId)}`,
+    delete: (memberId) => `${MEMBERS}/${encodeURIComponent(memberId)}`,
+    readBySlug: (slug) => `${MEMBERS}/read/${encodeURIComponent(slug)}`,
+    listSummarized: `${MEMBERS}/summarized`,
+
   },
   projects: {
     listSummarized: `${PROJECTS}/summarized`
@@ -27,9 +28,8 @@ const routes = {
     listInfo: `${LAFOCA}`
   },
   users: {
-    USERS,
-    list: `${USERS}`,
-    paginatedList: (page = 0, resultsPerPage = 10, sort = '') => `${USERS}?page=${page}&size=${resultsPerPage}&sort=${sort}`,
+    add: `${USERS}`,
+    list: (page = 0, resultsPerPage = 10, sort = '') => `${USERS}?page=${page}&size=${resultsPerPage}&sort=${sort}`,
     addPhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
     removePhoto: (userId) => `${USERS}/${encodeURIComponent(userId)}/photo`,
     resetPassword: `${USERS}/reset-password`,
@@ -42,12 +42,6 @@ const routes = {
   groups: {
     list: GROUPS,
     listWithoutPag: `${GROUPS}/list`
-  },
-  admin: {
-    ADMIN,
-    home: `${ADMIN}`,
-    user: `${ADMIN}/usuario`,
-    member: `${ADMIN}/membro`
   }
 };
 

@@ -8,7 +8,7 @@ export default function Articles({member}) {
       <h1 className={stylesMember.globalPageMemberTitle}>
         Artigos Publicados
       </h1>
-      {member.articles.map((a) => <CardInfo key={a.id} icon={Icon} title={a.name} description={a.journal} link={a.url}/> )}
+      {member.articles.map((a) => <CardInfo key={a.id} icon={Icon} title={a.title} description={a.journal} link={a.url}/> )}
      
     </section>
   );

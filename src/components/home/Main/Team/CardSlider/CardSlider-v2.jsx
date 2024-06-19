@@ -2,20 +2,20 @@ import Image from 'next/image';
 import styles from './CardSlider-v2.module.css';
 import stylesAnimate from '@components/home/Custom-Slider/Animate.module.css';
 import Link from 'next/link';
-import routes from '@/routes';
+import url from '@/routes/url';
 
 export default function CardSlider({member}) {
 
   return (
-    <Link href={routes.members.member(member.slug)}>
+    <Link href={url.membros.buscarPeloSlug(member.slug)}>
 
       <div className={`${styles.card} ${stylesAnimate.hover_animate}`} >
         <div className={styles.card_content} >
           <div className={styles.text_container}>
             <h2 className={`${styles.card_content_name} 
-            ${member.firstName.length > 21 ? styles.horizontally_animated_text : ''}
+            ${member.displayName.length > 21 ? styles.horizontally_animated_text : ''}
             `}>
-              {member.firstName}
+              {member.displayName}
             </h2>
             <p
               className={
@@ -28,7 +28,7 @@ export default function CardSlider({member}) {
           
           <button className={styles.card_content_button}>{'>'}</button>
         </div>
-        <Image src={member.photo} alt={member.firstName} width={100} height={100} quality={100}/>
+        <Image src={member.photo} alt={member.displayName} width={100} height={100} quality={100}/>
       </div>
       
     </Link>

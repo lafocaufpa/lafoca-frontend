@@ -1,12 +1,12 @@
 import api from '@services/api/httpClientService';
-import routes from '@/routes';
+import routes from '@/routes/routes';
 import getCookie from '@/components/auth/authorization/getCookie';
 
 export const userService = {
 
   add: async (data) => {
     const token = await getCookie();
-    const response = await api.post(routes.users.USERS, data, {
+    const response = await api.post(routes.users.add, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -34,16 +34,16 @@ export const userService = {
       },
     });
   },
-  list: async (page = 0, resultsPerPage = 10, sort) => {
+  list: async (page = 0, resultsPerPage = 10,  sort = 'dateRegister,desc') => {
     const token = await getCookie();
-    const response = await api.get(routes.users.paginatedList(page, resultsPerPage, sort), {
+    const response = await api.get(routes.users.list(page, resultsPerPage, sort), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data; 
   },
-  read: async (userId) => {
+  readByUserId: async (userId) => {
     const token = await getCookie();
     const response = await api.get(routes.users.readByUserId(userId), {
       headers: {
@@ -63,7 +63,7 @@ export const userService = {
   },
   updatePassword: async (userId, formData) => {
     const token = await getCookie();
-    await api.put(`${routes.users.updatePassword(userId)}`, formData, {
+    await api.put(routes.users.updatePassword(userId), formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

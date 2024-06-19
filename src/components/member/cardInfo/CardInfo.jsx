@@ -15,7 +15,7 @@ export default function CardInfo({icon, title, description, link}) {
       </div>
       {link && 
       <Link 
-        href={'/'} 
+        href={link} 
         target="_black"
         rel="noopener noreferrer" 
         className={styles.cardLink}

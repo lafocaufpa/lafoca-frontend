@@ -1,5 +1,5 @@
 import getCookie from '@/components/auth/authorization/getCookie';
-import routes from '@/routes';
+import routes from '@/routes/routes';
 import api from '@services/api/httpClientService';
 
 export const groupService = {

@@ -28,7 +28,6 @@ export default function AddUser() {
         const data = await groupService.listWithoutPag();
         setGroups(data);
       } catch (error) {
-        console.log(error);
         setError(error.userMessage);
       }
     };
