@@ -56,7 +56,7 @@ export default function MemberPage() {
 
   const handleDelete = async (memberId) => {
     try {
-      await memberService.delete(memberId);
+      await MemberService.delete(memberId);
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
       setError(error.message);
@@ -70,7 +70,7 @@ export default function MemberPage() {
   };
 
   const handleAddMember = () => {
-    router.push(url.admin.member.add);
+    router.push(url.admin.membro.adicionar);
   };
 
   const confirmDelete = (memberId) => {

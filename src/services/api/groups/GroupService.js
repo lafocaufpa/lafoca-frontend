@@ -11,5 +11,17 @@ export const groupService = {
       },
     });
     return response.data;
-  }
+  },
+  list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', query = '') => {
+    //se o query for vazio, será tratado e retornará a consulta normal com todos os registros paginados
+    const token = await getCookie();
+    const url = routes.groups.list(page, resultsPerPage, sort, query);
+
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  },
 };

@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageCropProvider from '@/providers/ImageCropProvider';
 import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
 import url from '@/routes/url';
+import AlertMessage from '@/components/notification/AlertMessage';
+import useNotification from '@/components/notification/useNotification';
 
 export default function EditUser({ userId }) {
   const [email, setEmail] = useState('');
@@ -19,11 +21,10 @@ export default function EditUser({ userId }) {
   const [groups, setGroups] = useState([]);
   const [selectedGroups, setSelectedGroups] = useState([]);
   const [photo, setPhoto] = useState(null);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [passwordError, setPasswordError] = useState(null);
-  const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [error, showError, hideError] = useNotification(null);
+  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
 
   const imageCropRef = useRef(null);
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function EditUser({ userId }) {
         const data = await groupService.listWithoutPag();
         setGroups(data);
       } catch (error) {
-        setError(error.userMessage);
+        showError(error.userMessage || 'Erro ao carregar grupos.');
       }
     };
 
@@ -45,10 +46,12 @@ export default function EditUser({ userId }) {
         setName(user.name);
         setSelectedGroups(user.groups.map(group => ({ value: group.id, label: group.name })));
         if (user.urlPhoto) {
+
+        
           setPhoto(user.urlPhoto);
         }
       } catch (error) {
-        setError(error.userMessage);
+        showError(error.userMessage || 'Erro ao carregar usuário.');
       }
     };
 
@@ -81,25 +84,21 @@ export default function EditUser({ userId }) {
     if (password) {
       const passwordError = validatePassword(password);
       if (passwordError) {
-        setPasswordError(passwordError);
-        return;
+        showError(passwordError);
+        return false;
       }
     }
-    setPasswordError(null);
+    return true;
   };
 
   const handleConfirmPasswordBlur = () => {
     if (password !== confirmPassword) {
-      setPasswordError('As senhas não coincidem.');
-    } else {
-      setPasswordError(null);
+      showError('As senhas não coincidem.');
     }
   };
 
   const handleUserSubmit = async (event) => {
     event.preventDefault();
-    setError(null);
-    setSuccess(false);
 
     const userData = {
       email,
@@ -114,26 +113,28 @@ export default function EditUser({ userId }) {
         await userService.addPhoto(userId, photo);
       }
 
-      setSuccess(true);
-      router.push(url.admin.usuario.home); 
+      showSuccessMessage('Usuário editado com sucesso!');
+      
+
+      setTimeout(() => {
+        router.push(url.admin.usuario.home);
+      }, 3000);
+
     } catch (error) {
-      setError(error.userMessage || 'Erro ao editar usuário.');
+      showError(error.userMessage || 'Erro ao editar usuário.');
     }
   };
 
   const handlePasswordSubmit = async (event) => {
     event.preventDefault();
-    setPasswordError(null);
-    setPasswordSuccess(false);
 
     if (!currentPassword || !password || password !== confirmPassword) {
-      setPasswordError('Preencha corretamente os campos de senha.');
+      showError('Preencha corretamente os campos de senha.');
       return;
     }
 
-    const passwordError = validatePassword(password);
-    if (passwordError) {
-      setPasswordError(passwordError);
+    const isPasswordValid = handlePasswordIsValid(password);
+    if (!isPasswordValid) {
       return;
     }
 
@@ -146,9 +147,9 @@ export default function EditUser({ userId }) {
       setCurrentPassword('');
       setPassword('');
       setConfirmPassword('');
-      setPasswordSuccess(true);
+      showSuccessMessage('Senha alterada com sucesso!');
     } catch (error) {
-      setPasswordError(error.userMessage || 'Erro ao alterar a senha.');
+      showError(error.userMessage || 'Erro ao alterar a senha.');
     }
   };
 
@@ -160,12 +161,12 @@ export default function EditUser({ userId }) {
     try {
       await userService.removePhoto(userId);
       setPhoto(null);
-
       if (imageCropRef.current) {
         imageCropRef.current.resetImageCrop();
       }
+      showSuccessMessage('Foto removida com sucesso!');
     } catch (error) {
-      setError(error.userMessage || 'Erro ao remover a foto.');
+      showError(error.userMessage|| 'Erro ao remover a foto.');
     }
   };
 
@@ -173,12 +174,15 @@ export default function EditUser({ userId }) {
     <div className="container mt-5">
       <div className="card mx-auto p-4" style={{ maxWidth: '600px' }}>
         <h2 className="text-center mb-4">Editar Usuário</h2>
-        {error && <div className="alert alert-danger mb-3">{error}</div>}
-        {success && <div className="alert alert-success mb-3">Usuário editado com sucesso!</div>}
+        {successMessage && (
+          <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
+        )}
+        {error && (
+          <AlertMessage type="error" message={error} onClose={hideError} />
+        )}
         <form onSubmit={handleUserSubmit}>
           <div className="form-group mb-3">
-            <label htmlFor="email" className="fw-bold mb-1">
-              Email</label>
+            <label htmlFor="email" className="fw-bold mb-1">Email</label>
             <input
               type="email"
               className="form-control"
@@ -232,8 +236,6 @@ export default function EditUser({ userId }) {
 
       <div className="card mx-auto p-4 mt-5" style={{ maxWidth: '600px' }}>
         <h2 className="text-center mb-4">Alterar Senha</h2>
-        {passwordError && <div className="alert alert-danger mb-3">{passwordError}</div>}
-        {passwordSuccess && <div className="alert alert-success mb-3">Senha alterada com sucesso!</div>}
         <form onSubmit={handlePasswordSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="currentPassword" className="fw-bold mb-1">Senha Atual</label>
@@ -259,7 +261,7 @@ export default function EditUser({ userId }) {
             />
           </div>
           <div className="form-group mb-3">
-            <label htmlFor="confirmPassword" className="fw-bold mb-1">Confirme a Nova Senha</label>
+            <label htmlFor="confirmPassword" className="fw-bold mb-1">Confirmar Senha</label>
             <input
               type={showPassword ? 'text' : 'password'}
               className="form-control"
@@ -270,7 +272,7 @@ export default function EditUser({ userId }) {
               required
             />
           </div>
-          <div className="form-group mb-3 form-check">
+          <div className="form-group form-check mb-3">
             <input
               type="checkbox"
               className="form-check-input"
@@ -278,7 +280,7 @@ export default function EditUser({ userId }) {
               checked={showPassword}
               onChange={() => setShowPassword(!showPassword)}
             />
-            <label className="form-check-label" htmlFor="showPassword">Mostrar Senha</label>
+            <label className="form-check-label" htmlFor="showPassword">Mostrar Senhas</label>
           </div>
           <button type="submit" className="btn btn-primary w-100">Alterar Senha</button>
         </form>

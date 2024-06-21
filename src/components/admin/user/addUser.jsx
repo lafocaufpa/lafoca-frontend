@@ -1,39 +1,26 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
-import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageCropProvider from '@/providers/ImageCropProvider';
 import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
+import { AsyncPaginate } from 'react-select-async-paginate';
+import AlertMessage from '@/components/notification/AlertMessage';
+import useNotification from '@/components/notification/useNotification';
 
 export default function AddUser() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [groups, setGroups] = useState([]);
   const [selectedGroups, setSelectedGroups] = useState([]);
   const [photo, setPhoto] = useState(null);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [error, showError, hideError] = useNotification(null);
+  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
   const imageCropRef = useRef(null);
-
-  useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const data = await groupService.listWithoutPag();
-        setGroups(data);
-      } catch (error) {
-        setError(error.userMessage);
-      }
-    };
-
-    fetchGroups();
-  }, []);
 
   const validatePassword = (password) => {
     const minLength = 8;
@@ -60,28 +47,49 @@ export default function AddUser() {
     if (password) {
       const passwordError = validatePassword(password);
       if (passwordError) {
-        setError(passwordError);
+        showError(passwordError);
         return;
       }
     }
-    setError(null);
+    hideError();
   };
 
   const handleConfirmPasswordBlur = () => {
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem.');
+      showError('As senhas não coincidem.');
     } else {
-      setError(null);
+      hideError();
+    }
+  };
+
+  const loadGroupOptions = async (inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await groupService.list(page, 5, 'name,asc', inputValue);
+      return {
+        options: response.content.map(group => ({
+          value: group.id,
+          label: group.name,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching groups:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null);
-    setSuccess(false);
+    hideError();
 
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem.');
+      showError('As senhas não coincidem.');
       return;
     }
 
@@ -97,7 +105,6 @@ export default function AddUser() {
       if (photo) {
         await userService.addPhoto(newUser.id, photo);
       }
-      setSuccess(true);
       setEmail('');
       setName('');
       setPassword('');
@@ -109,8 +116,10 @@ export default function AddUser() {
         imageCropRef.current.resetImageCrop();
       }
 
+      showSuccessMessage('Usuário adicionado com sucesso!');
+
     } catch (error) {
-      setError(error.userMessage || 'Erro ao adicionar usuário.');
+      showError(error.userMessage || 'Erro ao adicionar usuário.');
     }
   };
 
@@ -118,12 +127,22 @@ export default function AddUser() {
     setSelectedGroups(selectedOptions);
   };
 
+  const handleRemovePhoto = async () => {
+    if (imageCropRef.current) {
+      imageCropRef.current.resetImageCrop();
+    }
+  };
+
   return (
     <div className="container mt-5">
       <div className="card mx-auto p-4" style={{ maxWidth: '600px' }}>
         <h2 className="text-center mb-4">Adicionar Usuário</h2>
-        {error && <div className="alert alert-danger mb-3">{error}</div>}
-        {success && <div className="alert alert-success mb-3">Usuário adicionado com sucesso!</div>}
+        {successMessage && (
+          <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
+        )}
+        {error && (
+          <AlertMessage type="error" message={error} onClose={hideError} />
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="email" className="fw-bold mb-1">Email</label>
@@ -185,25 +204,63 @@ export default function AddUser() {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="groups" className="fw-bold mb-1">Grupos</label>
-            <Select
+            <AsyncPaginate
               isMulti
               name="groups"
-              options={groups.map(group => ({ value: group.id, label: group.name }))}
+              loadOptions={loadGroupOptions}
               className="basic-multi-select"
               classNamePrefix="select"
               placeholder='Selecione um grupo para o usuário'
               onChange={handleGroupChange}
               value={selectedGroups}
+              additional={{
+                page: 0,
+              }}
               id="groups"
               required
+              styles={{
+                menu: base => ({
+                  ...base,
+                  zIndex: 9999, // Ajuste caso haja problemas de sobreposição
+                  cursor: 'pointer'
+                }),
+                menuList: base => ({
+                  ...base,
+                  maxHeight: '200px', // A mesma altura máxima definida no CSS
+                  overflowY: 'auto', // Permitir rolagem vertical
+                  cursor: 'pointer'
+                }),
+                control: (styles) => ({
+                  ...styles,
+                  cursor: 'pointer',
+                }),
+                dropdownIndicator: (styles) => ({
+                  ...styles,
+                  cursor: 'pointer'
+                }),
+                option: (styles, { isFocused, isSelected }) => ({
+                  ...styles,
+                  cursor: 'pointer',
+                  backgroundColor: isFocused ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando focado
+                  ':active': {
+                    ...styles[':active'],
+                    backgroundColor: isSelected ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando selecionado
+                  }
+                }),
+              }}
             />
           </div>
           <div className="form-group mb-3">
             <div className='d-flex justify-content-center align-items-center flex-column'>
               <label htmlFor="photo" className="fw-bold mb-1">Selecione uma foto</label>
               <ImageCropProvider>
-                <ImageCrop setPhoto={setPhoto} ref={imageCropRef} />
+                <ImageCrop photo={photo} setPhoto={setPhoto} ref={imageCropRef} />
               </ImageCropProvider>
+              {photo && (
+                <button type="button" className="btn btn-danger mt-3" onClick={handleRemovePhoto}>
+                  Remover Foto
+                </button>
+              )}
             </div>
           </div>
 

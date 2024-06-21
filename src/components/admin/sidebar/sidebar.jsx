@@ -26,6 +26,9 @@ export default async function SideBar() {
     );
   }
 
+  const urlImage = user.urlPhoto || UserDefault;
+
+
   return (
     <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
       <nav className="nav flex-column mb-auto">
@@ -38,7 +41,7 @@ export default async function SideBar() {
           <div className="mb-3">
             <Image
               className="rounded-circle"
-              src={user.urlPhoto || UserDefault}
+              src={urlImage}
               alt={user.name}
               width={80}
               height={80}

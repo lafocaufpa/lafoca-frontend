@@ -1,10 +1,10 @@
 'use client';
 
-import { userService } from '@/services/api/Users/UserService';
-import { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import url from '@/routes/url';
+import { userService } from '@/services/api/Users/UserService';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
@@ -15,6 +15,7 @@ export default function UserPage() {
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [showDeletedAlert, setShowDeletedAlert] = useState(false);
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
@@ -39,6 +40,15 @@ export default function UserPage() {
     }
   }, [showConfirmModal]);
 
+  useEffect(() => {
+    if (showDeletedAlert) {
+      const timer = setTimeout(() => {
+        setShowDeletedAlert(false);
+      }, 3000); //
+      return () => clearTimeout(timer);
+    }
+  }, [showDeletedAlert]);
+
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
       setCurrentPage(page);
@@ -47,7 +57,7 @@ export default function UserPage() {
 
   const handleResultsPerPageChange = (event) => {
     setResultsPerPage(Number(event.target.value));
-    setCurrentPage(0); 
+    setCurrentPage(0);
   };
 
   const handleEdit = (user) => {
@@ -57,6 +67,7 @@ export default function UserPage() {
   const handleDelete = async (userId) => {
     try {
       await userService.delete(userId);
+      setShowDeletedAlert(true); // Mostrar alerta de exclusão
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
       setError(error.message);
@@ -101,15 +112,31 @@ export default function UserPage() {
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
         <h1 className="mb-0">Configurações de Usuário</h1>
-        <button className="btn btn-success" onClick={handleAddUser}>Adicionar Usuário</button>
+        <button className="btn btn-success" onClick={handleAddUser}>
+          Adicionar Usuário
+        </button>
       </div>
       {error ? (
         <div className="alert alert-danger">Erro ao buscar usuários: {error}</div>
       ) : (
         <div>
+          {showDeletedAlert && (
+            <div className="alert alert-success alert-dismissible fade show" role="alert">
+              Usuário excluído com sucesso.
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+                onClick={() => setShowDeletedAlert(false)}
+              ></button>
+            </div>
+          )}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div className="d-flex align-items-center">
-              <label htmlFor="resultsPerPage" className="d-inline-block mb-0 me-2">Mostrando</label>
+              <label htmlFor="resultsPerPage" className="d-inline-block mb-0 me-2">
+                Mostrando
+              </label>
               <input
                 type="number"
                 id="resultsPerPage"
@@ -161,7 +188,11 @@ export default function UserPage() {
             <nav aria-label="Page navigation">
               <ul className="pagination mb-0">
                 <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
-                  <button className="page-link" onClick={() => handlePageChange(currentPage - 1)} aria-label="Previous">
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    aria-label="Previous"
+                  >
                     &laquo;
                   </button>
                 </li>
@@ -173,7 +204,11 @@ export default function UserPage() {
                   </li>
                 ))}
                 <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
-                  <button className="page-link" onClick={() => handlePageChange(currentPage + 1)} aria-label="Next">
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    aria-label="Next"
+                  >
                     &raquo;
                   </button>
                 </li>
@@ -183,7 +218,6 @@ export default function UserPage() {
         </div>
       )}
 
-      {/* Modal de confirmação de exclusão */}
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">
@@ -195,13 +229,15 @@ export default function UserPage() {
                 <p>Tem certeza que deseja excluir este usuário?</p>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>Cancelar</button>
+                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
+                  Cancelar
+                </button>
                 <button
-                  ref={deleteButtonRef} // Referência para o botão de exclusão
+                  ref={deleteButtonRef} 
                   type="button"
                   className="btn btn-danger"
                   onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown} // Captura a tecla "Enter"
+                  onKeyDown={handleKeyDown}
                 >
                   Excluir
                 </button>

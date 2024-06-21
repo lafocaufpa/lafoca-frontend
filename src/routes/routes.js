@@ -40,8 +40,15 @@ const routes = {
     delete: (userId) => `${USERS}/${encodeURIComponent(userId)}`,
   },
   groups: {
-    list: GROUPS,
-    listWithoutPag: `${GROUPS}/list`
+    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+      let url = `${GROUPS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
+      if (query) {
+        url += `&name=${query}`;
+      }
+      return url;
+    },
+    listWithoutPag: `${GROUPS}/list`,
+
   }
 };
 
