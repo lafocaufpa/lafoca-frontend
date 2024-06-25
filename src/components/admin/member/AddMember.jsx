@@ -33,6 +33,7 @@ export default function AddMember() {
   const [photo, setPhoto] = useState(null);
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
+  const [includeTCC, setIncludeTCC] = useState(false);
   const imageCropRef = useRef(null);
 
   const handleSubmit = async (event) => {
@@ -49,11 +50,11 @@ export default function AddMember() {
       functionMemberId: parseInt(functionMemberId),
       linkPortifolio,
       linkLinkedin,
-      tcc: {
+      tcc: includeTCC ? {
         name: tccName,
         url: tccUrl,
         date: formatDate(tccDate),
-      },
+      } : null,
       skillsId: skillsId.split(',').map(id => parseInt(id.trim())),
       articlesId: articlesId.split(',').map(id => parseInt(id.trim())),
       projectsId: projectsId.split(',').map(id => id.trim()),
@@ -64,27 +65,10 @@ export default function AddMember() {
       if (photo) {
         await MemberService.addPhoto(newMember.id, photo);
       }
-      setFullName('');
-      setDisplayName('');
-      setEmail('');
-      setDescription('');
-      setBiography('');
-      setYearClassId('');
-      setFunctionMemberId('');
-      setLinkPortifolio('');
-      setLinkLinkedin('');
-      setTccName('');
-      setTccUrl('');
-      setTccDate('');
-      setSkillsId('');
-      setArticlesId('');
-      setProjectsId('');
-      setPhoto(null);
-
+      clearFields();
       if (imageCropRef.current) {
         imageCropRef.current.resetImageCrop();
       }
-
       showSuccessMessage('Membro adicionado com sucesso!');
 
     } catch (error) {
@@ -96,6 +80,26 @@ export default function AddMember() {
     if (imageCropRef.current) {
       imageCropRef.current.resetImageCrop();
     }
+  };
+
+  const clearFields = () => {
+    setFullName('');
+    setDisplayName('');
+    setEmail('');
+    setDescription('');
+    setBiography('');
+    setYearClassId('');
+    setFunctionMemberId('');
+    setLinkPortifolio('');
+    setLinkLinkedin('');
+    setTccName('');
+    setTccUrl('');
+    setTccDate('');
+    setSkillsId('');
+    setArticlesId('');
+    setProjectsId('');
+    setPhoto(null);
+    setIncludeTCC(false);
   };
 
   return (
@@ -181,30 +185,46 @@ export default function AddMember() {
             onChange={(e) => setLinkLinkedin(e.target.value)}
             required
           />
-          <InputField
-            label="Nome do TCC"
-            type="text"
-            id="tccName"
-            value={tccName}
-            onChange={(e) => setTccName(e.target.value)}
-            required
-          />
-          <InputField
-            label="URL do TCC"
-            type="url"
-            id="tccUrl"
-            value={tccUrl}
-            onChange={(e) => setTccUrl(e.target.value)}
-            required
-          />
-          <InputField
-            label="Data do TCC"
-            type="date"
-            id="tccDate"
-            value={tccDate}
-            onChange={(e) => setTccDate(e.target.value)}
-            required
-          />
+          <div className="form-check mb-3">
+            <input
+              type="checkbox"
+              id="includeTCC"
+              className="form-check-input"
+              checked={includeTCC}
+              onChange={(e) => setIncludeTCC(e.target.checked)}
+            />
+            <label htmlFor="includeTCC" className="form-check-label">
+              Incluir TCC
+            </label>
+          </div>
+          {includeTCC && (
+            <>
+              <InputField
+                label="Nome do TCC"
+                type="text"
+                id="tccName"
+                value={tccName}
+                onChange={(e) => setTccName(e.target.value)}
+                required
+              />
+              <InputField
+                label="URL do TCC"
+                type="url"
+                id="tccUrl"
+                value={tccUrl}
+                onChange={(e) => setTccUrl(e.target.value)}
+                required
+              />
+              <InputField
+                label="Data do TCC"
+                type="date"
+                id="tccDate"
+                value={tccDate}
+                onChange={(e) => setTccDate(e.target.value)}
+                required
+              />
+            </>
+          )}
           <InputField
             label="IDs de Habilidades (separados por vírgula)"
             type="text"
