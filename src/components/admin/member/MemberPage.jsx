@@ -51,7 +51,7 @@ export default function MemberPage() {
   };
 
   const handleEdit = (member) => {
-    router.push(url.admin.member.edit(member.id));
+    router.push(url.admin.membro.editar(member.id));
   };
 
   const handleDelete = async (memberId) => {

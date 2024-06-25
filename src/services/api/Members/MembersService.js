@@ -4,6 +4,7 @@ import getCookie from '@/components/auth/authorization/getCookie';
 
 export const MemberService = {
   add: async (data) => {
+    console.log(data);
     const token = await getCookie();
     const response = await api.post(routes.members.add, data, {
       headers: {
@@ -38,22 +39,12 @@ export const MemberService = {
   },
 
   list: async (page = 0, resultsPerPage = 10, sort = 'fullName,asc') => {
-    const token = await getCookie();
-    const response = await api.get(routes.members.list(page, resultsPerPage, sort), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(routes.members.list(page, resultsPerPage, sort));
     return response.data;
   },
 
   readById: async (memberId) => {
-    const token = await getCookie();
-    const response = await api.get(routes.members.readById(memberId), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(routes.members.readById(memberId));
     return response.data;
   },
 

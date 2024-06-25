@@ -20,5 +20,6 @@ module.exports = {
     domains: ['lafoca.s3.amazonaws.com'],
     unoptimized: true
   },
+  reactStrictMode: false
 };
 

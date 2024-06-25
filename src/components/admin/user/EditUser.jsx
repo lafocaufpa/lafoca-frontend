@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
-import Select from 'react-select';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageCropProvider from '@/providers/ImageCropProvider';
 import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
@@ -18,7 +18,6 @@ export default function EditUser({ userId }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
-  const [groups, setGroups] = useState([]);
   const [selectedGroups, setSelectedGroups] = useState([]);
   const [photo, setPhoto] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -30,15 +29,6 @@ export default function EditUser({ userId }) {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const data = await groupService.listWithoutPag();
-        setGroups(data);
-      } catch (error) {
-        showError(error.userMessage || 'Erro ao carregar grupos.');
-      }
-    };
-
     const fetchUser = async () => {
       try {
         const user = await userService.readByUserId(userId);
@@ -46,8 +36,6 @@ export default function EditUser({ userId }) {
         setName(user.name);
         setSelectedGroups(user.groups.map(group => ({ value: group.id, label: group.name })));
         if (user.urlPhoto) {
-
-        
           setPhoto(user.urlPhoto);
         }
       } catch (error) {
@@ -55,7 +43,6 @@ export default function EditUser({ userId }) {
       }
     };
 
-    fetchGroups();
     fetchUser();
   }, [userId]);
 
@@ -114,7 +101,6 @@ export default function EditUser({ userId }) {
       }
 
       showSuccessMessage('Usuário editado com sucesso!');
-      
 
       setTimeout(() => {
         router.push(url.admin.usuario.home);
@@ -153,6 +139,28 @@ export default function EditUser({ userId }) {
     }
   };
 
+  const loadGroupOptions = async (inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await groupService.list(page, 5, 'name,asc', inputValue);
+      return {
+        options: response.content.map(group => ({
+          value: group.id,
+          label: group.name,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching groups:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
+
   const handleGroupChange = (selectedOptions) => {
     setSelectedGroups(selectedOptions);
   };
@@ -166,7 +174,7 @@ export default function EditUser({ userId }) {
       }
       showSuccessMessage('Foto removida com sucesso!');
     } catch (error) {
-      showError(error.userMessage|| 'Erro ao remover a foto.');
+      showError(error.userMessage || 'Erro ao remover a foto.');
     }
   };
 
@@ -205,16 +213,50 @@ export default function EditUser({ userId }) {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="groups" className="fw-bold mb-1">Grupos</label>
-            <Select
+            <AsyncPaginate
               isMulti
               name="groups"
-              options={groups.map(group => ({ value: group.id, label: group.name }))}
+              loadOptions={loadGroupOptions}
               className="basic-multi-select"
               classNamePrefix="select"
+              placeholder='Selecione um grupo para o usuário'
               onChange={handleGroupChange}
               value={selectedGroups}
+              additional={{
+                page: 0,
+              }}
               id="groups"
               required
+              styles={{
+                menu: base => ({
+                  ...base,
+                  zIndex: 9999, // Ajuste caso haja problemas de sobreposição
+                  cursor: 'pointer'
+                }),
+                menuList: base => ({
+                  ...base,
+                  maxHeight: '200px', // A mesma altura máxima definida no CSS
+                  overflowY: 'auto', // Permitir rolagem vertical
+                  cursor: 'pointer'
+                }),
+                control: (styles) => ({
+                  ...styles,
+                  cursor: 'pointer',
+                }),
+                dropdownIndicator: (styles) => ({
+                  ...styles,
+                  cursor: 'pointer'
+                }),
+                option: (styles, { isFocused, isSelected }) => ({
+                  ...styles,
+                  cursor: 'pointer',
+                  backgroundColor: isFocused ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando focado
+                  ':active': {
+                    ...styles[':active'],
+                    backgroundColor: isSelected ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando selecionado
+                  }
+                }),
+              }}
             />
           </div>
           <div className="form-group mb-3">
@@ -224,67 +266,60 @@ export default function EditUser({ userId }) {
                 <ImageCrop photo={photo} setPhoto={setPhoto} ref={imageCropRef} />
               </ImageCropProvider>
               {photo && (
-                <button type="button" className="btn btn-danger mt-3" onClick={handleRemovePhoto}>
-                  Remover Foto
-                </button>
+                <div className='d-flex justify-content-center align-items-center mt-3'>
+                  <button type="button" className="btn btn-danger" onClick={handleRemovePhoto}>Remover Foto</button>
+                </div>
               )}
             </div>
           </div>
-          <button type="submit" className="btn btn-primary w-100">Editar Usuário</button>
+          <button type="submit" className="btn btn-primary w-100 mt-3">Salvar</button>
         </form>
-      </div>
-
-      <div className="card mx-auto p-4 mt-5" style={{ maxWidth: '600px' }}>
-        <h2 className="text-center mb-4">Alterar Senha</h2>
+        <h4 className="text-center mb-4 mt-4">Alterar Senha</h4>
         <form onSubmit={handlePasswordSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="currentPassword" className="fw-bold mb-1">Senha Atual</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              className="form-control"
-              id="currentPassword"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              required
-            />
+            <div className="input-group">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className="form-control"
+                id="currentPassword"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? 'Esconder' : 'Mostrar'}
+              </button>
+            </div>
           </div>
           <div className="form-group mb-3">
             <label htmlFor="password" className="fw-bold mb-1">Nova Senha</label>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="password"
               className="form-control"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onBlur={(e) => handlePasswordIsValid(e.target.value)}
-              required
             />
           </div>
           <div className="form-group mb-3">
-            <label htmlFor="confirmPassword" className="fw-bold mb-1">Confirmar Senha</label>
+            <label htmlFor="confirmPassword" className="fw-bold mb-1">Confirmar Nova Senha</label>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="password"
               className="form-control"
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               onBlur={handleConfirmPasswordBlur}
-              required
             />
           </div>
-          <div className="form-group form-check mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="showPassword"
-              checked={showPassword}
-              onChange={() => setShowPassword(!showPassword)}
-            />
-            <label className="form-check-label" htmlFor="showPassword">Mostrar Senhas</label>
-          </div>
-          <button type="submit" className="btn btn-primary w-100">Alterar Senha</button>
+          <button type="submit" className="btn btn-primary w-100 mt-3">Alterar Senha</button>
         </form>
       </div>
     </div>
   );
 }
+  

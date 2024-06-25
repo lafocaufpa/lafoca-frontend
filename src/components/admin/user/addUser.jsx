@@ -6,9 +6,9 @@ import { groupService } from '@/services/api/groups/GroupService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ImageCropProvider from '@/providers/ImageCropProvider';
 import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
-import { AsyncPaginate } from 'react-select-async-paginate';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
+import AsyncSelect from '@/components/asyncSelect/AsyncSelect';
 
 export default function AddUser() {
   const [email, setEmail] = useState('');
@@ -64,7 +64,7 @@ export default function AddUser() {
 
   const loadGroupOptions = async (inputValue, loadedOptions, { page }) => {
     try {
-      const response = await groupService.list(page, 5, 'name,asc', inputValue);
+      const response = await groupService.list(page, 7, 'name,asc', inputValue);
       return {
         options: response.content.map(group => ({
           value: group.id,
@@ -204,50 +204,17 @@ export default function AddUser() {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="groups" className="fw-bold mb-1">Grupos</label>
-            <AsyncPaginate
-              isMulti
-              name="groups"
+            <AsyncSelect
               loadOptions={loadGroupOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              placeholder='Selecione um grupo para o usuário'
-              onChange={handleGroupChange}
+              placeholder="Selecione um grupo para o usuário"
+              isMulti
               value={selectedGroups}
+              onChange={handleGroupChange}
               additional={{
                 page: 0,
               }}
               id="groups"
               required
-              styles={{
-                menu: base => ({
-                  ...base,
-                  zIndex: 9999, // Ajuste caso haja problemas de sobreposição
-                  cursor: 'pointer'
-                }),
-                menuList: base => ({
-                  ...base,
-                  maxHeight: '200px', // A mesma altura máxima definida no CSS
-                  overflowY: 'auto', // Permitir rolagem vertical
-                  cursor: 'pointer'
-                }),
-                control: (styles) => ({
-                  ...styles,
-                  cursor: 'pointer',
-                }),
-                dropdownIndicator: (styles) => ({
-                  ...styles,
-                  cursor: 'pointer'
-                }),
-                option: (styles, { isFocused, isSelected }) => ({
-                  ...styles,
-                  cursor: 'pointer',
-                  backgroundColor: isFocused ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando focado
-                  ':active': {
-                    ...styles[':active'],
-                    backgroundColor: isSelected ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando selecionado
-                  }
-                }),
-              }}
             />
           </div>
           <div className="form-group mb-3">
