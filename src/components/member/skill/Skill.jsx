@@ -9,7 +9,7 @@ export default function Skill({member}) {
       <h1 className={stylesMember.globalPageMemberTitle}>Habilidades</h1>
       <div className={styles.skills}>
         {member?.skills.map((skill, index) => (
-          <CardSkill key={index} name={skill.name} />
+          <CardSkill key={index} name={skill.name} icon={skill.skillPictureUrl} />
         ))}
       </div>
     </section>

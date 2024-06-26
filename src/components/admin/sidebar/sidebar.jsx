@@ -26,7 +26,7 @@ export default async function SideBar() {
         Authorization: `Bearer ${token}`,
       },
       next: {
-        revalidate: 15
+        revalidate: 10
       }
     });
 
