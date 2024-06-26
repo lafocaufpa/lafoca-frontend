@@ -22,7 +22,6 @@ const handler = NextAuth({
         }
 
         const session = await AuthApiService.login(credentials.email, credentials.password);
-
         if (session?.status == 401) {
           return null;
         } else {

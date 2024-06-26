@@ -25,7 +25,7 @@ const AsyncSelect = ({
         }),
         menuList: base => ({
           ...base,
-          maxHeight: '200px',
+          maxHeight: '150px',
           overflowY: 'auto',
           cursor: 'pointer'
         }),

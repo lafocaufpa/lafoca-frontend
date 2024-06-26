@@ -3,7 +3,6 @@ import {MemberService} from '@services/api/Members/MembersService';
 
 async function readMemberBySlug(slug) {
   try {
-    console.log(slug);
     const response = await MemberService.readBySlug(slug);
     return response;
   } catch (error) {

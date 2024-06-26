@@ -7,6 +7,8 @@ import { userService } from '@/services/api/Users/UserService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LogoutButton from '@/components/auth/logout/LogoutButton';
 import url from '@/routes/url';
+import getCookie from '@/components/auth/authorization/getCookie';
+import routes from '@/routes/routes';
 
 export default async function SideBar() {
   const session = await getServerSession();
@@ -15,9 +17,24 @@ export default async function SideBar() {
     redirect(url.auth.login);
   }
 
+  
   let user;
   try {
-    user = await userService.readByEmail(session.user.email);
+    const token = await getCookie();
+    const response = await fetch(routes.users.readByEmail(session.user.email), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      next: {
+        revalidate: 15
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+
+    user = await response.json();
   } catch (error) {
     return (
       <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>

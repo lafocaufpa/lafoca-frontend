@@ -4,7 +4,6 @@ import getCookie from '@/components/auth/authorization/getCookie';
 
 export const MemberService = {
   add: async (data) => {
-    console.log(data);
     const token = await getCookie();
     const response = await api.post(routes.members.add, data, {
       headers: {

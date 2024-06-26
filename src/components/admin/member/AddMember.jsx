@@ -8,6 +8,12 @@ import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@components/inputField/InputField';
+import AsyncSelect from '@/components/asyncSelect/AsyncSelect';
+import { articleService } from '@/services/api/article/ArticleService';
+import { projectsService } from '@/services/api/Projects/ProjectsService';
+import { functionService } from '@/services/api/function/FunctionService';
+import { skillService } from '@/services/api/skill/SkillService';
+import { classService } from '@/services/api/yearClass/YearClasses';
 
 const formatDate = (date) => {
   const [year, month, day] = date.split('-');
@@ -20,16 +26,16 @@ export default function AddMember() {
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
   const [biography, setBiography] = useState('');
-  const [yearClassId, setYearClassId] = useState('');
-  const [functionMemberId, setFunctionMemberId] = useState('');
+  const [yearClassId, setYearClassId] = useState([]);
+  const [functionMemberId, setFunctionMemberId] = useState([]);
   const [linkPortifolio, setLinkPortifolio] = useState('');
   const [linkLinkedin, setLinkLinkedin] = useState('');
   const [tccName, setTccName] = useState('');
   const [tccUrl, setTccUrl] = useState('');
   const [tccDate, setTccDate] = useState('');
-  const [skillsId, setSkillsId] = useState('');
-  const [articlesId, setArticlesId] = useState('');
-  const [projectsId, setProjectsId] = useState('');
+  const [skillsId, setSkillsId] = useState([]);
+  const [articlesId, setArticlesId] = useState([]);
+  const [projectsId, setProjectsId] = useState([]);
   const [photo, setPhoto] = useState(null);
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
@@ -46,8 +52,8 @@ export default function AddMember() {
       email,
       description,
       biography,
-      yearClassId: parseInt(yearClassId),
-      functionMemberId: parseInt(functionMemberId),
+      yearClassId: yearClassId.map(option => parseInt(option.value)),
+      functionMemberId: functionMemberId.map(option => parseInt(option.value)),
       linkPortifolio,
       linkLinkedin,
       tcc: includeTCC ? {
@@ -55,9 +61,9 @@ export default function AddMember() {
         url: tccUrl,
         date: formatDate(tccDate),
       } : null,
-      skillsId: skillsId.split(',').map(id => parseInt(id.trim())),
-      articlesId: articlesId.split(',').map(id => parseInt(id.trim())),
-      projectsId: projectsId.split(',').map(id => id.trim()),
+      skillsId: skillsId.map(option => parseInt(option.value)),
+      articlesId: articlesId.map(option => parseInt(option.value)),
+      projectsId: projectsId.map(option => option.value),
     };
 
     try {
@@ -88,18 +94,41 @@ export default function AddMember() {
     setEmail('');
     setDescription('');
     setBiography('');
-    setYearClassId('');
-    setFunctionMemberId('');
+    setYearClassId([]);
+    setFunctionMemberId([]);
     setLinkPortifolio('');
     setLinkLinkedin('');
     setTccName('');
     setTccUrl('');
     setTccDate('');
-    setSkillsId('');
-    setArticlesId('');
-    setProjectsId('');
+    setSkillsId([]);
+    setArticlesId([]);
+    setProjectsId([]);
     setPhoto(null);
     setIncludeTCC(false);
+  };
+
+  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue);
+      console.log(response);
+      return {
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.name || item.title || item.year,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching options:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
   };
 
   return (
@@ -153,22 +182,34 @@ export default function AddMember() {
             onChange={(e) => setBiography(e.target.value)}
             required
           />
-          <InputField
-            label="ID da Classe Anual"
-            type="number"
-            id="yearClassId"
-            value={yearClassId}
-            onChange={(e) => setYearClassId(e.target.value)}
-            required
-          />
-          <InputField
-            label="ID da Função do Membro"
-            type="number"
-            id="functionMemberId"
-            value={functionMemberId}
-            onChange={(e) => setFunctionMemberId(e.target.value)}
-            required
-          />
+          <div className="form-group mb-3">
+            <label htmlFor="yearClassId" className="fw-bold mb-1">Classe Anual</label>
+            <AsyncSelect
+              loadOptions={(inputValue, loadedOptions, additional) => 
+                loadOptions(classService, inputValue, loadedOptions, additional)}
+              placeholder="Selecione uma classe"
+              isMulti
+              value={yearClassId}
+              onChange={setYearClassId}
+              additional={{ page: 0 }}
+              id="yearClassId"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="functionMemberId" className="fw-bold mb-1">Função do Membro</label>
+            <AsyncSelect
+              loadOptions={(inputValue, loadedOptions, additional) => 
+                loadOptions(functionService, inputValue, loadedOptions, additional)}
+              placeholder="Selecione uma função"
+              isMulti
+              value={functionMemberId}
+              onChange={setFunctionMemberId}
+              additional={{ page: 0 }}
+              id="functionMemberId"
+              required
+            />
+          </div>
           <InputField
             label="Link do Portfólio"
             type="url"
@@ -225,30 +266,48 @@ export default function AddMember() {
               />
             </>
           )}
-          <InputField
-            label="IDs de Habilidades (separados por vírgula)"
-            type="text"
-            id="skillsId"
-            value={skillsId}
-            onChange={(e) => setSkillsId(e.target.value)}
-            required
-          />
-          <InputField
-            label="IDs de Artigos (separados por vírgula)"
-            type="text"
-            id="articlesId"
-            value={articlesId}
-            onChange={(e) => setArticlesId(e.target.value)}
-            required
-          />
-          <InputField
-            label="IDs de Projetos (separados por vírgula)"
-            type="text"
-            id="projectsId"
-            value={projectsId}
-            onChange={(e) => setProjectsId(e.target.value)}
-            required
-          />
+          <div className="form-group mb-3">
+            <label htmlFor="skillsId" className="fw-bold mb-1">Habilidades</label>
+            <AsyncSelect
+              loadOptions={(inputValue, loadedOptions, additional) => 
+                loadOptions(skillService, inputValue, loadedOptions, additional)}
+              placeholder="Selecione habilidades"
+              isMulti
+              value={skillsId}
+              onChange={setSkillsId}
+              additional={{ page: 0 }}
+              id="skillsId"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="articlesId" className="fw-bold mb-1">Artigos</label>
+            <AsyncSelect
+              loadOptions={(inputValue, loadedOptions, additional) => 
+                loadOptions(articleService, inputValue, loadedOptions, additional)}
+              placeholder="Selecione artigos"
+              isMulti
+              value={articlesId}
+              onChange={setArticlesId}
+              additional={{ page: 0 }}
+              id="articlesId"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="projectsId" className="fw-bold mb-1">Projetos</label>
+            <AsyncSelect
+              loadOptions={(inputValue, loadedOptions, additional) => 
+                loadOptions(projectsService, inputValue, loadedOptions, additional)}
+              placeholder="Selecione projetos"
+              isMulti
+              value={projectsId}
+              onChange={setProjectsId}
+              additional={{ page: 0 }}
+              id="projectsId"
+              required
+            />
+          </div>
           <div className="form-group mb-3">
             <div className='d-flex justify-content-center align-items-center flex-column'>
               <label htmlFor="photo" className="fw-bold mb-1">Selecione uma foto</label>
