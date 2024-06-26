@@ -21,7 +21,13 @@ export default async function SideBar() {
   let user;
   try {
     const token = await getCookie();
-    const response = await fetch(routes.users.readByEmail(session.user.email), {
+    // eslint-disable-next-line no-undef
+    const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    const path = routes.users.readByEmail(session.user.email);
+    const url = baseURL.concat(path);
+    
+    const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -29,6 +35,7 @@ export default async function SideBar() {
         revalidate: 10
       }
     });
+
 
     if (!response.ok) {
       throw new Error('Failed to fetch user data');
