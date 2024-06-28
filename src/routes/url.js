@@ -38,7 +38,7 @@ const url = {
     },
     membro: {
       home: `${ADMIN}${MEMBRO}`,
-      editar: (memerId) => `editar/${encodeURIComponent(memerId)}`,
+      editar: (memberId) => `editar/${encodeURIComponent(memberId)}`,
       adicionar: 'adicionar'
     }
   },

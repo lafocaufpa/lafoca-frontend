@@ -5,16 +5,22 @@ import { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import url from '@/routes/url';
+import AlertMessage from '@/components/notification/AlertMessage';
+import useNotification from '@/components/notification/useNotification';
 
 export default function MemberPage() {
   const [members, setMembers] = useState([]);
-  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
+  const [showDeletedAlert, setShowDeletedAlert] = useState(false);
+
+  const [error, showError, hideError] = useNotification(null);
+  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
+
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
@@ -25,7 +31,7 @@ export default function MemberPage() {
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      setError(error.message);
+      showError(error.message || 'Erro ao buscar membros.');
     }
   };
 
@@ -39,6 +45,15 @@ export default function MemberPage() {
     }
   }, [showConfirmModal]);
 
+  useEffect(() => {
+    if (showDeletedAlert) {
+      const timer = setTimeout(() => {
+        setShowDeletedAlert(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showDeletedAlert]);
+
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
       setCurrentPage(page);
@@ -47,7 +62,7 @@ export default function MemberPage() {
 
   const handleResultsPerPageChange = (event) => {
     setResultsPerPage(Number(event.target.value));
-    setCurrentPage(0); 
+    setCurrentPage(0);
   };
 
   const handleEdit = (member) => {
@@ -57,9 +72,10 @@ export default function MemberPage() {
   const handleDelete = async (memberId) => {
     try {
       await MemberService.delete(memberId);
+      showSuccessMessage('Membro excluído com sucesso.');
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
-      setError(error.message);
+      showError(error.message || 'Erro ao excluir membro.');
     }
   };
 
@@ -103,6 +119,12 @@ export default function MemberPage() {
         <h1 className="mb-0">Configurações de Membros</h1>
         <button className="btn btn-success" onClick={handleAddMember}>Adicionar Membro</button>
       </div>
+      {successMessage && (
+        <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
+      )}
+      {error && (
+        <AlertMessage type="error" message={error} onClose={hideError} />
+      )}
       {error ? (
         <div className="alert alert-danger">Erro ao buscar membros: {error}</div>
       ) : (
@@ -185,7 +207,6 @@ export default function MemberPage() {
         </div>
       )}
 
-      {/* Modal de confirmação de exclusão */}
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">

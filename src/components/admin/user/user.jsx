@@ -5,10 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import url from '@/routes/url';
 import { userService } from '@/services/api/Users/UserService';
+import AlertMessage from '@/components/notification/AlertMessage';
+import useNotification from '@/components/notification/useNotification';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
@@ -16,6 +17,10 @@ export default function UserPage() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [showDeletedAlert, setShowDeletedAlert] = useState(false);
+
+  const [error, showError, hideError] = useNotification(null);
+  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
+
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
@@ -26,7 +31,7 @@ export default function UserPage() {
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      setError(error.message);
+      showError(error.message || 'Erro ao buscar usuários.');
     }
   };
 
@@ -44,7 +49,7 @@ export default function UserPage() {
     if (showDeletedAlert) {
       const timer = setTimeout(() => {
         setShowDeletedAlert(false);
-      }, 3000); //
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [showDeletedAlert]);
@@ -67,10 +72,10 @@ export default function UserPage() {
   const handleDelete = async (userId) => {
     try {
       await userService.delete(userId);
-      setShowDeletedAlert(true); // Mostrar alerta de exclusão
+      showSuccessMessage('Usuário excluído com sucesso.');
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
-      setError(error.message);
+      showError(error.message || 'Erro ao excluir usuário.');
     }
   };
 
@@ -116,6 +121,12 @@ export default function UserPage() {
           Adicionar Usuário
         </button>
       </div>
+      {successMessage && (
+        <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
+      )}
+      {error && (
+        <AlertMessage type="error" message={error} onClose={hideError} />
+      )}
       {error ? (
         <div className="alert alert-danger">Erro ao buscar usuários: {error}</div>
       ) : (

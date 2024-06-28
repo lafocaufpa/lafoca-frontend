@@ -26,8 +26,8 @@ export default function AddMember() {
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
   const [biography, setBiography] = useState('');
-  const [yearClassId, setYearClassId] = useState([]);
-  const [functionMemberId, setFunctionMemberId] = useState([]);
+  const [yearClassId, setYearClassId] = useState(null);
+  const [functionMemberId, setFunctionMemberId] = useState(null);
   const [linkPortifolio, setLinkPortifolio] = useState('');
   const [linkLinkedin, setLinkLinkedin] = useState('');
   const [tccName, setTccName] = useState('');
@@ -52,8 +52,8 @@ export default function AddMember() {
       email,
       description,
       biography,
-      yearClassId: yearClassId.map(option => parseInt(option.value)),
-      functionMemberId: functionMemberId.map(option => parseInt(option.value)),
+      yearClassId: parseInt(yearClassId.value),
+      functionMemberId: parseInt(functionMemberId.value),
       linkPortifolio,
       linkLinkedin,
       tcc: includeTCC ? {
@@ -94,8 +94,8 @@ export default function AddMember() {
     setEmail('');
     setDescription('');
     setBiography('');
-    setYearClassId([]);
-    setFunctionMemberId([]);
+    setYearClassId(null);
+    setFunctionMemberId(null);
     setLinkPortifolio('');
     setLinkLinkedin('');
     setTccName('');
@@ -111,7 +111,6 @@ export default function AddMember() {
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
       const response = await service.list(page, 5, undefined, inputValue);
-      console.log(response);
       return {
         options: response.content.map(item => ({
           value: item.id,
@@ -148,6 +147,7 @@ export default function AddMember() {
             id="fullName"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            maxLength={225}
             required
           />
           <InputField
@@ -156,6 +156,7 @@ export default function AddMember() {
             id="displayName"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
+            maxLength={225}
             required
           />
           <InputField
@@ -164,22 +165,27 @@ export default function AddMember() {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            maxLength={225}
             required
           />
           <InputField
             label="Descrição"
             type="text"
             id="description"
+            as="textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            maxLength={225}
             required
           />
           <InputField
             label="Biografia"
             type="text"
             id="biography"
+            as="textarea"
             value={biography}
             onChange={(e) => setBiography(e.target.value)}
+            maxLength={500}
             required
           />
           <div className="form-group mb-3">
@@ -188,7 +194,6 @@ export default function AddMember() {
               loadOptions={(inputValue, loadedOptions, additional) => 
                 loadOptions(classService, inputValue, loadedOptions, additional)}
               placeholder="Selecione uma classe"
-              isMulti
               value={yearClassId}
               onChange={setYearClassId}
               additional={{ page: 0 }}
@@ -202,7 +207,6 @@ export default function AddMember() {
               loadOptions={(inputValue, loadedOptions, additional) => 
                 loadOptions(functionService, inputValue, loadedOptions, additional)}
               placeholder="Selecione uma função"
-              isMulti
               value={functionMemberId}
               onChange={setFunctionMemberId}
               additional={{ page: 0 }}
@@ -216,6 +220,7 @@ export default function AddMember() {
             id="linkPortifolio"
             value={linkPortifolio}
             onChange={(e) => setLinkPortifolio(e.target.value)}
+            maxLength={225}
             required
           />
           <InputField
@@ -224,6 +229,7 @@ export default function AddMember() {
             id="linkLinkedin"
             value={linkLinkedin}
             onChange={(e) => setLinkLinkedin(e.target.value)}
+            maxLength={225}
             required
           />
           <div className="form-check mb-3">

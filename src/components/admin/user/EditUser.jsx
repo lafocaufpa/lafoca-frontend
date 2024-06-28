@@ -93,6 +93,7 @@ export default function EditUser({ userId }) {
       groups: selectedGroups.map(group => group.value),
     };
 
+
     try {
       await userService.edit(userId, userData);
 
@@ -230,13 +231,13 @@ export default function EditUser({ userId }) {
               styles={{
                 menu: base => ({
                   ...base,
-                  zIndex: 9999, // Ajuste caso haja problemas de sobreposição
+                  zIndex: 9999,
                   cursor: 'pointer'
                 }),
                 menuList: base => ({
                   ...base,
-                  maxHeight: '200px', // A mesma altura máxima definida no CSS
-                  overflowY: 'auto', // Permitir rolagem vertical
+                  maxHeight: '200px',
+                  overflowY: 'auto',
                   cursor: 'pointer'
                 }),
                 control: (styles) => ({

@@ -4,7 +4,6 @@ const handleRequestError = (error) => {
     return error.response;
   }
 
-  console.log(error.response.data);
   throw error.response?.data;
 };
 

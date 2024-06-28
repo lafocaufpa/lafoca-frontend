@@ -4,6 +4,7 @@ import Linkedin from '@images/socialMedia/linkedin.svg';
 import Portifolio from '@images/socialMedia/portifolio.svg';
 import Email from '@images/socialMedia/e-mail.svg';
 import Image from 'next/image';
+import userDefault from '@images/default_user.png';
 import SocialMedia from '@/components/member/socialMedia/SocialMedia';
 import { useState } from 'react';
 
@@ -32,7 +33,7 @@ export default function MemberInfo({ member }) {
     <section className={styles.member}>
       <div className={styles.memberInfo}>
         <div className={styles.memberPhoto}>
-          <Image src={member?.urlPhoto} alt={member?.fullName} width={196} height={196} quality={100} />
+          <Image src={member?.urlPhoto || userDefault} alt={member?.fullName} width={196} height={196} quality={100} />
         </div>
         <h1 className={styles.memberName}>{member?.fullName}</h1>
         <p className="global__paragraph">{member?.description}</p>
