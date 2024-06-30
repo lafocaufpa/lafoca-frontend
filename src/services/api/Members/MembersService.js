@@ -37,8 +37,8 @@ export const MemberService = {
     });
   },
 
-  list: async (page = 0, resultsPerPage = 10, sort = 'fullName,asc') => {
-    const response = await api.get(routes.members.list(page, resultsPerPage, sort));
+  list: async (page = 0, resultsPerPage = 10, sort = 'fullName,asc', fullName, yearClassId) => {
+    const response = await api.get(routes.members.list(page, resultsPerPage, sort, fullName, yearClassId));
     return response.data;
   },
 

@@ -3,7 +3,7 @@ import routes from '@/routes/routes';
 import getCookie from '@/components/auth/authorization/getCookie';
 
 export const classService = {
-  list: async (page = 0, resultsPerPage = 10, sort = 'year,desc') => {
+  list: async (page = 0, resultsPerPage = 10, sort = 'year,asc') => {
     const token = await getCookie();
     const url = routes.classes.list(page, resultsPerPage, sort);
 

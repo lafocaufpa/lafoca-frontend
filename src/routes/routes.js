@@ -15,10 +15,13 @@ const routes = {
     session: '/check-token',
   },
   members: {
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = '', fullName = '', yearClassId = '') => {
       let url = `${MEMBERS}/resumed?page=${page}&size=${resultsPerPage}&sort=${sort}`;
-      if (query) {
-        url += `&fullName=${query}`;
+      if (fullName) {
+        url += `&fullName=${fullName}`;
+      }
+      if(yearClassId){
+        url += `&yearClassId=${yearClassId}`;
       }
       return url;
     },

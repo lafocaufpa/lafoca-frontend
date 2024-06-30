@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import url from '@/routes/url';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
+import { classService } from '@/services/api/yearClass/YearClasses';
 
 export default function MemberPage() {
   const [members, setMembers] = useState([]);
@@ -14,6 +16,8 @@ export default function MemberPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(10);
+  const [selectedYearClass, setSelectedYearClass] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
   const [showDeletedAlert, setShowDeletedAlert] = useState(false);
@@ -24,9 +28,9 @@ export default function MemberPage() {
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 10) => {
+  const fetchData = async (page = 0, resultsPerPage = 10, fullName = '', yearClassId = '') => {
     try {
-      const data = await MemberService.list(page, resultsPerPage);
+      const data = await MemberService.list(page, resultsPerPage, 'fullName,asc', fullName, yearClassId);
       setMembers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -36,8 +40,8 @@ export default function MemberPage() {
   };
 
   useEffect(() => {
-    fetchData(currentPage, resultsPerPage);
-  }, [currentPage, resultsPerPage]);
+    fetchData(currentPage, resultsPerPage, searchQuery, selectedYearClass?.value);
+  }, [currentPage, resultsPerPage, searchQuery, selectedYearClass]);
 
   useEffect(() => {
     if (showConfirmModal) {
@@ -73,7 +77,8 @@ export default function MemberPage() {
     try {
       await MemberService.delete(memberId);
       showSuccessMessage('Membro excluído com sucesso.');
-      fetchData(currentPage, resultsPerPage);
+      fetchData(currentPage, resultsPerPage, searchQuery, selectedYearClass?.value);
+
     } catch (error) {
       showError(error?.userMessage || 'Erro ao excluir membro.');
     }
@@ -109,7 +114,38 @@ export default function MemberPage() {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      handleConfirmDelete();
+      handleSearch();
+    }
+  };
+
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearch = () => {
+    fetchData(0, resultsPerPage, searchQuery, selectedYearClass?.value);
+    setCurrentPage(0);
+  };
+
+  const loadYearClasses = async (inputValue, loadedOptions, { page }) => {
+    try { 
+      const response = await classService.list(page, 5, undefined, inputValue);
+      return {
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.year,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching options:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
     }
   };
 
@@ -130,7 +166,7 @@ export default function MemberPage() {
       ) : (
         <div>
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center"> 
               <label htmlFor="resultsPerPage" className="d-inline-block mb-0 me-2">Mostrando</label>
               <input
                 type="number"
@@ -142,6 +178,27 @@ export default function MemberPage() {
               />
               <span className="text-reset">resultados por página</span>
             </div>
+            <div className="d-flex align-items-center">
+              <AsyncSelect
+                loadOptions={loadYearClasses}
+                placeholder="Selecione a turma"
+                value={selectedYearClass}
+                onChange={setSelectedYearClass}
+                additional={{ page: 0 }}
+                id="yearClassId"
+                label="Ano da Turma"
+              />
+              <input
+                type="text"
+                className="form-control me-2"
+                placeholder="Buscar por nome"
+                value={searchQuery}
+                onChange={handleSearchQueryChange}
+                onKeyDown={handleKeyDown}
+              />
+              <button className="btn btn-primary" onClick={handleSearch}>Buscar</button>
+            </div>
+            
             <span className="text-reset">{getResultMessage()}</span>
           </div>
           <div className="table-responsive">
