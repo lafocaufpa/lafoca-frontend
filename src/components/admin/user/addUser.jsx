@@ -4,11 +4,11 @@ import React, { useState, useRef } from 'react';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ImageCropProvider from '@/providers/ImageCropProvider';
-import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelect/AsyncSelect';
+import InputField from '@/components/inputField/InputField';
+import PhotoSelector from '@/components/photoSelector/photoSelector';
 
 export default function AddUser() {
   const [email, setEmail] = useState('');
@@ -119,12 +119,8 @@ export default function AddUser() {
       showSuccessMessage('Usuário adicionado com sucesso!');
 
     } catch (error) {
-      showError(error.userMessage || 'Erro ao adicionar usuário.');
+      showError(error?.userMessage || 'Erro ao adicionar usuário.');
     }
-  };
-
-  const handleGroupChange = (selectedOptions) => {
-    setSelectedGroups(selectedOptions);
   };
 
   const handleRemovePhoto = async () => {
@@ -144,52 +140,40 @@ export default function AddUser() {
           <AlertMessage type="error" message={error} onClose={hideError} />
         )}
         <form onSubmit={handleSubmit}>
-          <div className="form-group mb-3">
-            <label htmlFor="email" className="fw-bold mb-1">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="name" className="fw-bold mb-1">Nome</label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="password" className="fw-bold mb-1">Senha</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              className="form-control"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} 
-              onBlur={(e) => handlePasswordIsValid(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="confirmPassword" className="fw-bold mb-1">Confirme a Senha</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              className="form-control"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)} 
-              onBlur={handleConfirmPasswordBlur}
-              required
-            />
-          </div>
+          <InputField
+            label="Email"
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <InputField
+            label="Nome"
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <InputField
+            label="Senha"
+            type={showPassword ? 'text' : 'password'}
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={(e) => handlePasswordIsValid(e.target.value)}
+            required
+          />
+          <InputField
+            label="Confirme a Senha"
+            type={showPassword ? 'text' : 'password'}
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            onBlur={handleConfirmPasswordBlur}
+            required
+          />
           <div className="form-group form-check mb-3">
             <input
               type="checkbox"
@@ -202,35 +186,24 @@ export default function AddUser() {
               Mostrar Senha
             </label>
           </div>
-          <div className="form-group mb-3">
-            <label htmlFor="groups" className="fw-bold mb-1">Grupos</label>
-            <AsyncSelect
-              loadOptions={loadGroupOptions}
-              placeholder="Selecione um grupo para o usuário"
-              isMulti
-              value={selectedGroups}
-              onChange={handleGroupChange}
-              additional={{
-                page: 0,
-              }}
-              id="groups"
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <div className='d-flex justify-content-center align-items-center flex-column'>
-              <label htmlFor="photo" className="fw-bold mb-1">Selecione uma foto</label>
-              <ImageCropProvider>
-                <ImageCrop photo={photo} setPhoto={setPhoto} ref={imageCropRef} />
-              </ImageCropProvider>
-              {photo && (
-                <button type="button" className="btn btn-danger mt-3" onClick={handleRemovePhoto}>
-                  Remover Foto
-                </button>
-              )}
-            </div>
-          </div>
-
+          <AsyncSelect
+            loadOptions={loadGroupOptions}
+            service={groupService}
+            placeholder="Selecione grupos de segurança para o usuário"
+            label="Grupos de Segurança"
+            isMulti
+            value={selectedGroups}
+            onChange={setSelectedGroups}
+            additional={{ page: 0 }}
+            id="selectedGroups"
+            required
+          />
+          <PhotoSelector
+            photo={photo}
+            setPhoto={setPhoto}
+            imageCropRef={imageCropRef}
+            handleRemovePhoto={handleRemovePhoto}
+          />
           <button type="submit" className="btn btn-primary w-100">Adicionar Usuário</button>
         </form>
       </div>

@@ -31,7 +31,7 @@ export default function MemberPage() {
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      showError(error.message || 'Erro ao buscar membros.');
+      showError(error?.userMessage || 'Erro ao buscar membros.');
     }
   };
 
@@ -75,7 +75,7 @@ export default function MemberPage() {
       showSuccessMessage('Membro excluído com sucesso.');
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
-      showError(error.message || 'Erro ao excluir membro.');
+      showError(error?.userMessage || 'Erro ao excluir membro.');
     }
   };
 

@@ -26,7 +26,6 @@ export default async function SideBar() {
 
     const path = routes.users.readByEmail(session.user.email);
     const url = baseURL.concat(path);
-    
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -35,13 +34,14 @@ export default async function SideBar() {
         revalidate: 10
       }
     });
-
-
     if (!response.ok) {
+    
       throw new Error('Failed to fetch user data');
     }
 
     user = await response.json();
+
+
   } catch (error) {
     return (
       <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>

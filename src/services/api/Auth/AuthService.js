@@ -23,7 +23,7 @@ export const AuthApiService = {
       const response = await api.post(routes.auth.session, data);
       return response?.data;
     } catch (error) {
-      console.error('Erro ao fazer login:', error.userMessage);
+      console.error('Erro ao fazer login:', error?.userMessage);
       redirect(`?${error.path}`);
     }
   }

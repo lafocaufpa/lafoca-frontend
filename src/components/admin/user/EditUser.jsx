@@ -6,11 +6,12 @@ import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
 import { AsyncPaginate } from 'react-select-async-paginate';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ImageCropProvider from '@/providers/ImageCropProvider';
-import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
 import url from '@/routes/url';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
+import PhotoSelector from '@/components/photoSelector/photoSelector';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
+import InputField from '@/components/inputField/InputField';
 
 export default function EditUser({ userId }) {
   const [email, setEmail] = useState('');
@@ -32,14 +33,14 @@ export default function EditUser({ userId }) {
     const fetchUser = async () => {
       try {
         const user = await userService.readByUserId(userId);
-        setEmail(user.email);
-        setName(user.name);
+        setEmail(user?.email);
+        setName(user?.name);
         setSelectedGroups(user.groups.map(group => ({ value: group.id, label: group.name })));
         if (user.urlPhoto) {
-          setPhoto(user.urlPhoto);
+          setPhoto(user?.urlPhoto);
         }
       } catch (error) {
-        showError(error.userMessage || 'Erro ao carregar usuário.');
+        showError(error?.userMessage || 'Erro ao carregar usuário.');
       }
     };
 
@@ -108,7 +109,7 @@ export default function EditUser({ userId }) {
       }, 3000);
 
     } catch (error) {
-      showError(error.userMessage || 'Erro ao editar usuário.');
+      showError(error?.userMessage || 'Erro ao editar usuário.');
     }
   };
 
@@ -136,17 +137,18 @@ export default function EditUser({ userId }) {
       setConfirmPassword('');
       showSuccessMessage('Senha alterada com sucesso!');
     } catch (error) {
-      showError(error.userMessage || 'Erro ao alterar a senha.');
+      showError(error?.userMessage || 'Erro ao alterar a senha.');
     }
   };
 
-  const loadGroupOptions = async (inputValue, loadedOptions, { page }) => {
+
+  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
-      const response = await groupService.list(page, 5, 'name,asc', inputValue);
+      const response = await service.list(page, 5, undefined, inputValue);
       return {
-        options: response.content.map(group => ({
-          value: group.id,
-          label: group.name,
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.name || item.title || item.year,
         })),
         hasMore: !response.lastPage,
         additional: {
@@ -154,16 +156,12 @@ export default function EditUser({ userId }) {
         },
       };
     } catch (error) {
-      console.error('Error fetching groups:', error);
+      console.error('Error fetching options:', error);
       return {
         options: [],
         hasMore: false,
       };
     }
-  };
-
-  const handleGroupChange = (selectedOptions) => {
-    setSelectedGroups(selectedOptions);
   };
 
   const handleRemovePhoto = async () => {
@@ -175,7 +173,7 @@ export default function EditUser({ userId }) {
       }
       showSuccessMessage('Foto removida com sucesso!');
     } catch (error) {
-      showError(error.userMessage || 'Erro ao remover a foto.');
+      showError(error?.userMessage || 'Erro ao remover a foto.');
     }
   };
 
@@ -190,89 +188,40 @@ export default function EditUser({ userId }) {
           <AlertMessage type="error" message={error} onClose={hideError} />
         )}
         <form onSubmit={handleUserSubmit}>
-          <div className="form-group mb-3">
-            <label htmlFor="email" className="fw-bold mb-1">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="name" className="fw-bold mb-1">Nome</label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="groups" className="fw-bold mb-1">Grupos</label>
-            <AsyncPaginate
-              isMulti
-              name="groups"
-              loadOptions={loadGroupOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              placeholder='Selecione um grupo para o usuário'
-              onChange={handleGroupChange}
-              value={selectedGroups}
-              additional={{
-                page: 0,
-              }}
-              id="groups"
-              required
-              styles={{
-                menu: base => ({
-                  ...base,
-                  zIndex: 9999,
-                  cursor: 'pointer'
-                }),
-                menuList: base => ({
-                  ...base,
-                  maxHeight: '200px',
-                  overflowY: 'auto',
-                  cursor: 'pointer'
-                }),
-                control: (styles) => ({
-                  ...styles,
-                  cursor: 'pointer',
-                }),
-                dropdownIndicator: (styles) => ({
-                  ...styles,
-                  cursor: 'pointer'
-                }),
-                option: (styles, { isFocused, isSelected }) => ({
-                  ...styles,
-                  cursor: 'pointer',
-                  backgroundColor: isFocused ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando focado
-                  ':active': {
-                    ...styles[':active'],
-                    backgroundColor: isSelected ? '#d3d3d3' : 'transparent', // Exemplo de estilo quando selecionado
-                  }
-                }),
-              }}
-            />
-          </div>
-          <div className="form-group mb-3">
-            <div className='d-flex justify-content-center align-items-center flex-column'>
-              <label htmlFor="photo" className="fw-bold mb-1">Selecione uma foto</label>
-              <ImageCropProvider>
-                <ImageCrop photo={photo} setPhoto={setPhoto} ref={imageCropRef} />
-              </ImageCropProvider>
-              {photo && (
-                <div className='d-flex justify-content-center align-items-center mt-3'>
-                  <button type="button" className="btn btn-danger" onClick={handleRemovePhoto}>Remover Foto</button>
-                </div>
-              )}
-            </div>
-          </div>
+          <InputField
+            label="Email"
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <InputField
+            label="Nome"
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <AsyncSelect
+            loadOptions={loadOptions}
+            service={groupService}
+            placeholder="Selecione grupos de segurança para o usuário"
+            label="Grupos de Segurança"
+            isMulti
+            value={selectedGroups}
+            onChange={setSelectedGroups}
+            additional={{ page: 0 }}
+            id="selectedGroups"
+            required
+          />
+          <PhotoSelector
+            photo={photo}
+            setPhoto={setPhoto}
+            imageCropRef={imageCropRef}
+            handleRemovePhoto={handleRemovePhoto}
+          />
           <button type="submit" className="btn btn-primary w-100 mt-3">Salvar</button>
         </form>
         <h4 className="text-center mb-4 mt-4">Alterar Senha</h4>

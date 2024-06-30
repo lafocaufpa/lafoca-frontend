@@ -3,17 +3,16 @@
 import React, { useState, useRef } from 'react';
 import { MemberService } from '@/services/api/Members/MembersService';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ImageCropProvider from '@/providers/ImageCropProvider';
-import ImageCrop from '@components/admin/ImageCrop/ImageCrop';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@components/inputField/InputField';
-import AsyncSelect from '@/components/asyncSelect/AsyncSelect';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import { articleService } from '@/services/api/article/ArticleService';
 import { projectsService } from '@/services/api/Projects/ProjectsService';
 import { functionService } from '@/services/api/function/FunctionService';
 import { skillService } from '@/services/api/skill/SkillService';
 import { classService } from '@/services/api/yearClass/YearClasses';
+import PhotoSelector from '@/components/photoSelector/photoSelector';
 
 const formatDate = (date) => {
   const [year, month, day] = date.split('-');
@@ -42,9 +41,28 @@ export default function AddMember() {
   const [includeTCC, setIncludeTCC] = useState(false);
   const imageCropRef = useRef(null);
 
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+      return url.length > 10;
+    } catch (e) {
+      return false;
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     hideError();
+
+    if (linkPortifolio && !isValidUrl(linkPortifolio)) {
+      showError('O link do portifólio é inválido.');
+      return;
+    }
+
+    if (linkLinkedin && !isValidUrl(linkLinkedin)) {
+      showError('O link do LinkedIn é inválido.');
+      return;
+    }
 
     const memberData = {
       fullName,
@@ -53,9 +71,9 @@ export default function AddMember() {
       description,
       biography,
       yearClassId: parseInt(yearClassId.value),
-      functionMemberId: parseInt(functionMemberId.value),
-      linkPortifolio,
-      linkLinkedin,
+      functionMemberId: functionMemberId ? parseInt(functionMemberId?.value) : null,
+      linkPortifolio: linkPortifolio.trim() === '' ? null : linkPortifolio,
+      linkLinkedin: linkLinkedin.trim() === '' ? null : linkLinkedin,
       tcc: includeTCC ? {
         name: tccName,
         url: tccUrl,
@@ -78,7 +96,7 @@ export default function AddMember() {
       showSuccessMessage('Membro adicionado com sucesso!');
 
     } catch (error) {
-      showError(error.userMessage || 'Erro ao adicionar membro.');
+      showError(error?.userMessage || 'Erro ao adicionar membro.');
     }
   };
 
@@ -188,49 +206,42 @@ export default function AddMember() {
             maxLength={500}
             required
           />
-          <div className="form-group mb-3">
-            <label htmlFor="yearClassId" className="fw-bold mb-1">Classe Anual</label>
-            <AsyncSelect
-              loadOptions={(inputValue, loadedOptions, additional) => 
-                loadOptions(classService, inputValue, loadedOptions, additional)}
-              placeholder="Selecione uma classe"
-              value={yearClassId}
-              onChange={setYearClassId}
-              additional={{ page: 0 }}
-              id="yearClassId"
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="functionMemberId" className="fw-bold mb-1">Função do Membro</label>
-            <AsyncSelect
-              loadOptions={(inputValue, loadedOptions, additional) => 
-                loadOptions(functionService, inputValue, loadedOptions, additional)}
-              placeholder="Selecione uma função"
-              value={functionMemberId}
-              onChange={setFunctionMemberId}
-              additional={{ page: 0 }}
-              id="functionMemberId"
-              required
-            />
-          </div>
+          <AsyncSelect
+            loadOptions={loadOptions}
+            placeholder="Selecione a turma"
+            service={classService}
+            value={yearClassId}
+            onChange={setYearClassId}
+            additional={{ page: 0 }}
+            id="yearClassId"
+            label="Ano da Turma"
+            required
+          />
+          <AsyncSelect
+            id="functionMemberId"
+            label="Função do Membro"
+            placeholder="Selecione a função do membro"
+            value={functionMemberId}
+            onChange={setFunctionMemberId}
+            service={functionService}
+            loadOptions={loadOptions}
+            additionalProps={{ page: 0 }}
+          />
           <InputField
-            label="Link do Portfólio"
+            label="Link do Portifólio"
             type="url"
             id="linkPortifolio"
             value={linkPortifolio}
             onChange={(e) => setLinkPortifolio(e.target.value)}
             maxLength={225}
-            required
           />
           <InputField
-            label="Link do LinkedIn"
+            label="Link do Linkedin"
             type="url"
             id="linkLinkedin"
             value={linkLinkedin}
             onChange={(e) => setLinkLinkedin(e.target.value)}
             maxLength={225}
-            required
           />
           <div className="form-check mb-3">
             <input
@@ -272,62 +283,45 @@ export default function AddMember() {
               />
             </>
           )}
-          <div className="form-group mb-3">
-            <label htmlFor="skillsId" className="fw-bold mb-1">Habilidades</label>
-            <AsyncSelect
-              loadOptions={(inputValue, loadedOptions, additional) => 
-                loadOptions(skillService, inputValue, loadedOptions, additional)}
-              placeholder="Selecione habilidades"
-              isMulti
-              value={skillsId}
-              onChange={setSkillsId}
-              additional={{ page: 0 }}
-              id="skillsId"
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="articlesId" className="fw-bold mb-1">Artigos</label>
-            <AsyncSelect
-              loadOptions={(inputValue, loadedOptions, additional) => 
-                loadOptions(articleService, inputValue, loadedOptions, additional)}
-              placeholder="Selecione artigos"
-              isMulti
-              value={articlesId}
-              onChange={setArticlesId}
-              additional={{ page: 0 }}
-              id="articlesId"
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <label htmlFor="projectsId" className="fw-bold mb-1">Projetos</label>
-            <AsyncSelect
-              loadOptions={(inputValue, loadedOptions, additional) => 
-                loadOptions(projectsService, inputValue, loadedOptions, additional)}
-              placeholder="Selecione projetos"
-              isMulti
-              value={projectsId}
-              onChange={setProjectsId}
-              additional={{ page: 0 }}
-              id="projectsId"
-              required
-            />
-          </div>
-          <div className="form-group mb-3">
-            <div className='d-flex justify-content-center align-items-center flex-column'>
-              <label htmlFor="photo" className="fw-bold mb-1">Selecione uma foto</label>
-              <ImageCropProvider>
-                <ImageCrop photo={photo} setPhoto={setPhoto} ref={imageCropRef} />
-              </ImageCropProvider>
-              {photo && (
-                <button type="button" className="btn btn-danger mt-3" onClick={handleRemovePhoto}>
-                  Remover Foto
-                </button>
-              )}
-            </div>
-          </div>
-
+          <AsyncSelect
+            id="skillsId"
+            label="Habilidades"
+            placeholder="Selecione habilidades"
+            value={skillsId}
+            onChange={setSkillsId}
+            service={skillService}
+            loadOptions={loadOptions}
+            additionalProps={{ page: 0 }}
+            isMulti
+          />
+          <AsyncSelect
+            id="articlesId"
+            label="Artigos"
+            placeholder="Selecione artigos"
+            value={articlesId}
+            onChange={setArticlesId}
+            service={articleService}
+            loadOptions={loadOptions}
+            additionalProps={{ page: 0 }}
+            isMulti
+          />
+          <AsyncSelect
+            id="projectsId"
+            label="Projetos"
+            placeholder="Selecione projetos"
+            value={projectsId}
+            onChange={setProjectsId}
+            service={projectsService}
+            loadOptions={loadOptions}
+            additionalProps={{ page: 0 }}
+            isMulti
+          />
+          <PhotoSelector
+            photo={photo}
+            setPhoto={setPhoto}
+            imageCropRef={imageCropRef}
+            handleRemovePhoto={handleRemovePhoto}
+          />
           <button type="submit" className="btn btn-primary w-100">Adicionar Membro</button>
         </form>
       </div>

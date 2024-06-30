@@ -31,7 +31,8 @@ export default function UserPage() {
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      showError(error.message || 'Erro ao buscar usuários.');
+      console.log(error);
+      showError(error?.userMessage || 'Erro ao buscar usuários.');
     }
   };
 
@@ -75,7 +76,7 @@ export default function UserPage() {
       showSuccessMessage('Usuário excluído com sucesso.');
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
-      showError(error.message || 'Erro ao excluir usuário.');
+      showError(error?.userMessage || 'Erro ao excluir usuário.');
     }
   };
 
