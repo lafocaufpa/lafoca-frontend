@@ -3,35 +3,36 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
-import url from '@/routes/url';
-import { userService } from '@/services/api/Users/UserService';
+import { classService } from '@/services/api/yearClass/YearClasses';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
+import url from '@/routes/url';
 
-export default function UserPage() {
-  const [users, setUsers] = useState([]);
+export default function ClassesPage() {
+  const [classes, setClasses] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
-  const [resultsPerPage, setResultsPerPage] = useState(10);
+  const [resultsPerPage, setResultsPerPage] = useState(5);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [userToDelete, setUserToDelete] = useState(null);
+  const [classToDelete, setClassToDelete] = useState(null);
   const [showDeletedAlert, setShowDeletedAlert] = useState(false);
-
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [year, setYear] = useState('');
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
 
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 10) => {
+  const fetchData = async (page = 0, resultsPerPage = 5, year = '') => {
     try {
-      const data = await userService.list(page, resultsPerPage);
-      setUsers(data.content);
+      const data = await classService.list(page, resultsPerPage, 'year,asc', year);
+      setClasses(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao buscar usuários.');
+      showError(error?.userMessage || 'Erro ao buscar turmas.');
     }
   };
 
@@ -65,46 +66,46 @@ export default function UserPage() {
     setCurrentPage(0);
   };
 
-  const handleEdit = (user) => {
-    router.push(url.admin.usuario.editar(user.id));
+  const handleEdit = (classData) => {
+    router.push(url.admin.turmas.editar(classData.id));
   };
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (classId) => {
     try {
-      await userService.delete(userId);
-      showSuccessMessage('Usuário excluído com sucesso.');
+      await classService.delete(classId);
+      showSuccessMessage('Turma excluída com sucesso.');
       fetchData(currentPage, resultsPerPage);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao excluir usuário.');
+      showError(error?.userMessage || 'Erro ao excluir turma.');
     }
   };
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} usuários de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} turmas de ${totalResults} resultados`;
   };
 
-  const handleAddUser = () => {
-    router.push(url.admin.usuario.adicionar);
-  };
-
-  const confirmDelete = (userId) => {
-    setUserToDelete(userId);
+  const confirmDelete = (classId) => {
+    setClassToDelete(classId);
     setShowConfirmModal(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirmModal(false);
-    if (userToDelete) {
-      await handleDelete(userToDelete);
-      setUserToDelete(null);
+    if (classToDelete) {
+      await handleDelete(classToDelete);
+      setClassToDelete(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
-    setUserToDelete(null);
+    setClassToDelete(null);
+  };
+
+  const handleCancelAdd = () => {
+    setShowAddModal(false);
   };
 
   const handleKeyDown = (event) => {
@@ -113,12 +114,28 @@ export default function UserPage() {
     }
   };
 
+  const handleAddClassSubmit = async () => {
+    const classData = {
+      year: parseInt(year),
+    };
+
+    try {
+      await classService.add(classData);
+      setYear('');
+      setShowAddModal(false);
+      showSuccessMessage('Turma adicionada com sucesso!');
+      fetchData(currentPage, resultsPerPage);
+    } catch (error) {
+      showError(error?.userMessage || 'Erro ao adicionar turma.');
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Configurações de Usuário</h1>
-        <button className="btn btn-success" onClick={handleAddUser}>
-          Adicionar Usuário
+        <h1 className="mb-0">Turmas</h1>
+        <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
+          Adicionar Turma
         </button>
       </div>
       {successMessage && (
@@ -128,12 +145,12 @@ export default function UserPage() {
         <AlertMessage type="error" message={error} onClose={hideError} />
       )}
       {error ? (
-        <div className="alert alert-danger">Erro ao buscar usuários: {error}</div>
+        <div className="alert alert-danger">Erro ao buscar turmas: {error}</div>
       ) : (
         <div>
           {showDeletedAlert && (
             <div className="alert alert-success alert-dismissible fade show" role="alert">
-              Usuário excluído com sucesso.
+              Turma excluída com sucesso.
               <button
                 type="button"
                 className="btn-close"
@@ -161,28 +178,24 @@ export default function UserPage() {
             <table className="table table-striped table-hover">
               <thead className="thead-dark">
                 <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Grupos</th>
-                  <th>Ações</th>
+                  <th>Ano</th>
+                  <th className='text-center'>Ações</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.groups.map((group) => group.name).join(', ')}</td>
-                    <td>
+                {classes.map((classData) => (
+                  <tr key={classData.id}>
+                    <td>{classData.year}</td>
+                    <td className='text-center'>
                       <button
                         className="btn btn-primary btn-sm me-1"
-                        onClick={() => handleEdit(user)}
+                        onClick={() => handleEdit(classData)}
                       >
                         Editar
                       </button>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => confirmDelete(user.id)}
+                        onClick={() => confirmDelete(classData.id)}
                       >
                         Deletar
                       </button>
@@ -222,34 +235,101 @@ export default function UserPage() {
                 </li>
               </ul>
             </nav>
-            <div className="result-message">{getResultMessage()}</div>
+            <div className="text-muted">{getResultMessage()}</div>
           </div>
         </div>
       )}
 
       {showConfirmModal && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog">
+        <div
+          className="modal fade show"
+          style={{ display: 'block' }}
+          tabIndex="-1"
+          aria-labelledby="confirmModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button type="button" className="btn-close" onClick={handleCancelDelete}></button>
+                <h5 className="modal-title" id="confirmModalLabel">Confirmar Exclusão</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={handleCancelDelete}
+                ></button>
               </div>
               <div className="modal-body">
-                <p>Tem certeza que deseja excluir este usuário?</p>
+              Tem certeza de que deseja excluir esta turma?
               </div>
               <div className="modal-footer">
                 <button
-                  ref={deleteButtonRef} 
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCancelDelete}
+                >
+                Cancelar
+                </button>
+                <button
                   type="button"
                   className="btn btn-danger"
+                  ref={deleteButtonRef}
                   onClick={handleConfirmDelete}
                   onKeyDown={handleKeyDown}
                 >
-                  Excluir
+                Excluir
                 </button>
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAddModal && (
+        <div
+          className="modal fade show"
+          style={{ display: 'block' }}
+          tabIndex="-1"
+          aria-labelledby="addModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="addModalLabel">Adicionar Turma</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={handleCancelAdd}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="form-group">
+                  <label htmlFor="year">Ano</label>
+                  <input
+                    type="number"
+                    id="year"
+                    className="form-control"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCancelAdd}
+                >
+                Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleAddClassSubmit}
+                >
+                Adicionar
                 </button>
               </div>
             </div>

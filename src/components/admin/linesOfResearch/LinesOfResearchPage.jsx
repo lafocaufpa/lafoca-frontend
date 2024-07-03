@@ -3,41 +3,45 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
-import url from '@/routes/url';
-import { userService } from '@/services/api/Users/UserService';
+import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
+import url from '@/routes/url';
+import InputField from '@/components/inputField/InputField'; // Importando componente de campo de input
 
-export default function UserPage() {
-  const [users, setUsers] = useState([]);
+export default function LinesOfResearchPage() {
+  const [linesOfResearch, setLinesOfResearch] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState(''); // Novo estado para o termo de busca
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [userToDelete, setUserToDelete] = useState(null);
+  const [lineToDelete, setLineToDelete] = useState(null);
   const [showDeletedAlert, setShowDeletedAlert] = useState(false);
-
+  const [showAddModal, setShowAddModal] = useState(false); // State para controlar a exibição do modal de adição
+  const [name, setName] = useState(''); // State para o nome da nova linha de pesquisa
+  const [description, setDescription] = useState(''); // State para a descrição da nova linha de pesquisa
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
 
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 10) => {
+  const fetchData = async (page = 0, resultsPerPage = 10, name = '') => {
     try {
-      const data = await userService.list(page, resultsPerPage);
-      setUsers(data.content);
+      const data = await linesOfResearchService.list(page, resultsPerPage, 'name,asc', name);
+      setLinesOfResearch(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao buscar usuários.');
+      showError(error?.userMessage || 'Erro ao buscar linhas de pesquisa.');
     }
   };
 
   useEffect(() => {
-    fetchData(currentPage, resultsPerPage);
-  }, [currentPage, resultsPerPage]);
+    fetchData(currentPage, resultsPerPage, searchTerm);
+  }, [currentPage, resultsPerPage, searchTerm]);
 
   useEffect(() => {
     if (showConfirmModal) {
@@ -65,46 +69,46 @@ export default function UserPage() {
     setCurrentPage(0);
   };
 
-  const handleEdit = (user) => {
-    router.push(url.admin.usuario.editar(user.id));
+  const handleEdit = (line) => {
+    router.push(url.admin.linhadepesquisa.editar(line.id));
   };
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (lineId) => {
     try {
-      await userService.delete(userId);
-      showSuccessMessage('Usuário excluído com sucesso.');
-      fetchData(currentPage, resultsPerPage);
+      await linesOfResearchService.delete(lineId);
+      showSuccessMessage('Linha de pesquisa excluída com sucesso.');
+      fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao excluir usuário.');
+      showError(error?.userMessage || 'Erro ao excluir linha de pesquisa.');
     }
   };
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} usuários de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} linhas de pesquisa de ${totalResults} resultados`;
   };
 
-  const handleAddUser = () => {
-    router.push(url.admin.usuario.adicionar);
-  };
-
-  const confirmDelete = (userId) => {
-    setUserToDelete(userId);
+  const confirmDelete = (lineId) => {
+    setLineToDelete(lineId);
     setShowConfirmModal(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirmModal(false);
-    if (userToDelete) {
-      await handleDelete(userToDelete);
-      setUserToDelete(null);
+    if (lineToDelete) {
+      await handleDelete(lineToDelete);
+      setLineToDelete(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
-    setUserToDelete(null);
+    setLineToDelete(null);
+  };
+
+  const handleCancelAdd = () => {
+    setShowAddModal(false);
   };
 
   const handleKeyDown = (event) => {
@@ -113,12 +117,30 @@ export default function UserPage() {
     }
   };
 
+  const handleAddLineSubmit = async () => {
+    const lineData = {
+      name,
+      description,
+    };
+
+    try {
+      await linesOfResearchService.add(lineData);
+      setName('');
+      setDescription('');
+      setShowAddModal(false); // Após adicionar com sucesso, fecha o modal
+      showSuccessMessage('Linha de pesquisa adicionada com sucesso!');
+      fetchData(currentPage, resultsPerPage, searchTerm);
+    } catch (error) {
+      showError(error?.userMessage || 'Erro ao adicionar linha de pesquisa.');
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Configurações de Usuário</h1>
-        <button className="btn btn-success" onClick={handleAddUser}>
-          Adicionar Usuário
+        <h1 className="mb-0">Linhas de Pesquisa</h1>
+        <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
+          Adicionar Linha de Pesquisa
         </button>
       </div>
       {successMessage && (
@@ -128,12 +150,12 @@ export default function UserPage() {
         <AlertMessage type="error" message={error} onClose={hideError} />
       )}
       {error ? (
-        <div className="alert alert-danger">Erro ao buscar usuários: {error}</div>
+        <div className="alert alert-danger">Erro ao buscar linhas de pesquisa: {error}</div>
       ) : (
         <div>
           {showDeletedAlert && (
             <div className="alert alert-success alert-dismissible fade show" role="alert">
-              Usuário excluído com sucesso.
+              Linha de pesquisa excluída com sucesso.
               <button
                 type="button"
                 className="btn-close"
@@ -156,33 +178,40 @@ export default function UserPage() {
               />
               <span className="ms-2 text-reset">resultados por página</span>
             </div>
+            <div className="col-md-4">
+              <InputField
+                label="Buscar por Nome"
+                type="text"
+                id="searchTerm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
           </div>
           <div className="table-responsive">
             <table className="table table-striped table-hover">
               <thead className="thead-dark">
                 <tr>
                   <th>Nome</th>
-                  <th>Email</th>
-                  <th>Grupos</th>
+                  <th>Descrição</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.groups.map((group) => group.name).join(', ')}</td>
+                {linesOfResearch.map((line) => (
+                  <tr key={line.id}>
+                    <td>{line.name}</td>
+                    <td>{line.description}</td>
                     <td>
                       <button
                         className="btn btn-primary btn-sm me-1"
-                        onClick={() => handleEdit(user)}
+                        onClick={() => handleEdit(line)}
                       >
                         Editar
                       </button>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => confirmDelete(user.id)}
+                        onClick={() => confirmDelete(line.id)}
                       >
                         Deletar
                       </button>
@@ -222,11 +251,54 @@ export default function UserPage() {
                 </li>
               </ul>
             </nav>
-            <div className="result-message">{getResultMessage()}</div>
+            <span className="text-reset">{getResultMessage()}</span>
           </div>
         </div>
       )}
 
+      {/* Modal de Adicionar Linha de Pesquisa */}
+      {showAddModal && (
+        <div className="modal show fade" style={{ display: 'block' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Adicionar Linha de Pesquisa</h5>
+                <button type="button" className="btn-close" onClick={handleCancelAdd}></button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <InputField
+                    label="Nome"
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                  <InputField
+                    label="Descrição"
+                    type="text"
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                  />
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary" onClick={handleAddLineSubmit}>
+                  Adicionar
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Confirmação de Exclusão */}
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">
@@ -236,11 +308,11 @@ export default function UserPage() {
                 <button type="button" className="btn-close" onClick={handleCancelDelete}></button>
               </div>
               <div className="modal-body">
-                <p>Tem certeza que deseja excluir este usuário?</p>
+                <p>Tem certeza que deseja excluir esta linha de pesquisa?</p>
               </div>
               <div className="modal-footer">
                 <button
-                  ref={deleteButtonRef} 
+                  ref={deleteButtonRef}
                   type="button"
                   className="btn btn-danger"
                   onClick={handleConfirmDelete}

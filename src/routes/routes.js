@@ -8,6 +8,7 @@ const FUNCTIONS = '/functions-member';
 const YEARCLASSES = '/year-classes';
 const SKILLS = '/skills';
 const TCCS = '/tccs';
+const LINESOFRESEARCH = '/lines-of-research';
 
 const routes = {
   auth: {
@@ -71,15 +72,25 @@ const routes = {
 
   },
   article: {
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+    add: `${ARTICLES}`,
+    list: (page = 0, resultsPerPage = 10, sort = '', query = '', lineOfResearchId = '') => {
       let url = `${ARTICLES}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
       }
+
+      if (lineOfResearchId) {
+        url += `&lineOfResearchId=${lineOfResearchId}`;
+      }
       return url;
     },
+    update: (articleId) => `${ARTICLES}/${encodeURIComponent(articleId)}`,
+    readById: (articleId) => `${ARTICLES}/${encodeURIComponent(articleId)}`,
+    readBySlug: (articleSlug) => `${ARTICLES}/read/${encodeURIComponent(articleSlug)}`,
+    delete: (articleId) => `${ARTICLES}/${encodeURIComponent(articleId)}`,
   },
   function: {
+    add: `${FUNCTIONS}`,
     list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
       let url = `${FUNCTIONS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
@@ -87,6 +98,9 @@ const routes = {
       }
       return url;
     },
+    update: (functionId) => `${FUNCTIONS}/${encodeURIComponent(functionId)}`,
+    readById: (functionId) => `${FUNCTIONS}/${encodeURIComponent(functionId)}`,
+    delete: (functionId) => `${FUNCTIONS}/${encodeURIComponent(functionId)}`,
   },
   classes: {
     list: (page = 0, resultsPerPage = 10, sort = '') => {
@@ -96,9 +110,14 @@ const routes = {
     listMemberByYearClass: (yearClassId, page = 0, resultsPerPage = 10, sort = '') => {
       let url = `${YEARCLASSES}/${yearClassId}/members?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       return url;
-    }
+    },
+    add: `${YEARCLASSES}`,
+    update: (classId) => `${YEARCLASSES}/${encodeURIComponent(classId)}`,
+    readById: (classId) => `${YEARCLASSES}/${encodeURIComponent(classId)}`,
+    delete: (classId) => `${YEARCLASSES}/${encodeURIComponent(classId)}`,
   },
   skills: {
+    add: `${SKILLS}`,
     list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
       let url = `${SKILLS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
@@ -106,6 +125,11 @@ const routes = {
       }
       return url;
     },
+    update: (skillsId) => `${SKILLS}/${encodeURIComponent(skillsId)}`,
+    readById: (skillsId) => `${SKILLS}/${encodeURIComponent(skillsId)}`,
+    delete: (skillsId) => `${SKILLS}/${encodeURIComponent(skillsId)}`,
+    addPhoto: (skillsId) => `${SKILLS}/${encodeURIComponent(skillsId)}/pic`,
+    removePhoto: (skillsId) => `${SKILLS}/${encodeURIComponent(skillsId)}/pic`,
   },
   tccs: {
     add: `${TCCS}`,
@@ -116,6 +140,22 @@ const routes = {
       }
       return url;
     },
+    update: (tccId) => `${TCCS}/${encodeURIComponent(tccId)}`,
+    readById: (tccId) => `${TCCS}/${encodeURIComponent(tccId)}`,
+    delete: (tccId) => `${TCCS}/${encodeURIComponent(tccId)}`,
+  },
+  linesOfResearch: {
+    add: `${LINESOFRESEARCH}`,
+    list: (page = 0, resultsPerPage = 10, sort = '', name = '') => {
+      let url = `${LINESOFRESEARCH}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
+      if (name) {
+        url += `&name=${name}`;
+      }
+      return url;
+    },
+    update: (lineId) => `${LINESOFRESEARCH}/${encodeURIComponent(lineId)}`,
+    readById: (lineId) => `${LINESOFRESEARCH}/${encodeURIComponent(lineId)}`,
+    delete: (lineId) => `${LINESOFRESEARCH}/${encodeURIComponent(lineId)}`,
   }
 };
 

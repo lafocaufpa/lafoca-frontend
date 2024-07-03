@@ -3,12 +3,14 @@ import Image from 'next/image';
 import UserDefault from '@images/default_user.png';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { userService } from '@/services/api/Users/UserService';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Accordion, Card } from 'react-bootstrap';
 import LogoutButton from '@/components/auth/logout/LogoutButton';
 import url from '@/routes/url';
 import getCookie from '@/components/auth/authorization/getCookie';
 import routes from '@/routes/routes';
+import styles from './sidebar.module.css';
+import NavBar from './navbar';
 
 export default async function SideBar() {
   const session = await getServerSession();
@@ -44,38 +46,13 @@ export default async function SideBar() {
 
   } catch (error) {
     return (
-      <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
+      <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', width: '250px' }}>
         <p>Erro ao carregar dados do usuário.</p>
       </div>
     );
   }
 
-  const urlImage = user.urlPhoto || UserDefault;
-
-
   return (
-    <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', minWidth: '250px' }}>
-      <nav className="nav flex-column mb-auto">
-        <Link className="nav-link text-white" href={url.admin.usuario.home}>Usuário</Link>
-        <Link className="nav-link text-white" href={url.admin.membro.home}>Membro</Link>
-      </nav>
-      
-      <div className="mt-auto">
-        <div className="text-center border-top border-secondary pt-4 pb-3">
-          <div className="mb-3">
-            <Image
-              className="rounded-circle"
-              src={urlImage}
-              alt={user.name}
-              width={80}
-              height={80}
-            />
-          </div>
-          <h5 className="mb-1">{user.name}</h5>
-          <p className="mb-0 text-white fs-6">{user.email}</p>
-        </div>
-        <LogoutButton/>
-      </div>
-    </div>
+    <NavBar user={user}/>
   );
 }

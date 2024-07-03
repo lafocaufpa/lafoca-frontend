@@ -15,7 +15,36 @@ export const tccService = {
   },
   list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', query = '') => {
     const url = routes.tccs.list(page, resultsPerPage, sort, query);
+    console.log(url);
     const response = await api.get(url);
+    return response.data;
+  },
+  update: async (tccId, data) => {
+    const token = await getCookie();
+    const response = await api.put(routes.tccs.update(tccId), data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  },
+  delete: async (tccId) => {
+    const token = await getCookie();
+    const response = await api.delete(routes.tccs.delete(tccId), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  },
+  readById: async (tccId) => {
+    const token = await getCookie();
+    const url = routes.tccs.readById(tccId);
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   },
 };

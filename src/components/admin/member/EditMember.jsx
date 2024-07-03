@@ -105,8 +105,8 @@ export default function EditMember({ memberId }) {
       biography,
       yearClassId: parseInt(yearClass.value),
       functionMemberId: functionMemberId ? parseInt(functionMemberId?.value) : null,
-      linkPortifolio: linkPortifolio.trim() === '' ? null : linkPortifolio,
-      linkLinkedin: linkLinkedin.trim() === '' ? null : linkLinkedin,
+      linkPortifolio: linkPortifolio?.trim() === '' ? null : linkPortifolio,
+      linkLinkedin: linkLinkedin?.trim() === '' ? null : linkLinkedin,
       tcc: includeTCC ? {
         name: tccName,
         url: tccUrl,

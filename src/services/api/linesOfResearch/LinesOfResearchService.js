@@ -2,30 +2,28 @@ import api from '@services/api/httpClientService';
 import routes from '@/routes/routes';
 import getCookie from '@/components/auth/authorization/getCookie';
 
-export const functionService = {
+export const linesOfResearchService = {
   add: async (data) => {
     const token = await getCookie();
-    const response = await api.post(routes.function.add, data, {
+    const response = await api.post(routes.linesOfResearch.add, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
   },
-  list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', query = '') => {
+  list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', name) => {
     const token = await getCookie();
-    const url = routes.function.list(page, resultsPerPage, sort, query);
-
-    const response = await api.get(url, {
+    const response = await api.get(routes.linesOfResearch.list(page, resultsPerPage, sort, name), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
+    } );
     return response.data;
   },
-  update: async (functionId, data) => {
+  update: async (lineId, data) => {
     const token = await getCookie();
-    const response = await api.put(routes.function.update(functionId), data, {
+    const response = await api.put(routes.linesOfResearch.update(lineId), data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -33,22 +31,17 @@ export const functionService = {
     return response.data;
   },
 
-  delete: async (functionId) => {
+  delete: async (lineId) => {
     const token = await getCookie();
-    const response = await api.delete(routes.function.delete(functionId), {
+    const response = await api.delete(routes.linesOfResearch.delete(lineId), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
   },
-  readById: async (functionId) => {
-    const token = await getCookie();
-    const response = await api.get(routes.function.readById(functionId), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  readById: async (lineId) => {
+    const response = await api.get(routes.linesOfResearch.readById(lineId));
     return response.data;
   },
 };

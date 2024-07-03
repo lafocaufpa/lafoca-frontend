@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { userService } from '@/services/api/Users/UserService';
 import { groupService } from '@/services/api/groups/GroupService';
-import { AsyncPaginate } from 'react-select-async-paginate';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import url from '@/routes/url';
 import AlertMessage from '@/components/notification/AlertMessage';
