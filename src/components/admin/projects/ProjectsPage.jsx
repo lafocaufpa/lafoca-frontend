@@ -3,28 +3,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
-import { articleService } from '@/services/api/article/ArticleService';
+import { projectsService } from '@/services/api/Projects/ProjectsService';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import urlPath from '@/routes/url';
-import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 
-export default function ArticlesPage() {
-  const [articles, setArticles] = useState([]);
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(5);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [articleToDelete, setArticleToDelete] = useState(null);
+  const [projectToDelete, setProjectToDelete] = useState(null);
   const [showDeletedAlert, setShowDeletedAlert] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
-  const [journal, setJournal] = useState('');
-  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [year, setYear] = useState('');
+  const [completed, setCompleted] = useState(false);
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [lineId, setLineId] = useState(null);
@@ -36,12 +36,12 @@ export default function ArticlesPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
     try {
-      const data = await articleService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
-      setArticles(data.content);
+      const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
+      setProjects(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao buscar artigos.');
+      showError(error?.userMessage || 'Erro ao buscar projetos.');
     }
   };
 
@@ -75,42 +75,42 @@ export default function ArticlesPage() {
     setCurrentPage(0);
   };
 
-  const handleEdit = (article) => {
-    router.push(urlPath.admin.artigos.editar(article.id));
+  const handleEdit = (project) => {
+    router.push(urlPath.admin.projetos.editar(project.id));
   };
 
-  const handleDelete = async (articleId) => {
+  const handleDelete = async (projectId) => {
     try {
-      await articleService.delete(articleId);
-      showSuccessMessage('Artigo excluído com sucesso.');
+      await projectsService.delete(projectId);
+      showSuccessMessage('Projeto excluído com sucesso.');
       fetchData(currentPage, resultsPerPage, searchTerm, lineId?.value);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao excluir artigo.');
+      showError(error?.userMessage || 'Erro ao excluir projeto.');
     }
   };
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} artigos de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} projetos de ${totalResults} resultados`;
   };
 
-  const confirmDelete = (articleId) => {
-    setArticleToDelete(articleId);
+  const confirmDelete = (projectId) => {
+    setProjectToDelete(projectId);
     setShowConfirmModal(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirmModal(false);
-    if (articleToDelete) {
-      await handleDelete(articleToDelete);
-      setArticleToDelete(null);
+    if (projectToDelete) {
+      await handleDelete(projectToDelete);
+      setProjectToDelete(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
-    setArticleToDelete(null);
+    setProjectToDelete(null);
   };
 
   const handleCancelAdd = () => {
@@ -121,6 +121,13 @@ export default function ArticlesPage() {
     if (event.key === 'Enter') {
       handleConfirmDelete();
     }
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.substring(0, maxLength)}...`;
+    }
+    return text;
   };
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
@@ -145,34 +152,34 @@ export default function ArticlesPage() {
     }
   };
 
-  const handleAddArticleSubmit = async () => {
-    const articleData = {
+  const handleAddProjectSubmit = async () => {
+    const projectData = {
       title,
-      journal,
-      url,
+      description,
+      completed,
+      year,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
-
     };
 
     try {
-      await articleService.add(articleData);
+      await projectsService.add(projectData);
       setTitle('');
-      setJournal('');
-      setUrl('');
+      setDescription('');
+      setYear('');
       setShowAddModal(false);
-      showSuccessMessage('Artigo adicionado com sucesso!');
+      showSuccessMessage('Projeto adicionado com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao adicionar artigo.');
+      showError(error?.userMessage || 'Erro ao adicionar projeto.');
     }
   };
 
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Artigos</h1>
+        <h1 className="mb-0">Projetos</h1>
         <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
-          Adicionar Artigo
+          Adicionar Projeto
         </button>
       </div>
       {successMessage && (
@@ -182,12 +189,12 @@ export default function ArticlesPage() {
         <AlertMessage type="error" message={error} onClose={hideError} />
       )}
       {error ? (
-        <div className="alert alert-danger">Erro ao buscar artigos: {error}</div>
+        <div className="alert alert-danger">Erro ao buscar projetos: {error}</div>
       ) : (
         <div>
           {showDeletedAlert && (
             <div className="alert alert-success alert-dismissible fade show" role="alert">
-              Artigo excluído com sucesso.
+              Projeto excluído com sucesso.
               <button
                 type="button"
                 className="btn-close"
@@ -238,29 +245,29 @@ export default function ArticlesPage() {
               <thead className="thead-dark">
                 <tr>
                   <th>Título</th>
-                  <th>Jornal</th>
-                  <th>URL</th>
+                  <th>Descrição</th>
+                  <th>Ano</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-                {articles.map((article) => (
-                  <tr key={article.id}>
-                    <td>{article.title}</td>
-                    <td>{article.journal}</td>
-                    <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={article.url}  target='_blank' rel="noreferrer">Link</Link></td>
-                    <td>
+                {projects.map((project) => (
+                  <tr key={project.id}>
+                    <td style={{ minWidth: '250px' }}>{project.title}</td>
+                    <td>{truncateText(project.description, 250)}</td>
+                    <td>{project.year}</td>
+                    <td  style={{ minWidth: '136px' }}>
                       <button
                         className="btn btn-primary btn-sm me-1"
-                        onClick={() => handleEdit(article)}
+                        onClick={() => handleEdit(project)}
                       >
                         Editar
                       </button>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => confirmDelete(article.id)}
+                        onClick={() => confirmDelete(project.id)}
                       >
-                        Deletar
+                            Excluir
                       </button>
                     </td>
                   </tr>
@@ -302,108 +309,97 @@ export default function ArticlesPage() {
           </div>
         </div>
       )}
-
+    
       {showAddModal && (
-        <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
+        <div className="modal show fade d-block" tabIndex="-1" role="dialog">
+          <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Adicionar Artigo</h5>
-                <button type="button" className="btn-close" onClick={handleCancelAdd}></button>
+                <h5 className="modal-title">Adicionar Projeto</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={handleCancelAdd}></button>
               </div>
               <div className="modal-body">
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="title" className="form-label">
-                      Título
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="journal" className="form-label">
-                      Jornal
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="journal"
-                      value={journal}
-                      onChange={(e) => setJournal(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="url" className="form-label">
-                      URL
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      id="url"
-                      value={url}
-                      onChange={(e) => setUrl(e.target.value)}
-                    />
-                  </div>
-                  <AsyncSelect
-                    loadOptions={loadOptions}
-                    service={linesOfResearchService}
-                    placeholder="Selecione linhas de pesquisa"
-                    label="Linhas de Pesquisa"
-                    isMulti
-                    value={selectedLinesOfResearch}
-                    onChange={setSelectedLinesOfResearch}
-                    additional={{ page: 0 }}
-                    id="selectedLinesOfResearch"
-                    required
+                <InputField
+                  label="Título"
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+                <InputField
+                  label="Descrição"
+                  type="text"
+                  id="description"
+                  as="textarea"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  maxLength={1000}
+                  required
+                />
+                <InputField
+                  label="Ano"
+                  type="text"
+                  id="year"
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  required
+                />
+                <div className="form-check mb-3">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id='completed'
+                    checked={completed}
+                    onChange={() => setCompleted(!completed)}
                   />
-                </form>
+                  <label className="fw-bold mb-1" htmlFor='completed'>
+              Concluído
+                  </label>
+                </div>
+                <AsyncSelect
+                  loadOptions={loadOptions}
+                  placeholder="Selecione linhas de pesquisa"
+                  service={linesOfResearchService}
+                  value={selectedLinesOfResearch}
+                  onChange={setSelectedLinesOfResearch}
+                  additional={{ page: 0 }}
+                  isMulti
+                  id="linesOfResearch"
+                  label="Linhas de Pesquisa"
+                  required
+                />
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleCancelAdd}>
-                  Cancelar
+                      Cancelar
                 </button>
-                <button type="button" className="btn btn-primary" onClick={handleAddArticleSubmit}>
-                  Adicionar
+                <button type="button" className="btn btn-primary" onClick={handleAddProjectSubmit}>
+                      Salvar
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-
+    
       {showConfirmModal && (
-        <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
+        <div className="modal show fade d-block" tabIndex="-1" role="dialog" onKeyDown={handleKeyDown}>
+          <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleCancelDelete}
-                  aria-label="Close"
-                ></button>
+                <button type="button" className="btn-close" aria-label="Close" onClick={handleCancelDelete}></button>
               </div>
               <div className="modal-body">
-                <p>Tem certeza que deseja excluir este artigo?</p>
+                <p>Tem certeza de que deseja excluir este projeto?</p>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
+                      Cancelar
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                  ref={deleteButtonRef}
-                >
-                  Excluir
+                <button type="button" className="btn btn-danger" ref={deleteButtonRef} onClick={handleConfirmDelete}>
+                      Excluir
                 </button>
               </div>
             </div>
@@ -413,3 +409,4 @@ export default function ArticlesPage() {
     </div>
   );
 }
+    

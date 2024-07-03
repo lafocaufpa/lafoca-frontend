@@ -73,7 +73,8 @@ const url = {
       editar: (articleId) => `editar/${encodeURIComponent(articleId)}`
     },
     projetos: {
-      home: `${ADMIN}${PROJETOS}`
+      home: `${ADMIN}${PROJETOS}`,
+      editar: (projectId) => `editar/${encodeURIComponent(projectId)}`
     }
   },
   redes: {

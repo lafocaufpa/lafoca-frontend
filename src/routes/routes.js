@@ -37,13 +37,23 @@ const routes = {
     listFull:  (page = 0, resultsPerPage = 10, sort = '') => `${MEMBERS}?page=${page}&size=${resultsPerPage}&sort=${sort}`,
   },
   projects: {
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+    add: `${PROJECTS}`,
+    list: (page = 0, resultsPerPage = 10, sort = '', query = '', lineOfResearchId = '') => {
       let url = `${PROJECTS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
       }
+
+      if(lineOfResearchId) {
+        url += `&lineOfResearchId=${lineOfResearchId}`;
+      }
+      
       return url;
     },
+    update: (projectId) => `${PROJECTS}/${encodeURIComponent(projectId)}`,
+    readById: (projectId) => `${PROJECTS}/${encodeURIComponent(projectId)}`,
+    readBySlug: (projectId) => `${PROJECTS}/read/${encodeURIComponent(projectId)}`,
+    delete: (projectId) => `${PROJECTS}/${encodeURIComponent(projectId)}`,
   },
   lafoca: {
     listInfo: `${LAFOCA}`
