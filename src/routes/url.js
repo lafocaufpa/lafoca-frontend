@@ -9,6 +9,7 @@ const LINHADEPESQUISA = '/linha-de-pesquisa';
 const FUNCOES = '/funcoes';
 const SKILLS = '/habilidades';
 const CLASSES = '/turmas';
+const SEGURANCA = '/seguranca';
 
 const INSTAGRAM ='https://www.instagram.com/lafocameta/';
 const FACEBOOK ='https://www.facebook.com/lafocameta/';
@@ -75,6 +76,11 @@ const url = {
     projetos: {
       home: `${ADMIN}${PROJETOS}`,
       editar: (projectId) => `editar/${encodeURIComponent(projectId)}`
+    },
+    seguranca: {
+      home: `${ADMIN}${SEGURANCA}`,
+      editar: (groupId) => `editar/${encodeURIComponent(groupId)}`
+
     }
   },
   redes: {

@@ -3,6 +3,7 @@ const PROJECTS = '/projects';
 const LAFOCA = '/info';
 const USERS = '/users';
 const GROUPS = '/groups';
+const PERMISSIONS = '/permissions';
 const ARTICLES = '/articles';
 const FUNCTIONS = '/functions-member';
 const YEARCLASSES = '/year-classes';
@@ -71,15 +72,20 @@ const routes = {
     delete: (userId) => `${USERS}/${encodeURIComponent(userId)}`,
   },
   groups: {
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+    add: `${GROUPS}`,
+    list: (page = 0, resultsPerPage = 10, sort = '', name = '') => {
       let url = `${GROUPS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
-      if (query) {
-        url += `&name=${query}`;
+      if (name) {
+        url += `&name=${name}`;
       }
       return url;
     },
-    listWithoutPag: `${GROUPS}/list`,
-
+    update: (groupId) => `${GROUPS}/${encodeURIComponent(groupId)}`,
+    readById: (groupId) => `${GROUPS}/${encodeURIComponent(groupId)}`,
+    delete: (groupId) => `${GROUPS}/${encodeURIComponent(groupId)}`,
+    listPermissionsByGroup: (groupId) => `${GROUPS}/${encodeURIComponent(groupId)}/permissions`,
+    associatePermissionGroup: (groupId, permissionId) => `${GROUPS}/${encodeURIComponent(groupId)}/permissions/${encodeURIComponent(permissionId)}`,
+    disassociatePermissionGroup: (groupId, permissionId) => `${GROUPS}/${encodeURIComponent(groupId)}/permissions/${encodeURIComponent(permissionId)}`,
   },
   article: {
     add: `${ARTICLES}`,
@@ -166,6 +172,19 @@ const routes = {
     update: (lineId) => `${LINESOFRESEARCH}/${encodeURIComponent(lineId)}`,
     readById: (lineId) => `${LINESOFRESEARCH}/${encodeURIComponent(lineId)}`,
     delete: (lineId) => `${LINESOFRESEARCH}/${encodeURIComponent(lineId)}`,
+  },
+  permissions: {
+    add: `${PERMISSIONS}`,
+    list: (page = 0, resultsPerPage = 10, sort = '', name = '') => {
+      let url = `${PERMISSIONS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
+      if (name) {
+        url += `&name=${name}`;
+      }
+      return url;
+    },
+    update: (permissionId) => `${PERMISSIONS}/${encodeURIComponent(permissionId)}`,
+    readById: (permissionId) => `${PERMISSIONS}/${encodeURIComponent(permissionId)}`,
+    delete: (permissionId) => `${PERMISSIONS}/${encodeURIComponent(permissionId)}`,
   }
 };
 

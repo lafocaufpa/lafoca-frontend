@@ -1,16 +1,11 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import UserDefault from '@images/default_user.png';
+
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Accordion, Card } from 'react-bootstrap';
-import LogoutButton from '@/components/auth/logout/LogoutButton';
 import url from '@/routes/url';
 import getCookie from '@/components/auth/authorization/getCookie';
 import routes from '@/routes/routes';
-import styles from './sidebar.module.css';
-import NavBar from './navbar';
+import NavBar from '@components/admin/sidebar/navbar';
 
 export default async function SideBar() {
   const session = await getServerSession();

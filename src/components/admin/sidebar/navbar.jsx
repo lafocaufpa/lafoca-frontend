@@ -26,17 +26,8 @@ export default function NavBar({user}){
           <Link className="nav-link text-white" href={url.admin.tccs.home}>Trabalhos de Conclusão de Curso</Link>
           <Link className="nav-link text-white" href={url.admin.artigos.home}>Artigos</Link>
           <Link className="nav-link text-white" href={url.admin.projetos.home}>Projetos</Link>
-
-          <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Segurança</Accordion.Header>
-              <Accordion.Body >
-                <Link className="nav-link text-white ps-3" href={url.admin.projetos.home}>Grupos</Link>
-                <Link className="nav-link text-white ps-3" href={url.admin.projetos.home}>Permissões</Link>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-
+          <Link className="nav-link text-white ps-3" href={url.admin.seguranca.home}>Segurança</Link>
+           
         </nav>
       </div>
       <div className="mt-auto">
@@ -50,7 +41,7 @@ export default function NavBar({user}){
               height={80}
             />
           </div>
-          <h5 className="mb-1">{user.name}</h5>
+          <h5 className="mb-1 fs-5">{user.name}</h5>
           <p className="mb-0 text-white fs-6">{user.email}</p>
         </div>
         <LogoutButton/>

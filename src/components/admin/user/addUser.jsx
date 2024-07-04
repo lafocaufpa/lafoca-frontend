@@ -6,7 +6,7 @@ import { groupService } from '@/services/api/groups/GroupService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
-import AsyncSelect from '@/components/asyncSelect/AsyncSelect';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import InputField from '@/components/inputField/InputField';
 import PhotoSelector from '@/components/photoSelector/photoSelector';
 
@@ -62,13 +62,13 @@ export default function AddUser() {
     }
   };
 
-  const loadGroupOptions = async (inputValue, loadedOptions, { page }) => {
+  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
-      const response = await groupService.list(page, 7, 'name,asc', inputValue);
+      const response = await service.list(page, 5, undefined, inputValue);
       return {
-        options: response.content.map(group => ({
-          value: group.id,
-          label: group.name,
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.name || item.title || item.year,
         })),
         hasMore: !response.lastPage,
         additional: {
@@ -76,7 +76,7 @@ export default function AddUser() {
         },
       };
     } catch (error) {
-      console.error('Error fetching groups:', error);
+      console.error('Error fetching options:', error);
       return {
         options: [],
         hasMore: false,
@@ -187,8 +187,9 @@ export default function AddUser() {
             </label>
           </div>
           <AsyncSelect
-            loadOptions={loadGroupOptions}
-            service={groupService}
+            loadOptions={(inputValue, loadedOptions, additional) => 
+              loadOptions(groupService, inputValue, loadedOptions, additional)
+            }
             placeholder="Selecione grupos de segurança para o usuário"
             label="Grupos de Segurança"
             isMulti

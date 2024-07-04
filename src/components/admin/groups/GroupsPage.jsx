@@ -1,47 +1,47 @@
 'use client';
 
-import { MemberService } from '@/services/api/Members/MembersService';
-import { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
-import url from '@/routes/url';
+import { groupService } from '@/services/api/groups/GroupService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
-import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
-import { classService } from '@/services/api/yearClass/YearClasses';
 import InputField from '@/components/inputField/InputField';
+import url from '@/routes/url';
+import PermissionsPage from '../permissions/PermissionsPage';
 
-export default function MemberPage() {
-  const [members, setMembers] = useState([]);
+export default function GroupsPage() {
+  const [groups, setGroups] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
-  const [resultsPerPage, setResultsPerPage] = useState(10);
-  const [yearClassId, setYearClassId] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [resultsPerPage, setResultsPerPage] = useState(5);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [memberToDelete, setMemberToDelete] = useState(null);
-
+  const [groupToDelete, setGroupToDelete] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [name, setName] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
 
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 10, fullName = '', yearClassId = '') => {
+  const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {
-      const data = await MemberService.list(page, resultsPerPage, 'fullName,asc', fullName, yearClassId);
-      setMembers(data.content);
+      const data = await groupService.list(page, resultsPerPage, 'name,asc', name);
+      setGroups(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
+      console.log(data.content);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao buscar membros.');
+      showError(error?.userMessage || 'Erro ao buscar grupos.');
     }
   };
 
   useEffect(() => {
-    fetchData(currentPage, resultsPerPage, searchQuery, yearClassId?.value);
-  }, [currentPage, resultsPerPage, searchQuery, yearClassId]);
+    fetchData(currentPage, resultsPerPage, searchTerm);
+  }, [currentPage, resultsPerPage, searchTerm]);
 
   useEffect(() => {
     if (showConfirmModal) {
@@ -60,76 +60,77 @@ export default function MemberPage() {
     setCurrentPage(0);
   };
 
-  const handleEdit = (member) => {
-    router.push(url.admin.membro.editar(member.id));
+  const handleEdit = (group) => {
+    router.push(url.admin.seguranca.editar(group.id));
   };
 
-  const handleDelete = async (memberId) => {
+  const handleDelete = async (groupId) => {
     try {
-      await MemberService.delete(memberId);
-      showSuccessMessage('Membro excluído com sucesso.');
-      fetchData(currentPage, resultsPerPage, searchQuery, yearClassId?.value);
-
+      await groupService.delete(groupId);
+      showSuccessMessage('Grupo excluído com sucesso.');
+      fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
-      showError(error?.userMessage || 'Erro ao excluir membro.');
+      showError(error?.userMessage || 'Erro ao excluir grupo.');
     }
   };
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} membros de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} de ${totalResults} resultados`;
   };
 
-  const handleAddMember = () => {
-    router.push(url.admin.membro.adicionar);
-  };
-
-  const confirmDelete = (memberId) => {
-    setMemberToDelete(memberId);
+  const confirmDelete = (groupId) => {
+    setGroupToDelete(groupId);
     setShowConfirmModal(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirmModal(false);
-    if (memberToDelete) {
-      await handleDelete(memberToDelete);
-      setMemberToDelete(null);
+    if (groupToDelete) {
+      await handleDelete(groupToDelete);
+      setGroupToDelete(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
-    setMemberToDelete(null);
+    setGroupToDelete(null);
   };
 
-  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
+  const handleCancelAdd = () => {
+    setShowAddModal(false);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleConfirmDelete();
+    }
+  };
+
+  const handleAddGroupSubmit = async () => {
+    const groupData = {
+      name,
+    };
+
     try {
-      const response = await service.list(page, 5, undefined, inputValue);
-      return {
-        options: response.content.map(item => ({
-          value: item.id,
-          label: item.name || item.title || item.year,
-        })),
-        hasMore: !response.lastPage,
-        additional: {
-          page: page + 1,
-        },
-      };
+      await groupService.add(groupData);
+      setName('');
+      setShowAddModal(false); // Após adicionar com sucesso, fecha o modal
+      showSuccessMessage('Grupo adicionado com sucesso!');
+      fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
-      console.error('Error fetching options:', error);
-      return {
-        options: [],
-        hasMore: false,
-      };
+      showError(error?.userMessage || 'Erro ao adicionar grupo.');
     }
   };
 
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Configurações de Membros</h1>
-        <button className="btn btn-success" onClick={handleAddMember}>Adicionar Membro</button>
+        <h1 className="mb-0">Grupos</h1>
+        <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
+          Adicionar Grupo
+        </button>
       </div>
       {successMessage && (
         <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
@@ -152,25 +153,12 @@ export default function MemberPage() {
             <span className="ms-2 text-reset">resultados por página</span>
           </div>
           <div className="col-md-4">
-            <AsyncSelect
-              loadOptions={loadOptions}
-              placeholder="Selecione a turma"
-              service={classService}
-              value={yearClassId}
-              onChange={setYearClassId}
-              additional={{ page: 0 }}
-              id="yearClassId"
-              label="Ano da Turma"
-              required
-            />
-          </div>
-          <div className="col-md-4">
             <InputField
               label="Buscar por Nome"
               type="text"
               id="searchTerm"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
@@ -178,30 +166,26 @@ export default function MemberPage() {
           <table className="table table-striped table-hover">
             <thead className="thead-dark">
               <tr>
-                <th>Nome Completo</th>
-                <th>Função</th>
-                <th>Email</th>
-                <th>Ano de Entrada</th>
+                <th>Nome</th>
+                <th>Permissões de Acesso</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {members.map((member) => (
-                <tr key={member.id}>
-                  <td>{member.fullName}</td>
-                  <td>{member.function}</td>
-                  <td>{member.email}</td>
-                  <td>{member.yearClass}</td>
+              {groups.map((group) => (
+                <tr key={group.id}>
+                  <td>{group.name}</td>
+                  <td>{group.permissions.map((permission) => permission.name).join(', ')}</td>
                   <td>
                     <button
                       className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(member)}
+                      onClick={() => handleEdit(group)}
                     >
                         Editar
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(member.id)}
+                      onClick={() => confirmDelete(group.id)}
                     >
                         Deletar
                     </button>
@@ -215,7 +199,11 @@ export default function MemberPage() {
           <nav aria-label="Page navigation">
             <ul className="pagination mb-0">
               <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)} aria-label="Previous">
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  aria-label="Previous"
+                >
                     &laquo;
                 </button>
               </li>
@@ -227,7 +215,11 @@ export default function MemberPage() {
                 </li>
               ))}
               <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)} aria-label="Next">
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  aria-label="Next"
+                >
                     &raquo;
                 </button>
               </li>
@@ -236,9 +228,38 @@ export default function MemberPage() {
           <div className="result-message">{getResultMessage()}</div>
         </div>
       </div>
-
+      <PermissionsPage/>
+      {showAddModal && (
+        <div className="modal show fade" style={{ display: 'block' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Adicionar Grupo</h5>
+                <button type="button" className="btn-close" onClick={handleCancelAdd}></button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <InputField
+                    label="Nome"
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={handleCancelAdd}>Cancelar</button>
+                <button type="button" className="btn btn-primary" onClick={handleAddGroupSubmit}>Adicionar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal de Confirmação de Exclusão */}
       {showConfirmModal && (
-        <div className="modal" tabIndex="-1" style={{ display: 'block' }}>
+        <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -246,19 +267,24 @@ export default function MemberPage() {
                 <button type="button" className="btn-close" onClick={handleCancelDelete}></button>
               </div>
               <div className="modal-body">
-                <p>Tem certeza de que deseja excluir este membro?</p>
+                <p>Tem certeza que deseja excluir este grupo?</p>
               </div>
               <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCancelDelete}
+                >
+              Cancelar
+                </button>
                 <button
                   type="button"
                   className="btn btn-danger"
                   onClick={handleConfirmDelete}
                   ref={deleteButtonRef}
+                  onKeyDown={handleKeyDown}
                 >
-                  Excluir
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
+              Excluir
                 </button>
               </div>
             </div>
