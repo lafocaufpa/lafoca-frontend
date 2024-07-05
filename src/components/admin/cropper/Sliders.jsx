@@ -6,7 +6,6 @@ import {
   ArrowUturnRightIcon,
   MinusIcon,
   PlusIcon,
-  AcademicCapIcon
 } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import 'bootstrap/dist/css/bootstrap.min.css';

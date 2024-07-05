@@ -26,6 +26,7 @@ export default function UserPage() {
   const fetchData = async (page = 0, resultsPerPage = 10) => {
     try {
       const data = await userService.list(page, resultsPerPage);
+      console.log(data.content);
       setUsers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);

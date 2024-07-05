@@ -7,26 +7,74 @@ import Image from 'next/image';
 import UserDefault from '@images/default_user.png';
 import LogoutButton from '@/components/auth/logout/LogoutButton';
 import url from '@/routes/url';
-import Accordion from 'react-bootstrap/Accordion';
+import { FaUsersCog } from 'react-icons/fa';
+import { FaUsers } from 'react-icons/fa6';
+import { GiArchiveResearch } from 'react-icons/gi';
+import { TbSubtask } from 'react-icons/tb';
+import { LiaUserCogSolid } from 'react-icons/lia';
+import { GrGroup } from 'react-icons/gr';
+import { LuBrainCircuit } from 'react-icons/lu';
+import { MdOutlineClass } from 'react-icons/md';
+import { BsJournalText } from 'react-icons/bs';
+import { RiArticleLine } from 'react-icons/ri';
+import { SiGoogleclassroom } from 'react-icons/si';
+import { MdOutlineLock } from 'react-icons/md';
+import { TbSchool } from 'react-icons/tb';
 
 export default function NavBar({user}){
 
   const urlImage = user.urlPhoto || UserDefault;
 
+  const NavLink = ({href, children, Icon }) => (
+    <div>
+      <Link className="nav-link text-white d-flex" href={href}><Icon size={20} className='me-2'/> {children}</Link>
+    </div>
+  );
+
   return (
-    <div className="d-flex flex-column bg-dark text-white p-4" style={{ minHeight: '100vh', width: '250px' }}>
+    <div className="d-flex flex-column bg-dark text-white p-4 w-auto" style={{ minHeight: '100vh'}}>
       <div className={`${styles.scrollableNav} mb-auto`} style={{maxHeight: 'calc(55vh)', overflowY:'auto'}}>
         <nav className="nav flex-column">
-          <Link className="nav-link text-white" href={url.admin.usuario.home}>Usuário</Link>
-          <Link className="nav-link text-white" href={url.admin.membro.home}>Membro</Link>
-          <Link className="nav-link text-white" href={url.admin.linhadepesquisa.home}>Linhas de Pesquisa</Link>
-          <Link className="nav-link text-white" href={url.admin.funcoes.home}>Funções de Membros</Link>
-          <Link className="nav-link text-white" href={url.admin.habilidades.home}>Habilidades</Link>
-          <Link className="nav-link text-white" href={url.admin.turmas.home}>Turmas</Link>
-          <Link className="nav-link text-white" href={url.admin.tccs.home}>Trabalhos de Conclusão de Curso</Link>
-          <Link className="nav-link text-white" href={url.admin.artigos.home}>Artigos</Link>
-          <Link className="nav-link text-white" href={url.admin.projetos.home}>Projetos</Link>
-          <Link className="nav-link text-white ps-3" href={url.admin.seguranca.home}>Segurança</Link>
+
+          <NavLink href={url.admin.usuario.home} Icon={FaUsersCog}>
+            Usuarios
+          </NavLink>
+
+          <NavLink href={url.admin.membro.home} Icon={GrGroup}>
+            Membros
+          </NavLink>
+
+          <NavLink href={url.admin.linhadepesquisa.home} Icon={GiArchiveResearch}>
+            Linhas de Pesquisa
+          </NavLink>
+
+          <NavLink href={url.admin.funcoes.home} Icon={TbSubtask}>
+          Funções de Membros
+          </NavLink>
+
+          <NavLink href={url.admin.habilidades.home} Icon={LuBrainCircuit}>
+          Habilidades
+          </NavLink>
+
+          <NavLink href={url.admin.turmas.home} Icon={TbSchool}>
+          Turmas
+          </NavLink>
+
+          <NavLink href={url.admin.tccs.home} Icon={BsJournalText}>
+          Tccs
+          </NavLink>
+
+          <NavLink href={url.admin.artigos.home} Icon={RiArticleLine}>
+          Artigos
+          </NavLink>
+
+          <NavLink href={url.admin.projetos.home} Icon={SiGoogleclassroom}>
+          Projetos
+          </NavLink>
+
+          <NavLink href={url.admin.seguranca.home} Icon={MdOutlineLock}>
+          Segurança
+          </NavLink>
            
         </nav>
       </div>
