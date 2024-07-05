@@ -1,7 +1,7 @@
 'use client';
 
+import IconLogout from '@/components/icon/IconLogout';
 import Authorization from '@components/auth/authorization/authorization';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function LogoutButton() {
   const handleLogout = async () => {
@@ -9,10 +9,6 @@ export default function LogoutButton() {
   };
 
   return (
-    <div className="mt-auto text-center">
-      <button className="btn btn-danger w-100" onClick={handleLogout}>
-        Sair
-      </button>
-    </div>
+    <IconLogout width='25' heith='25' onClick={handleLogout}/>
   );
 }

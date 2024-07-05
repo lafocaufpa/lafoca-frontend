@@ -12,3 +12,7 @@
 .scrollableNav::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
 }
+
+.padding {
+  padding: 1.25rem 0 1.25rem 1.25rem;
+}

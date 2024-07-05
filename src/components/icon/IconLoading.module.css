@@ -1,0 +1,14 @@
+.iconLoading {
+  animation: rotate 2s linear infinite;
+  height: 1em;
+  width: 1em; 
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -16,14 +16,7 @@ export default function Login() {
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const [renderRestorePassword, setRenderRestorePassword] = useState(false);
-  
-  useEffect(() => {
-    const removeCookie = async () => {
-      await Authorization.removeCookie();
-    };
-
-    removeCookie();
-  }, []);
+  const [loading, setLoading] = useState(false); // Estado para controlar o loading
 
   useEffect(() => {
     let errorTimeout;
@@ -37,28 +30,36 @@ export default function Login() {
 
   async function login(e){
     e.preventDefault();
+    setLoading(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     
     const res = await Authorization.login(email, password);
 
     if(res) {
-      router.push(url.admin.home);
+      router.push(url.admin.usuario.home);
     } else {
       setToggle(!toggle);
+      setLoading(false);
     }
   }
 
 
   async function resetPassword(e) {
     e.preventDefault();
+    setLoading(true);
 
     const email = e.target.email.value;
 
     await Authorization.resetPassword(email);
-
-    setToggle(!toggle);
+    setTimeout(() => {
+      setLoading(false);
+      setToggle(!toggle);
+    }, 1000);
     
+    
+
+   
   }
   
   return (
@@ -89,7 +90,7 @@ export default function Login() {
             {(
               <span className={`${styles.error} ${toggle ? '' : styles.hidden}`}>Credenciais inválidas</span>
             )}
-            <Button>Faça o Login no sistema</Button>
+            <Button loading={loading}>Faça o Login no sistema</Button>
           </form> 
         </div>
         <div className={styles.restorePassword}>
@@ -111,7 +112,7 @@ export default function Login() {
             {(
               <span className={`${styles.error} ${toggle ? '' : styles.hidden}`}>Verifique sua caixa de mensagem</span>
             )}
-            <Button>Enviar email</Button>
+            <Button loading={loading}>Enviar email</Button>
           </form> 
         </div>
         <div className={styles.restorePassword}>

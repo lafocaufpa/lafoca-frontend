@@ -39,7 +39,7 @@ async function resetPassword(email){
     email
   };
 
-  userService.resetPassword(data);
+  userService.updatePassword(data);
 
 }
 

@@ -149,10 +149,14 @@ const routes = {
   },
   tccs: {
     add: `${TCCS}`,
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = '', query = '', lineOfResearchId = '') => {
       let url = `${TCCS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&name=${query}`;
+      }
+
+      if(lineOfResearchId) {
+        url += `&lineOfResearchId=${lineOfResearchId}`;
       }
       return url;
     },

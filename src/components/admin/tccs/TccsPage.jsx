@@ -5,10 +5,12 @@ import url from '@/routes/url';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import { tccService } from '@/services/api/tcc/TccService';
+import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import Link from 'next/link';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 
 export default function TccsPage() {
   const [tccs, setTccs] = useState([]);
@@ -22,6 +24,8 @@ export default function TccsPage() {
   const [name, setName] = useState('');
   const [urlTcc, setUrlTcc] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [lineId, setLineId] = useState(null);
+  const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
   const [tccDate, setTccDate] = useState('');
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
@@ -29,9 +33,9 @@ export default function TccsPage() {
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
+  const fetchData = async (page = 0, resultsPerPage = 5, name = '', lineOfResearchId = '') => {
     try {
-      const data = await tccService.list(page, resultsPerPage, undefined, name);
+      const data = await tccService.list(page, resultsPerPage, undefined, name, lineOfResearchId);
       setTccs(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -41,8 +45,31 @@ export default function TccsPage() {
   };
 
   useEffect(() => {
-    fetchData(currentPage, resultsPerPage, searchTerm);
-  }, [currentPage, resultsPerPage, searchTerm]);
+    fetchData(currentPage, resultsPerPage, searchTerm, lineId?.value);
+  }, [currentPage, resultsPerPage, searchTerm, lineId]);
+
+
+  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue);
+      return {
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.name || item.title || item.year,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching options:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
 
   useEffect(() => {
     if (showConfirmModal) {
@@ -70,7 +97,7 @@ export default function TccsPage() {
     try {
       await tccService.delete(tccId);
       showSuccessMessage('TCC excluído com sucesso.');
-      fetchData(currentPage, resultsPerPage, searchTerm);
+      fetchData(currentPage, resultsPerPage, searchTerm, lineId?.value);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao excluir TCC.');
     }
@@ -120,6 +147,7 @@ export default function TccsPage() {
       name,
       url: urlTcc,
       date: formatDate(tccDate),
+      lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
     };
 
     try {
@@ -164,9 +192,22 @@ export default function TccsPage() {
             />
             <span className="ms-2 text-reset">resultados por página</span>
           </div>
+          <div className='col-md-4'>
+            <AsyncSelect
+              loadOptions={loadOptions}
+              placeholder="Selecione uma linha de pesquisa"
+              service={linesOfResearchService}
+              value={lineId}
+              onChange={setLineId}
+              additional={{ page: 0 }}
+              id="lineId"
+              label="Linha de Pesquisa"
+              required
+            />
+          </div>
           <div className="col-md-4">
             <InputField
-              label="Buscar por Nome"
+              label="Buscar por título"
               type="text"
               id="searchTerm"
               value={searchTerm}
@@ -178,7 +219,7 @@ export default function TccsPage() {
           <table className="table table-striped table-hover">
             <thead className="thead-dark">
               <tr>
-                <th>Nome</th>
+                <th>Título</th>
                 <th>Acesso</th>
                 <th>Data de Defesa</th>
                 <th className='text-center'>Ações</th>
@@ -308,34 +349,46 @@ export default function TccsPage() {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="name">Nome</label>
-                  <input
+                <form>
+                  <InputField
+                    label="Título"
                     type="text"
                     id="name"
-                    className="form-control"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    maxLength={255}
+                    required
                   />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="url">URL</label>
-                  <input
+                  <InputField
+                    label="Url"
                     type="text"
                     id="url"
-                    className="form-control"
                     value={urlTcc}
                     onChange={(e) => setUrlTcc(e.target.value)}
+                    maxLength={700}
+                    required
                   />
-                </div>
-                <InputField
-                  label="Data do TCC"
-                  type="date"
-                  id="tccDate"
-                  value={tccDate}
-                  onChange={(e) => setTccDate(e.target.value)}
-                  required
-                />
+                  <InputField
+                    label="Data do TCC"
+                    type="date"
+                    id="tccDate"
+                    value={tccDate}
+                    onChange={(e) => setTccDate(e.target.value)}
+                    required
+                  />
+                  <AsyncSelect
+                    loadOptions={loadOptions}
+                    service={linesOfResearchService}
+                    placeholder="Selecione linhas de pesquisa"
+                    label="Linhas de Pesquisa"
+                    isMulti
+                    value={selectedLinesOfResearch}
+                    onChange={setSelectedLinesOfResearch}
+                    additional={{ page: 0 }}
+                    id="selectedLinesOfResearch"
+                    required
+                  />
+                </form>
               </div>
               <div className="modal-footer">
                 <button
