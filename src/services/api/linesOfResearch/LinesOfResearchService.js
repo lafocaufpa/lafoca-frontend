@@ -41,7 +41,13 @@ export const linesOfResearchService = {
     return response.data;
   },
   readById: async (lineId) => {
-    const response = await api.get(routes.linesOfResearch.readById(lineId));
+    const token = await getCookie();
+
+    const response = await api.get(routes.linesOfResearch.readById(lineId), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   },
 };

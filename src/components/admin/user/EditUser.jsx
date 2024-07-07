@@ -105,7 +105,7 @@ export default function EditUser({ userId }) {
 
       setTimeout(() => {
         router.push(url.admin.usuario.home);
-      }, 3000);
+      }, 1000);
 
     } catch (error) {
       showError(error?.userMessage || 'Erro ao editar usuário.');

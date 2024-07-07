@@ -1,7 +1,7 @@
 .cropContainer {
   position: relative;
-  width: 236px;
-  height: 236px;
+  width: 285px;
+  height: 320px;
   background: linear-gradient(to right, #cbd4e1 8px, transparent 8px) 0 0,
               linear-gradient(to right, #cbd4e1 8px, transparent 8px) 0 100%,
               linear-gradient(to left, #cbd4e1 8px, transparent 8px) 100% 0,

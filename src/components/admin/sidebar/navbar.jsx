@@ -18,8 +18,11 @@ import IconTccs from '@/components/icon/IconTccs';
 import IconArticles from '@/components/icon/IconArticles';
 import IconProjects from '@/components/icon/IconProjects';
 import IconSecurity from '@/components/icon/IconSecurity';
+import { useRouter } from 'next/navigation';
 
 export default function NavBar({user}){
+
+  const router = useRouter();
 
   const urlImage = user.urlPhoto || UserDefault;
 
@@ -28,6 +31,10 @@ export default function NavBar({user}){
       <Link className="nav-link text-white d-flex" href={href}><Icon width={size} height={size} className='me-2'/> {children}</Link>
     </div>
   );
+
+  const handleEdit = (user) => {
+    router.push(url.admin.usuario.editar(user.id));
+  };
 
   return (
     <div className={'d-flex flex-column bg-dark text-white w-auto'} style={{ minHeight: '100vh'}}>
@@ -85,7 +92,9 @@ export default function NavBar({user}){
               src={urlImage}
               alt={user.name}
               width={50}
-              height={50}
+              height={50} 
+              role='button' 
+              onClick={() => handleEdit(user)}
             />
             <div className="flex-grow-1">
               <h5 className="mb-0 fs-5">{user.name}</h5>
