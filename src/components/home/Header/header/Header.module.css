@@ -6,3 +6,15 @@
   margin-bottom: var(--margin-default-bottom-section);
   padding-top: var(--padding-top-body-default);
 }
+
+@media (width <= 1000px){
+  .header {
+    padding-bottom: 17.25rem !important;
+  }
+}
+
+@media (width <= 768px){
+  .header {
+    padding-bottom: 12.25rem !important;
+  }
+}

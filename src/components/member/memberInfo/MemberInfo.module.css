@@ -25,10 +25,6 @@
   object-fit: cover;
 }
 
-.memberName {
-  margin-bottom: 1.2rem;
-}
-
 .memberSocialMedia {
   display: flex;
   flex-direction: row-reverse; /* Isso garante que os botões estejam na mesma linha */

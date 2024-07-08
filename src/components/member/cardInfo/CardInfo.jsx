@@ -7,7 +7,7 @@ export default function CardInfo({icon, title, description, link}) {
   return (
     <div className={styles.cardInfo}>
       <div>
-        <Image src={icon} alt='icon'/>
+        <Image className={styles.img} src={icon} alt='icon'/>
       </div>
       <div className={styles.cardContent}>
         <p className={styles.cardContent_title}>{title}</p>

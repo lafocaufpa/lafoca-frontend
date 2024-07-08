@@ -19,3 +19,15 @@
 .cardLink {
   margin-left: auto;
 }
+
+.img {
+  width: 33px;
+  height: 33px;
+}
+
+@media (width <=768px) {
+  .img {
+    width: 28.417px;
+    height: 28.417px;
+  }
+}

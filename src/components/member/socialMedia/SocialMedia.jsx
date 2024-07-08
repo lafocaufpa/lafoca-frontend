@@ -8,7 +8,7 @@ export default function SocialMedia({name, backgroundColor, icon}) {
 
   return (
     <button style={buttonStyle} className={styles.buttonMedia}>
-      <Image src={icon} alt={name} width={24} height={24} />
+      <Image className={styles.img} src={icon} alt={name} width={24} height={24} />
       <span className={styles.buttonName}>{name}</span>
     </button>
   );
