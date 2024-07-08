@@ -1,7 +1,8 @@
 import React from 'react';
+import IconBsSearch from '@components/icon/IconBsSearch';
 
-const InputField = ({ label, type, id, value, onChange, onBlur, required, maxLength, as }) => (
-  <div className="form-group mb-3">
+const InputField = ({ label, type, id, value, onChange, onBlur, required, maxLength, as, isSearch }) => (
+  <div className="form-group mb-3 position-relative">
     <label htmlFor={id} className="fw-bold mb-1">{label}</label>
     {as === 'textarea' ? (
       <textarea
@@ -15,16 +16,23 @@ const InputField = ({ label, type, id, value, onChange, onBlur, required, maxLen
         rows={5}
       />
     ) : (
-      <input
-        type={type}
-        className="form-control"
-        id={id}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        required={required}
-        maxLength={maxLength}
-      />
+      <div className="input-group">
+        <input
+          type={type}
+          className="form-control"
+          id={id}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          required={required}
+          maxLength={maxLength}
+        />
+        {isSearch && (
+          <span className="input-group-text">
+            <IconBsSearch idth={20} height={20} />
+          </span>
+        )}
+      </div>
     )}
   </div>
 );

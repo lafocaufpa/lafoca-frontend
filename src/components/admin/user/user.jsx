@@ -7,6 +7,8 @@ import url from '@/routes/url';
 import { userService } from '@/services/api/Users/UserService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
+import IconUsers from '@/components/icon/IconUsers';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
@@ -106,7 +108,7 @@ export default function UserPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Configurações de Usuário</h1>
+        <h1 className="mb-0">{'Usuários'}</h1>
         <button className="btn btn-success" onClick={handleAddUser}>
           Adicionar Usuário
         </button>

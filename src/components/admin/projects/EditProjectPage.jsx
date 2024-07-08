@@ -59,7 +59,6 @@ export default function EditProject({ projectId }) {
       setShow(false);
       router.back();
     } catch (error) {
-      console.log(error);
       showError(error?.userMessage || 'Erro ao editar projeto.');
     } finally {
       setLoading(false);

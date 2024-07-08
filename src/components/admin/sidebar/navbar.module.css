@@ -1,0 +1,50 @@
+.scrollableNav::-webkit-scrollbar {
+  width: 12px;
+  /* for vertical scrollbars */
+  height: 12px;
+  /* for horizontal scrollbars */
+}
+
+.scrollableNav::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.scrollableNav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.padding {
+  /* padding: 1.25rem 0 1.25rem 1.25rem; */
+}
+
+
+.linkHoverEffect {
+  transition: background-color 0.3s ease;
+}
+
+.linkHoverEffect:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hoverEffect {
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.hoverEffect:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  /* opacity: 1; */
+}
+
+.iconEdit {
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hoverEffect:hover .iconEdit {
+  opacity: 1;
+}

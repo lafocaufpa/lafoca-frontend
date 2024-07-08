@@ -56,7 +56,6 @@ export default function EditArticle({ articleId }) {
       setShow(false);
       router.back();
     } catch (error) {
-      console.log(error);
       showError(error?.userMessage || 'Erro ao editar artigo.');
     } finally {
       setLoading(false);

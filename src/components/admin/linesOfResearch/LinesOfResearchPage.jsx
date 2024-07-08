@@ -8,6 +8,8 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import url from '@/routes/url';
 import InputField from '@/components/inputField/InputField'; // Importando componente de campo de input
+import IconResearchs from '@/components/icon/IconResearchs';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
 
 export default function LinesOfResearchPage() {
   const [linesOfResearch, setLinesOfResearch] = useState([]);
@@ -128,7 +130,7 @@ export default function LinesOfResearchPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Linhas de Pesquisa</h1>
+        <h1 className="mb-0">{'Linhas de Pesquisa'}</h1>
         <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
           Adicionar Linha de Pesquisa
         </button>
@@ -160,6 +162,7 @@ export default function LinesOfResearchPage() {
               id="searchTerm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              isSearch
             />
           </div>
         </div>

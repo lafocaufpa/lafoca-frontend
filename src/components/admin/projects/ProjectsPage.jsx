@@ -211,7 +211,8 @@ export default function ProjectsPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)} 
+              isSearch
             />
           </div>
         </div>

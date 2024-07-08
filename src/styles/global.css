@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
 
 
 :root {
@@ -82,7 +81,7 @@ p {
 
 body {
   font-size: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif !important;
   background: var(--color-ghost-white);
   color: var(--title-color);
   margin: 0 auto;

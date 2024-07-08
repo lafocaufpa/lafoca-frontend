@@ -9,6 +9,8 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import Image from 'next/image';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
+import IconSkills from '@/components/icon/IconSkills';
 
 export default function SkillsPage() {
   const [skills, setSkills] = useState([]);
@@ -130,7 +132,7 @@ export default function SkillsPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Habilidades</h1>
+        <h1 className="mb-0">{'Habilidades'}</h1>
         <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
           Adicionar Habilidade
         </button>
@@ -162,6 +164,7 @@ export default function SkillsPage() {
               id="searchTerm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              isSearch
             />
           </div>
         </div>

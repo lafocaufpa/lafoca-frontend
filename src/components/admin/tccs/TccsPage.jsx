@@ -11,6 +11,8 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
+import IconTccs from '@/components/icon/IconTccs';
 
 export default function TccsPage() {
   const [tccs, setTccs] = useState([]);
@@ -159,7 +161,6 @@ export default function TccsPage() {
       showSuccessMessage('TCC adicionado com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
-      console.log(error);
       showError(error?.userMessage || 'Erro ao adicionar TCC.');
     }
   };
@@ -167,7 +168,7 @@ export default function TccsPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">TCCs</h1>
+        <h1 className="mb-0">{'Tccs'}</h1>
         <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
           Adicionar TCC
         </button>
@@ -211,7 +212,8 @@ export default function TccsPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)} 
+              isSearch
             />
           </div>
         </div>

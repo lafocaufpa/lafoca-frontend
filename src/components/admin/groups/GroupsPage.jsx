@@ -33,7 +33,6 @@ export default function GroupsPage() {
       setGroups(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
-      console.log(data.content);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar grupos.');
     }

@@ -10,6 +10,8 @@ import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import { classService } from '@/services/api/yearClass/YearClasses';
 import InputField from '@/components/inputField/InputField';
+import IconMembers from '@/components/icon/IconMembers';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
 
 export default function MemberPage() {
   const [members, setMembers] = useState([]);
@@ -128,7 +130,7 @@ export default function MemberPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Configurações de Membros</h1>
+        <h1 className="mb-0">{'Membros'}</h1>
         <button className="btn btn-success" onClick={handleAddMember}>Adicionar Membro</button>
       </div>
       {successMessage && (
@@ -170,7 +172,8 @@ export default function MemberPage() {
               type="text"
               id="searchTerm"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)} 
+              isSearch={true}
             />
           </div>
         </div>

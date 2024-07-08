@@ -8,6 +8,8 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
+import IconFunctions from '@/components/icon/IconFunctions';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
 
 export default function FunctionMemberPage() {
   const [functionMembers, setFunctionMembers] = useState([]);
@@ -117,7 +119,7 @@ export default function FunctionMemberPage() {
       await functionService.add(memberData);
       setName('');
       setDescription('');
-      setShowAddModal(false); // Após adicionar com sucesso, fecha o modal
+      setShowAddModal(false);
       showSuccessMessage('Membro de função adicionado com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
@@ -128,7 +130,7 @@ export default function FunctionMemberPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Membros de Função</h1>
+        <h1 className="mb-0">{'Funções de Membros'}</h1>
         <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
           Adicionar Membro de Função
         </button>
@@ -159,7 +161,8 @@ export default function FunctionMemberPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)} 
+              isSearch
             />
           </div>
         </div>

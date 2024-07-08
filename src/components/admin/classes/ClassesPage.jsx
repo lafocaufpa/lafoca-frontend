@@ -7,6 +7,8 @@ import { classService } from '@/services/api/yearClass/YearClasses';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import url from '@/routes/url';
+import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
+import IconClasses from '@/components/icon/IconClasses';
 
 export default function ClassesPage() {
   const [classes, setClasses] = useState([]);
@@ -123,7 +125,7 @@ export default function ClassesPage() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
-        <h1 className="mb-0">Turmas</h1>
+        <h1 className="mb-0">{'Turmas'}</h1>
         <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
           Adicionar Turma
         </button>
