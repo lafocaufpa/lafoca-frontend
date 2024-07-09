@@ -42,3 +42,26 @@
   flex-basis: 100%; /* Isso faz com que o terceiro botão ocupe toda a largura da linha */
 }
 
+
+
+@media (width <=600px) {
+  .member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .memberSocialMedia {
+    flex-wrap: nowrap;
+    width: auto;
+    gap: 16px;
+  }
+
+  .memberInfo > h1 {
+    margin-bottom: 1rem;
+  }
+
+  .memberInfo > p {
+    margin-bottom: 1.5rem;
+  }
+}

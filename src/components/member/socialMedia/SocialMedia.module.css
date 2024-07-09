@@ -16,7 +16,7 @@
   font-weight: 600;
 }
 
-@media (width <= 768px){
+@media (width <=768px) {
   .img {
     width: 1.25rem;
     height: 1.25rem;
@@ -29,5 +29,21 @@
   .buttonMedia {
     width: 152px;
     height: 48.949px;
+  }
+}
+
+@media (width <=600px) {
+  .img {
+    width: 1.449125rem;
+    height: 1.449125rem;
+  }
+
+  .buttonMedia {
+    width: 171px;
+    height: 55.068px;
+  }
+
+  .buttonName {
+    font-size: 0.96875rem;
   }
 }

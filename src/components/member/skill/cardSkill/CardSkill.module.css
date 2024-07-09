@@ -4,13 +4,17 @@
   border-radius: 50px;
   border: 2px solid #EE972D;
   margin-bottom: 2.25rem;
+  margin-right: 1rem;
+  max-width: 40%;
+  min-width: 13%;
+  /* height: 75px; */
 }
 
 .cardSkillImg {
   filter: drop-shadow(5px 0 6px rgba(0, 0, 0, 0.2));
 }
 
-.cardSkill > img {
+.cardSkill>img {
   margin-top: -3px;
   margin-right: 0px;
   margin-left: -3px;
@@ -22,5 +26,32 @@
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--color-black);
-  margin: 1.625rem 6.25rem 1.625rem 1.625rem;
+  margin: 0.8125rem;
+}
+
+
+@media (width <=600px) {
+  /* .cardSkillImg {
+    width: 46.673px;
+    height: 46.673px;
+  } */
+
+  /* .cardSkill {
+    width: 173px;
+    height: 46.673px;
+  } */
+
+  .cardSkillName {
+    font-size: 0.65625rem;
+  }
+
+  .cardSkill>img {
+    width: 46.673px;
+    height: 46.673px;
+  }
+
+  .cardSkill {
+    height: 46px;
+    margin-bottom: 1.2rem;
+  }
 }
