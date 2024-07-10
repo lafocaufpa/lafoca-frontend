@@ -6,7 +6,6 @@ export default function ButtonLink() {
   return (
     <span className={styles.buttonLink}>
       <Image src={IconLink} alt=''/>
-      <p>Ver Online</p>
     </span>
   );
 }

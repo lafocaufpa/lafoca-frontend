@@ -1,0 +1,92 @@
+.articleContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.dateAndResearch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 20px;
+  text-align: left;
+}
+
+.dateAndResearch p {
+  margin: 0;
+}
+
+.researchLines {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.researchLines p {
+  margin: 0;
+}
+
+.articleDetails {
+  flex: 1;
+  padding-left: 20px;
+  text-align: left;
+}
+
+.articleTitle {
+  font-size: 1.5em;
+  margin: 0;
+  font-weight: 500;
+  line-height: 36.654px;
+}
+
+.articleUrl {
+  color: inherit;
+}
+
+.articleUrl:hover {
+  text-decoration: underline;
+}
+
+.articleJournal {
+  font-style: italic;
+  color: grey;
+  margin-top: 5px;
+  font-size: 0.75rem;
+}
+
+.articleAbstract {
+  margin-top: 6.25rem;
+  line-height: 1.6;
+  font-style: normal;
+font-weight: 400;
+line-height: 36.654px; 
+}
+
+.articleLink {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.articleLink:hover {
+  text-decoration: underline;
+}
+
+.showMoreButton {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.showMoreButton:hover {
+  text-decoration: none;
+}

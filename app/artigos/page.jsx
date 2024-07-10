@@ -1,8 +1,8 @@
+import ArticlesPage from '@/components/articles/ArticlesPage';
+
 const ProjectsPage = () => {
   return(
-    <div>
-      <h1>LISTAGEM DE ARTIGOS</h1>
-    </div>
+    <ArticlesPage/>
   );
 };
 

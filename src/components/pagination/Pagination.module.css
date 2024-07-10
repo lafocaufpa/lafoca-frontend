@@ -1,0 +1,84 @@
+.navContainer {
+  border-radius: 5px;
+  border: 0.5px solid rgba(0, 0, 0, 0.3);
+  background: var(--Branco, #FFF);
+  display: flex;
+  padding: 9px 10px;
+}
+
+.pagContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pagination {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  gap: 30px;
+}
+
+.pagination>li {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.paginationGoTo {
+  display: flex;
+  gap: 16px;
+}
+
+.paginationGoTo p {
+  font-size: 1rem;
+  color: #000;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.paginationInput {
+  border-radius: 5px;
+  border: 0.5px solid rgba(0, 0, 0, 0.65);
+  background: #FFF;
+  text-align: center;
+  font-size: 16px;
+  /* font-style: normal; */
+  /* font-weight: 500; */
+  /* line-height: 20px; */
+  /* display: flex; */
+  /* justify-content: center; */
+
+}
+
+.buttonPrevious,
+.buttonNext {
+  /* background: transparent;
+  font-size: 16px;
+  font-weight: 600; */
+  cursor: pointer;
+}
+
+.paginationListButton {
+  background: transparent;
+  margin: 0 5px;
+  color: #000;
+  cursor: pointer;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  /* padding: 10px; */
+}
+
+
+.liActive {
+  border-radius: 5px;
+  border: 0.5px solid rgba(0, 0, 0, 0.65)
+}
