@@ -1,15 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
 import IconBsSearch from '@components/icon/IconBsSearch';
 import IconClose from '@components/icon/IconClose';
 import styles from './Search.module.css';
 
-export default function Search() {
-  const [searchValue, setSearchValue] = useState('');
+export default function Search({searchTerm, setSearchTerm}) {
 
   const handleClear = () => {
-    setSearchValue('');
+    setSearchTerm('');
   };
 
   return (
@@ -17,12 +15,12 @@ export default function Search() {
       <IconBsSearch className={styles.searchIcon} />
       <input
         type="text"
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Buscar por título"
         className={styles.searchInput}
       />
-      {searchValue && <IconClose className={styles.clearIcon} onClick={handleClear} />}
+      {searchTerm && <IconClose className={styles.clearIcon} onClick={handleClear} />}
     </div>
   );
 }

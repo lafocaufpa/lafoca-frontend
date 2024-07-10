@@ -25,7 +25,7 @@ export default function ProjectsPage() {
   const [year, setYear] = useState('');
   const [completed, setCompleted] = useState(false);
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(undefined);
   const [lineId, setLineId] = useState(null);
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
@@ -36,9 +36,13 @@ export default function ProjectsPage() {
   const fetchData = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
     try {
       const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
+      console.log(data.content);
       setProjects(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
+      if(lineOfResearchId != 0 || searchTerm != undefined){
+        setCurrentPage(0);
+      }
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar projetos.');
     }
@@ -47,6 +51,10 @@ export default function ProjectsPage() {
   useEffect(() => {
     fetchData(currentPage, resultsPerPage, searchTerm, lineId?.value);
   }, [currentPage, resultsPerPage, searchTerm, lineId]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [lineId, searchTerm]);
 
   useEffect(() => {
     if (showConfirmModal) {

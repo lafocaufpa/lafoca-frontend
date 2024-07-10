@@ -24,6 +24,7 @@ export default function ArticlesPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
   const [journal, setJournal] = useState('');
+  const [articleAbstract, setArticleAbstract] = useState('');
   const [url, setUrl] = useState('');
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,11 +36,13 @@ export default function ArticlesPage() {
   const deleteButtonRef = useRef(null);
 
   const fetchData = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
+
     try {
       const data = await articleService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
       setArticles(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
+     
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar artigos.');
     }
@@ -48,6 +51,10 @@ export default function ArticlesPage() {
   useEffect(() => {
     fetchData(currentPage, resultsPerPage, searchTerm, lineId?.value);
   }, [currentPage, resultsPerPage, searchTerm, lineId]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [lineId, searchTerm]);
 
   useEffect(() => {
     if (showConfirmModal) {
@@ -141,6 +148,7 @@ export default function ArticlesPage() {
       title,
       journal,
       url,
+      articleAbstract,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
 
     };
@@ -263,42 +271,40 @@ export default function ArticlesPage() {
               </div>
               <div className="modal-body">
                 <form>
-                  <div className="mb-3">
-                    <label htmlFor="title" className="form-label">
-                      Título
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="journal" className="form-label">
-                      Jornal
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="journal"
-                      value={journal}
-                      onChange={(e) => setJournal(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="url" className="form-label">
-                      URL
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      id="url"
-                      value={url}
-                      onChange={(e) => setUrl(e.target.value)}
-                    />
-                  </div>
+                  <InputField
+                    label="Título"
+                    type="text"
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                  />
+                  <InputField
+                    label="Revista"
+                    type="text"
+                    id="journal"
+                    value={journal}
+                    onChange={(e) => setJournal(e.target.value)}
+                    required
+                  />
+                  <InputField
+                    label="Resumo"
+                    type="text"
+                    id="articleAbstract"
+                    as="textarea"
+                    value={articleAbstract}
+                    onChange={(e) => setArticleAbstract(e.target.value)}
+                    maxLength={5000}
+                    required
+                  />
+                  <InputField
+                    label="Link de Acesso"
+                    type="text"
+                    id="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    required
+                  />
                   <AsyncSelect
                     loadOptions={loadOptions}
                     service={linesOfResearchService}

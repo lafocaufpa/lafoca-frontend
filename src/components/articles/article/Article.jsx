@@ -8,7 +8,6 @@ export default function Article({ article }) {
 
   const abstractToShow = showFullAbstract ? articleAbstract : articleAbstract.substring(0, 300);
   const showButton = articleAbstract.length > 300;
-
   return (
     <div className={styles.articleContainer}>
       <div className={styles.dateAndResearch}>

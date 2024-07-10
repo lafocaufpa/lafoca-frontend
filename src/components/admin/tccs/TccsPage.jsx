@@ -50,6 +50,9 @@ export default function TccsPage() {
     fetchData(currentPage, resultsPerPage, searchTerm, lineId?.value);
   }, [currentPage, resultsPerPage, searchTerm, lineId]);
 
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [lineId, searchTerm]);
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
@@ -232,7 +235,7 @@ export default function TccsPage() {
                 <tr key={tccData.id}>
                   <td>{tccData.name}</td>
                   <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={tccData.url}  target='_blank' rel="noreferrer">Link</Link></td>
-                  <td>{new Date(tccData.date).toLocaleDateString()}</td>
+                  <td>{tccData.date}</td>
                   <td className='text-center'>
                     <button
                       className="btn btn-primary btn-sm me-1"

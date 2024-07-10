@@ -8,8 +8,6 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
-import IconFunctions from '@/components/icon/IconFunctions';
-import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
 
 export default function FunctionMemberPage() {
   const [functionMembers, setFunctionMembers] = useState([]);
@@ -43,6 +41,10 @@ export default function FunctionMemberPage() {
   useEffect(() => {
     fetchData(currentPage, resultsPerPage, searchTerm);
   }, [currentPage, resultsPerPage, searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (showConfirmModal) {

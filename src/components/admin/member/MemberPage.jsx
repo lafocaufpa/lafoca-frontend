@@ -46,6 +46,10 @@ export default function MemberPage() {
   }, [currentPage, resultsPerPage, searchQuery, yearClassId]);
 
   useEffect(() => {
+    setCurrentPage(0);
+  }, [yearClassId, searchQuery]);
+
+  useEffect(() => {
     if (showConfirmModal) {
       deleteButtonRef.current.focus();
     }

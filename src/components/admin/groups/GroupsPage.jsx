@@ -43,6 +43,10 @@ export default function GroupsPage() {
   }, [currentPage, resultsPerPage, searchTerm]);
 
   useEffect(() => {
+    setCurrentPage(0);
+  }, [searchTerm]);
+
+  useEffect(() => {
     if (showConfirmModal) {
       deleteButtonRef.current.focus();
     }

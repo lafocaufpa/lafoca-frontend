@@ -9,8 +9,6 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import Image from 'next/image';
-import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
-import IconSkills from '@/components/icon/IconSkills';
 
 export default function SkillsPage() {
   const [skills, setSkills] = useState([]);
@@ -44,6 +42,10 @@ export default function SkillsPage() {
   useEffect(() => {
     fetchData(currentPage, resultsPerPage, searchTerm);
   }, [currentPage, resultsPerPage, searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (showConfirmModal) {
