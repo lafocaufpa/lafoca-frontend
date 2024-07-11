@@ -1,8 +1,12 @@
+import ViewPage from '@/components/viewer/ViewPage';
+
 const ProjectsPage = () => {
   return(
-    <div>
-      <h1>LISTAGEM DE PROJETOS</h1>
-    </div>
+    <ViewPage 
+      titlePage={'Projetos criados'} 
+      descriptionPage={'Todos os projetos criado pelo grupo de pesquisa LA FocA'} 
+      
+    />
   );
 };
 

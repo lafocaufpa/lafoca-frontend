@@ -1,17 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Search from '@/components/search/Search';
-import styles from './ArticlesMain.module.css';
+import styles from './ViewPageMain.module.css';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
-import Article from '@components/articles/article/Article';
 import Line from '@images/icons/line.svg';
 import { articleService } from '@/services/api/article/ArticleService';
-import LineOfResearchSelect from '@/components/lineOfResearchSelect/LineOfResearchSelect';
 import Image from 'next/image';
 import Pagination from '@/components/pagination/PaginationView';
+import SectionMainHeader from '@/components/viewer//SectionMainHeader';
+import SearchView from '@/components/viewer/SearchView';
+import ViewContent from '@components/viewer/content/ViewContent';
 
-export default function ArticlesMain() {
+export default function ViewPageMain() {
   const [lineId, setLineId] = useState(null);
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -49,6 +49,9 @@ export default function ArticlesMain() {
       setArticles(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
+      if(lineOfResearchId != 0){
+        setCurrentPage(0);
+      }
     } catch (error) {
       console.error('Erro ao buscar artigos:', error);
     }
@@ -58,16 +61,16 @@ export default function ArticlesMain() {
     fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value);
   }, [currentPage, resultsPerPage, searchTerm, lineId]);
 
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [lineId, searchTerm]);
+
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
       setCurrentPage(page);
       document.querySelector(`.${styles.sectionMain}`).scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [lineId, searchTerm]);
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
@@ -77,30 +80,20 @@ export default function ArticlesMain() {
 
   return (
     <main className='global-container'>
-      <section className={`${styles.container}`}>
-        <h1>Artigos Publicados</h1>
-        <p>Todos os artigos publicados pelo grupo de pesquisa LA FocA</p>
-      </section>
-      <section>
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <div className={styles.lineOfResearchContainer}>
-          <LineOfResearchSelect
-            loadOptions={loadOptions}
-            placeholder="Filtrar por linha de pesquisa"
-            service={linesOfResearchService}
-            value={lineId}
-            onChange={setLineId}
-            additionalProps={{ page: 0 }}
-            id="lineId"
-            required
-          />
-        </div>
-      </section>
+      <SectionMainHeader titlePage={'Projetos Publicados'} descriptionPage={'Todos os projetos publicados pelo grupo de pesquisa LA FocA'}/>
+      <SearchView 
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm} 
+        loadOptions={loadOptions} 
+        linesOfResearchService={linesOfResearchService} 
+        lineId={lineId} 
+        setLineId={setLineId}
+      />
       <section className={styles.sectionMain}>
         <h2 className={styles.title}>{lineId?.label || 'Todos os artigos publicados'}</h2>
         <Image src={Line} alt='' />
         {articles?.map((article) =>
-          <Article key={article?.id} article={article} />
+          <ViewContent key={article?.id} obj={article} />
         )}
       </section>
       <Pagination

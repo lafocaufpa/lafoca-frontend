@@ -1,0 +1,21 @@
+.container {
+  text-align: left;
+  margin-top: 15.625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
+}
+
+.container > h1 {
+  font-size: 5.8125rem;
+  width: 20%;
+}
+
+.container > p {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 0.0225rem;
+  margin-bottom: 1.125rem;
+}

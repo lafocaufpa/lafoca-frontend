@@ -55,7 +55,7 @@ const PaginationView = ({ currentPage, totalPages, onPageChange, getResultMessag
           />
         </div> */}
       </nav>
-      <div className="result-message">{getResultMessage()}</div>
+      <div className={styles.resultMessage}>{getResultMessage()}</div>
       
     </div>
   );

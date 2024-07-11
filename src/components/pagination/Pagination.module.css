@@ -48,19 +48,10 @@
   background: #FFF;
   text-align: center;
   font-size: 16px;
-  /* font-style: normal; */
-  /* font-weight: 500; */
-  /* line-height: 20px; */
-  /* display: flex; */
-  /* justify-content: center; */
-
 }
 
 .buttonPrevious,
 .buttonNext {
-  /* background: transparent;
-  font-size: 16px;
-  font-weight: 600; */
   cursor: pointer;
 }
 
@@ -74,11 +65,15 @@
   font-style: normal;
   font-weight: 600;
   line-height: 20px;
-  /* padding: 10px; */
-}
+}  /* padding: 10px; */
+
 
 
 .liActive {
   border-radius: 5px;
   border: 0.5px solid rgba(0, 0, 0, 0.65)
+}
+
+.resultMessage {
+  color: rgba(34, 34, 34, 0.65);
 }
