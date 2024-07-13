@@ -1,8 +1,6 @@
 .scrollableNav::-webkit-scrollbar {
   width: 12px;
-  /* for vertical scrollbars */
   height: 12px;
-  /* for horizontal scrollbars */
 }
 
 .scrollableNav::-webkit-scrollbar-track {
@@ -14,7 +12,6 @@
 }
 
 .padding {
-  /* padding: 1.25rem 0 1.25rem 1.25rem; */
 }
 
 
@@ -33,7 +30,6 @@
 
 .hoverEffect:hover {
   background-color: rgba(255, 255, 255, 0.5);
-  /* opacity: 1; */
 }
 
 .iconEdit {

@@ -15,7 +15,6 @@
 .footer_lafoca_info {
   display: flex;
   justify-content: space-between;
-  /* flex-flow: wrap; */
 }
 
 .footer_lafoca_info > div:first-child {

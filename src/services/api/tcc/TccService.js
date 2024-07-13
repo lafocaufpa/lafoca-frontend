@@ -13,8 +13,8 @@ export const tccService = {
     });
     return response.data;
   },
-  list: async (page = 0, resultsPerPage = 10, sort, query = '', lineOfResearchId = '' ) => {
-    const url = routes.tccs.list(page, resultsPerPage, sort, query, lineOfResearchId);
+  list: async (page = 0, resultsPerPage = 10, sort, query = '', lineOfResearchId = '', year = '') => {
+    const url = routes.tccs.list(page, resultsPerPage, sort, query, lineOfResearchId, year);
     const response = await api.get(url);
     return response.data;
   },

@@ -12,8 +12,8 @@ export const projectsService = {
     });
     return response.data;
   },
-  list: async (page = 0, resultsPerPage = 10, sort, query = '', lineOfResearchId = '' ) => {
-    const url = routes.projects.list(page, resultsPerPage, sort, query, lineOfResearchId);
+  list: async (page = 0, resultsPerPage = 10, sort, query = '', lineOfResearchId = '', year = '', onGoing = '') => {
+    const url = routes.projects.list(page, resultsPerPage, sort, query, lineOfResearchId, year, onGoing);
     const response = await api.get(url);
     return response.data;
   },

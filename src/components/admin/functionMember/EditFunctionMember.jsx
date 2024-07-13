@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import InputField from '@/components/inputField/InputField'; // Importe o componente de campo de input adequado
+import InputField from '@/components/inputField/InputField';
 import { useRouter } from 'next/navigation';
 import { functionService } from '@/services/api/function/FunctionService';
 
@@ -12,7 +12,7 @@ export default function EditFunction({ functionId }) {
   const [description, setDescription] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(true); // Estado para controlar a visibilidade do modal
+  const [show, setShow] = useState(true);
   const router = useRouter();
 
   useEffect(() => {

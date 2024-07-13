@@ -379,10 +379,10 @@ export default function ProjectsPage() {
                     onChange={(e) => setModality(e.target.value)}
                     required
                   >
-                    <option value="">Selecione a Modalidade</option>
-                    <option value="PESQUISA">PESQUISA</option>
-                    <option value="ENSINO">ENSINO</option>
-                    <option value="EXTENSÃO">EXTENSÃO</option>
+                    <option style={{color: 'hsl(0, 0%, 50%)'}} value="">Selecione a Modalidade</option>
+                    <option value="PESQUISA">Pesquisa</option>
+                    <option value="ENSINO">Ensino</option>
+                    <option value="EXTENSÃO">Extensão</option>
                   </select>
                 </div>
                 <AsyncSelect

@@ -1,8 +1,6 @@
 .scrollableNav::-webkit-scrollbar {
   width: 12px;
-  /* for vertical scrollbars */
   height: 12px;
-  /* for horizontal scrollbars */
 }
 
 .scrollableNav::-webkit-scrollbar-track {

@@ -119,7 +119,7 @@ export default function GroupsPage() {
     try {
       await groupService.add(groupData);
       setName('');
-      setShowAddModal(false); // Após adicionar com sucesso, fecha o modal
+      setShowAddModal(false);
       showSuccessMessage('Grupo adicionado com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
@@ -260,7 +260,7 @@ export default function GroupsPage() {
           </div>
         </div>
       )}
-      {/* Modal de Confirmação de Exclusão */}
+      
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">

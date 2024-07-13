@@ -179,9 +179,9 @@ export default function EditProject({ projectId }) {
               required
             >
               <option value="">Selecione a Modalidade</option>
-              <option value="PESQUISA">PESQUISA</option>
-              <option value="ENSINO">ENSINO</option>
-              <option value="EXTENSÃO">EXTENSÃO</option>
+              <option value="PESQUISA">Pesquisa</option>
+              <option value="ENSINO">Ensino</option>
+              <option value="EXTENSÃO">Extensão</option>
             </select>
           </div>
           <AsyncSelect

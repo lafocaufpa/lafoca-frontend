@@ -6,7 +6,6 @@ export default function Header() {
   return (
     <header>
       <div className='global-container'>
-        {/* <Logo/> */}
         <Link href={url.homepage}><Logo/></Link>
       </div>
     </header>

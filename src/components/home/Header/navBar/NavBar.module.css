@@ -114,11 +114,9 @@
   .navbar.active {
     clip-path: circle(1500px at 70% 7%);
     
-    /* pointer-events: none;x */
   }
 
   .navbar.active ~ .MenuHamburger {
-    /* position: fixed; */
     border-top-color: transparent;
   }
 

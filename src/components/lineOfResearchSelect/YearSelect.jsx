@@ -1,22 +1,21 @@
 'use client';
 
-import { AsyncPaginate } from 'react-select-async-paginate';
+import Select from 'react-select';
 import IconUp from '../icon/IconUp';
 import IconDown from '../icon/IconDown';
 import styles from './LineOfResearchSelect.module.css';
-import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 
-const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
-  const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
-    return loadOptions(linesOfResearchService, inputValue, loadedOptions, additional);
-  };
+const YearSelect = ({ id, label, ...props }) => {
+  const years = Array.from({ length: 2024 - 2017 + 1 }, (_, i) => ({
+    value: (2017 + i).toString(),
+    label: (2017 + i).toString(),
+  }));
 
   return (
     <div className={`${styles.formGroup} form-group mb-3`}>
       <label htmlFor={id} className={`${styles.label} fw-bold mb-1`}>{label}</label>
-      <AsyncPaginate
-        loadOptions={loadOptionsHandler}
-        additional={additionalProps}
+      <Select
+        options={years}
         isClearable
         styles={{
           menu: base => ({
@@ -60,12 +59,6 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
               borderColor: 'rgba(0, 0, 0, 0.65)'
             },
           }),
-          loadingIndicator: (styles) => ({
-            ...styles,
-            '& span': {
-              color: 'rgb(204, 204, 204)'
-            }
-          }),
           indicatorsContainer: styles => ({
             ...styles,
             'svg': {
@@ -105,4 +98,4 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
   );
 };
 
-export default LineOfResearchSelect;
+export default YearSelect;

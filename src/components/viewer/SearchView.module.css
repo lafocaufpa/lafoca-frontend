@@ -1,3 +1,11 @@
 .lineOfResearchContainer {
-  max-width: 37%;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  gap: 10px;
+}
+
+.checkboxContainer > label{
+  margin: 0.3125rem;
+
 }

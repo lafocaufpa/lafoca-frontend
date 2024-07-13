@@ -3,15 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import InputField from '@/components/inputField/InputField'; // Certifique-se de importar o componente de campo de input correto
 import { useRouter } from 'next/navigation';
-import { classService } from '@/services/api/yearClass/YearClasses'; // Importe o serviço de classe corretamente
+import { classService } from '@/services/api/yearClass/YearClasses';
 
 export default function EditClassPage({ turmaId }) {
   const [year, setYear] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(true); // Estado para controlar a visibilidade do modal
+  const [show, setShow] = useState(true);
   const router = useRouter();
 
   useEffect(() => {

@@ -38,7 +38,6 @@
   transition: max-height 0.5s cubic-bezier(1, 0, 1, 0);
   font-weight: 500;
   font-size: 0.8rem;
-  /* margin: 1rem 0; */
 
 }
 
@@ -54,7 +53,6 @@
 
 .item:hover {
   box-shadow: 0 2px 4px rgba(12, 0, 0, 0.1);
-  /* Adiciona sombra suave ao passar o mouse */
 }
 
 @media (width <=768px) {

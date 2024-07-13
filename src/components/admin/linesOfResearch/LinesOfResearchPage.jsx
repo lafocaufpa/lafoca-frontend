@@ -7,9 +7,7 @@ import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfRe
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import url from '@/routes/url';
-import InputField from '@/components/inputField/InputField'; // Importando componente de campo de input
-import IconResearchs from '@/components/icon/IconResearchs';
-import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
+import InputField from '@/components/inputField/InputField';
 
 export default function LinesOfResearchPage() {
   const [linesOfResearch, setLinesOfResearch] = useState([]);
@@ -119,7 +117,7 @@ export default function LinesOfResearchPage() {
       await linesOfResearchService.add(lineData);
       setName('');
       setDescription('');
-      setShowAddModal(false); // Após adicionar com sucesso, fecha o modal
+      setShowAddModal(false);
       showSuccessMessage('Linha de pesquisa adicionada com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
@@ -274,7 +272,6 @@ export default function LinesOfResearchPage() {
         </div>
       )}
 
-      {/* Modal de Confirmação de Exclusão */}
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">

@@ -275,7 +275,6 @@ export default function FunctionMemberPage() {
         </div>
       )}
 
-      {/* Modal de Confirmação de Exclusão */}
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">

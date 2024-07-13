@@ -11,6 +11,8 @@ import SectionMain from '@components/viewer/section/SectionMain';
 
 export default function ViewPageMain() {
   const [lineId, setLineId] = useState(null);
+  const [year, setYear] = useState(null);
+  const [onGoing, setOnGoing] = useState(false);
   const [objs, setObjs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -40,10 +42,10 @@ export default function ViewPageMain() {
     }
   };
 
-  const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
+  const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '', year = '', onGoind = '') => {
     try {
       resultsPerPage = resultsPerPage ?? 5;
-      const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
+      const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId, year, onGoind);
       setObjs(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -53,12 +55,12 @@ export default function ViewPageMain() {
   };
 
   useEffect(() => {
-    fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value);
-  }, [currentPage, resultsPerPage, searchTerm, lineId]);
+    fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value, year?.value, onGoing);
+  }, [currentPage, resultsPerPage, searchTerm, lineId, year, onGoing]);
 
   useEffect(() => {
     setCurrentPage(0);
-  }, [lineId, searchTerm]);
+  }, [lineId, searchTerm, year,onGoing]);
 
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
@@ -82,14 +84,19 @@ export default function ViewPageMain() {
         loadOptions={loadOptions} 
         linesOfResearchService={linesOfResearchService} 
         lineId={lineId} 
-        setLineId={setLineId}
+        setLineId={setLineId} 
+        year={year} 
+        setYear={setYear} 
+        onGoing={onGoing} 
+        setOnGoing={setOnGoing} 
+        as={'checkbox'}
       />
       <SectionMain lineId={lineId} label={'Todos os projetos realizados'} type={'project'} objs={objs}/>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
-        getResultMessage={getResultMessage}
+        getResultMessage={getResultMessage} 
       />
     </main>
   );

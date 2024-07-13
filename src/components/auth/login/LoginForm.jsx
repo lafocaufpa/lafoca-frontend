@@ -16,7 +16,7 @@ export default function Login() {
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const [renderRestorePassword, setRenderRestorePassword] = useState(false);
-  const [loading, setLoading] = useState(false); // Estado para controlar o loading
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let errorTimeout;
@@ -55,7 +55,7 @@ export default function Login() {
     setTimeout(() => {
       setLoading(false);
       setToggle(!toggle);
-    }, 1000);
+    }, 2000);
     
     
 

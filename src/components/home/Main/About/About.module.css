@@ -46,8 +46,6 @@
 
   .appointments__menina img {
 
-    /* width: clamp(290px, calc(40.41vw + 270px), 680px) !important; */
-
   }
 
   .container__accordion {
@@ -72,11 +70,11 @@
 
   .about_lafoca h2, .about_lafoca span {
     display: block;
-    text-transform: uppercase; /* Faz o texto "O LAFOCA" maiúsculo */
+    text-transform: uppercase;
   }
 
   .about_lafoca h2 {
-    text-transform: uppercase; /* Faz o texto "SOBRE" maiúsculo */
+    text-transform: uppercase;
   }
 
   .container__accordion span {

@@ -10,6 +10,7 @@ import SectionMainHeader from '@/components/viewer/SectionMainHeader';
 
 export default function  ArticlesMain() {
   const [lineId, setLineId] = useState(null);
+  const [year, setYear] = useState(null);
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -39,10 +40,10 @@ export default function  ArticlesMain() {
     }
   };
 
-  const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
+  const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '', year = '') => {
     try {
       resultsPerPage = resultsPerPage ?? 5;
-      const data = await articleService.list(page, resultsPerPage, undefined, searchTerm, lineOfResearchId);
+      const data = await articleService.list(page, resultsPerPage, undefined, searchTerm, lineOfResearchId, year);
       setArticles(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -52,8 +53,8 @@ export default function  ArticlesMain() {
   };
 
   useEffect(() => {
-    fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value);
-  }, [currentPage, resultsPerPage, searchTerm, lineId]);
+    fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value, year?.value);
+  }, [currentPage, resultsPerPage, searchTerm, lineId, year]);
 
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
@@ -64,7 +65,7 @@ export default function  ArticlesMain() {
 
   useEffect(() => {
     setCurrentPage(0);
-  }, [lineId, searchTerm]);
+  }, [lineId, searchTerm, year]);
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
@@ -84,7 +85,9 @@ export default function  ArticlesMain() {
         setSearchTerm={setSearchTerm} 
         loadOptions={loadOptions} 
         lineId={lineId} 
-        setLineId={setLineId}
+        setLineId={setLineId} 
+        year={year} 
+        setYear={setYear} 
       />
       <SectionMain 
         lineId={lineId} 

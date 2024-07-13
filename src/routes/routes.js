@@ -39,7 +39,7 @@ const routes = {
   },
   projects: {
     add: `${PROJECTS}`,
-    list: (page = 0, resultsPerPage = 10, sort = 'title,asc', query = '', lineOfResearchId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'title,asc', query = '', lineOfResearchId = '', year = '', onGoing = '') => {
       let url = `${PROJECTS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
@@ -47,6 +47,14 @@ const routes = {
 
       if(lineOfResearchId) {
         url += `&lineOfResearchId=${lineOfResearchId}`;
+      }
+
+      if(year) {
+        url += `&year=${year}`;
+      }
+
+      if(onGoing) {
+        url += `&onGoing=${'true'}`;
       }
       
       return url;
@@ -89,7 +97,7 @@ const routes = {
   },
   article: {
     add: `${ARTICLES}`,
-    list: (page = 0, resultsPerPage = 10, sort = 'date,desc', query = '', lineOfResearchId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'date,desc', query = '', lineOfResearchId = '', year = '') => {
       let url = `${ARTICLES}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
@@ -97,6 +105,10 @@ const routes = {
 
       if (lineOfResearchId) {
         url += `&lineOfResearchId=${lineOfResearchId}`;
+      }
+
+      if (year) {
+        url += `&year=${year}`;
       }
       return url;
     },
@@ -149,7 +161,7 @@ const routes = {
   },
   tccs: {
     add: `${TCCS}`,
-    list: (page = 0, resultsPerPage = 10, sort = 'date,desc', query = '', lineOfResearchId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'date,desc', query = '', lineOfResearchId = '', year = '') => {
       let url = `${TCCS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
@@ -157,6 +169,10 @@ const routes = {
 
       if(lineOfResearchId) {
         url += `&lineOfResearchId=${lineOfResearchId}`;
+      }
+
+      if(year){
+        url += `&year=${year}`;
       }
       return url;
     },

@@ -27,7 +27,7 @@
 
 .memberSocialMedia {
   display: flex;
-  flex-direction: row-reverse; /* Isso garante que os botões estejam na mesma linha */
+  flex-direction: row-reverse;
   flex-wrap: wrap;
   row-gap: 10px;
   width: 33%;
@@ -39,7 +39,7 @@
 }
 
 .memberSocialMedia > div:last-child {
-  flex-basis: 100%; /* Isso faz com que o terceiro botão ocupe toda a largura da linha */
+  flex-basis: 100%;
 }
 
 
