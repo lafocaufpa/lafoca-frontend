@@ -6,12 +6,18 @@ import Button from 'react-bootstrap/Button';
 import InputField from '@/components/inputField/InputField';
 import { useRouter } from 'next/navigation';
 import { tccService } from '@/services/api/tcc/TccService';
+import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
+import { MemberService } from '@/services/api/Members/MembersService';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 
 export default function EditTccsPage({ tccId }) {
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
   const [date, setDate] = useState('');
+  const [abstractText, setAbstractText] = useState('');
   const [error, setError] = useState(null);
+  const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
+  const [selectedMember, setSelectedMember] = useState([]);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const router = useRouter();
@@ -20,9 +26,12 @@ export default function EditTccsPage({ tccId }) {
     const fetchTccData = async () => {
       try {
         const tcc = await tccService.readById(tccId);
-        setName(tcc.name);
+        setTitle(tcc.title);
         setUrl(tcc.url);
         setDate(parseDate(tcc.date)); 
+        setAbstractText(tcc.abstractText);
+        setSelectedLinesOfResearch(tcc.linesOfResearch.map(line => ({ value: line.id, label: line.name })));
+        setSelectedMember({ value: tcc.slugMember, label: tcc.nameMember });
       } catch (error) {
         setError(error?.userMessage || 'Erro ao carregar dados do TCC.');
       }
@@ -31,9 +40,64 @@ export default function EditTccsPage({ tccId }) {
     fetchTccData();
   }, [tccId]);
 
+  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue);
+      return {
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.name || item.title || item.year,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching options:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
+
+  const loadMemberOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue, undefined);
+      return {
+        options: response.content.map(member => ({
+          value: member.slug,
+          label: member.fullName,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Erro ao carregar membros:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
+
+
   const handleUpdate = async () => {
     setLoading(true);
-    const data = { name, url, date: formatDate(date) };
+    const data = { 
+      title, 
+      url, 
+      date: formatDate(date), 
+      abstractText,
+      lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
+      nameMember: selectedMember.label,
+      slugMember: selectedMember.value
+    };
+
+    console.log(data);
 
     try {
       await tccService.update(tccId, data);
@@ -60,17 +124,21 @@ export default function EditTccsPage({ tccId }) {
         {error && <div className="alert alert-danger">{error}</div>}
         <form>
           <InputField
-            label="Nome"
+            label="Título"
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            maxLength={255}
             required
           />
           <InputField
-            label="URL"
+            label="Url"
             type="text"
+            id="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
+            maxLength={700}
             required
           />
           <InputField
@@ -79,6 +147,39 @@ export default function EditTccsPage({ tccId }) {
             id="tccDate"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            required
+          />
+          <InputField
+            label="Resumo"
+            type="text"
+            id="abstractText"
+            as='textarea'
+            maxLength={5000}
+            value={abstractText}
+            onChange={(e) => setAbstractText(e.target.value)} 
+            required
+          />
+          <AsyncSelect
+            loadOptions={loadOptions}
+            service={linesOfResearchService}
+            placeholder="Selecione linhas de pesquisa"
+            label="Linhas de Pesquisa"
+            isMulti
+            value={selectedLinesOfResearch}
+            onChange={setSelectedLinesOfResearch}
+            additional={{ page: 0 }}
+            id="selectedLinesOfResearch"
+            required
+          />
+          <AsyncSelect
+            loadOptions={loadMemberOptions}
+            placeholder="Selecione um membro"
+            service={MemberService}
+            value={selectedMember}
+            onChange={setSelectedMember}
+            additional={{ page: 0 }}
+            id="collab"
+            label="Vincular membro"
             required
           />
         </form>

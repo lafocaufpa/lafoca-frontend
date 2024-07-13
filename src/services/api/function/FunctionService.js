@@ -12,7 +12,7 @@ export const functionService = {
     });
     return response.data;
   },
-  list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', query = '') => {
+  list: async (page = 0, resultsPerPage = 10, sort, query = '') => {
     const token = await getCookie();
     const url = routes.function.list(page, resultsPerPage, sort, query);
 

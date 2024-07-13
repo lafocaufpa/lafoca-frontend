@@ -1,8 +1,8 @@
+import TccsPage from '@/components/tccs/tccsPage';
+
 const ProjectsPage = () => {
   return(
-    <div>
-      <h1>LISTAGEM DE TCCS</h1>
-    </div>
+    <TccsPage/>
   );
 };
 

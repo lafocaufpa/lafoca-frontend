@@ -6,13 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import { tccService } from '@/services/api/tcc/TccService';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
+import { MemberService } from '@/services/api/Members/MembersService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
-import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
-import IconTccs from '@/components/icon/IconTccs';
 
 export default function TccsPage() {
   const [tccs, setTccs] = useState([]);
@@ -23,11 +22,13 @@ export default function TccsPage() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [tccToDelete, setTccToDelete] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [urlTcc, setUrlTcc] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [lineId, setLineId] = useState(null);
+  const [abstractText, setAbstractText] = useState('');
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
+  const [selectedMember, setSelectedMember] = useState([]);
   const [tccDate, setTccDate] = useState('');
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
@@ -35,9 +36,9 @@ export default function TccsPage() {
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 5, name = '', lineOfResearchId = '') => {
+  const fetchData = async (page = 0, resultsPerPage = 5, title = '', lineOfResearchId = '') => {
     try {
-      const data = await tccService.list(page, resultsPerPage, undefined, name, lineOfResearchId);
+      const data = await tccService.list(page, resultsPerPage, undefined, title, lineOfResearchId);
       setTccs(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -69,6 +70,28 @@ export default function TccsPage() {
       };
     } catch (error) {
       console.error('Error fetching options:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
+
+  const loadMemberOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue, undefined);
+      return {
+        options: response.content.map(member => ({
+          value: member.slug,
+          label: member.fullName,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Erro ao carregar membros:', error);
       return {
         options: [],
         hasMore: false,
@@ -149,15 +172,18 @@ export default function TccsPage() {
 
   const handleAddTccSubmit = async () => {
     const tccData = {
-      name,
+      title,
       url: urlTcc,
       date: formatDate(tccDate),
+      abstractText,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
+      nameMember: selectedMember.label,
+      slugMember: selectedMember.value
     };
 
     try {
       await tccService.add(tccData);
-      setName('');
+      setTitle('');
       setUrlTcc('');
       setTccDate('');
       setShowAddModal(false);
@@ -233,7 +259,7 @@ export default function TccsPage() {
             <tbody>
               {tccs.map((tccData) => (
                 <tr key={tccData.id}>
-                  <td>{tccData.name}</td>
+                  <td>{tccData.title}</td>
                   <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={tccData.url}  target='_blank' rel="noreferrer">Link</Link></td>
                   <td>{tccData.date}</td>
                   <td className='text-center'>
@@ -358,9 +384,9 @@ export default function TccsPage() {
                   <InputField
                     label="Título"
                     type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     maxLength={255}
                     required
                   />
@@ -381,6 +407,16 @@ export default function TccsPage() {
                     onChange={(e) => setTccDate(e.target.value)}
                     required
                   />
+                  <InputField
+                    label="Resumo"
+                    type="text"
+                    id="abstractText"
+                    as='textarea'
+                    maxLength={5000}
+                    value={abstractText}
+                    onChange={(e) => setAbstractText(e.target.value)} 
+                    required
+                  />
                   <AsyncSelect
                     loadOptions={loadOptions}
                     service={linesOfResearchService}
@@ -391,6 +427,17 @@ export default function TccsPage() {
                     onChange={setSelectedLinesOfResearch}
                     additional={{ page: 0 }}
                     id="selectedLinesOfResearch"
+                    required
+                  />
+                  <AsyncSelect
+                    loadOptions={loadMemberOptions}
+                    placeholder="Selecione um membro"
+                    service={MemberService}
+                    value={selectedMember}
+                    onChange={setSelectedMember}
+                    additional={{ page: 0 }}
+                    id="collab"
+                    label="Vincular membro"
                     required
                   />
                 </form>

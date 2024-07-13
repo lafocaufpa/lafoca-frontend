@@ -12,12 +12,9 @@ import { projectsService } from '@/services/api/Projects/ProjectsService';
 import { functionService } from '@/services/api/function/FunctionService';
 import { skillService } from '@/services/api/skill/SkillService';
 import { classService } from '@/services/api/yearClass/YearClasses';
-import PhotoSelector from '@/components/photoSelector/photoSelector';
+import { tccService } from '@/services/api/tcc/TccService';
 
-const formatDate = (date) => {
-  const [year, month, day] = date.split('-');
-  return `${day}/${month}/${year}`;
-};
+import PhotoSelector from '@/components/photoSelector/photoSelector';
 
 export default function AddMember() {
   const [fullName, setFullName] = useState('');
@@ -27,11 +24,9 @@ export default function AddMember() {
   const [biography, setBiography] = useState('');
   const [yearClassId, setYearClassId] = useState(null);
   const [functionMemberId, setFunctionMemberId] = useState(null);
+  const [tccId, setTccId] = useState(null);
   const [linkPortifolio, setLinkPortifolio] = useState('');
   const [linkLinkedin, setLinkLinkedin] = useState('');
-  const [tccName, setTccName] = useState('');
-  const [tccUrl, setTccUrl] = useState('');
-  const [tccDate, setTccDate] = useState('');
   const [skillsId, setSkillsId] = useState([]);
   const [articlesId, setArticlesId] = useState([]);
   const [projectsId, setProjectsId] = useState([]);
@@ -41,28 +36,9 @@ export default function AddMember() {
   const [includeTCC, setIncludeTCC] = useState(false);
   const imageCropRef = useRef(null);
 
-  const isValidUrl = (url) => {
-    try {
-      new URL(url);
-      return url.length > 10;
-    } catch (e) {
-      return false;
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     hideError();
-
-    if (linkPortifolio && !isValidUrl(linkPortifolio)) {
-      showError('O link do portifólio é inválido.');
-      return;
-    }
-
-    if (linkLinkedin && !isValidUrl(linkLinkedin)) {
-      showError('O link do LinkedIn é inválido.');
-      return;
-    }
 
     const memberData = {
       fullName,
@@ -74,11 +50,7 @@ export default function AddMember() {
       functionMemberId: functionMemberId ? parseInt(functionMemberId?.value) : null,
       linkPortifolio: linkPortifolio?.trim() === '' ? null : linkPortifolio,
       linkLinkedin: linkLinkedin?.trim() === '' ? null : linkLinkedin,
-      tcc: includeTCC ? {
-        name: tccName,
-        url: tccUrl,
-        date: formatDate(tccDate),
-      } : null,
+      tccId: includeTCC ? parseInt(tccId?.value) : null,
       skillsId: skillsId.map(option => parseInt(option.value)),
       articlesId: articlesId.map(option => parseInt(option.value)),
       projectsId: projectsId.map(option => option.value),
@@ -116,9 +88,7 @@ export default function AddMember() {
     setFunctionMemberId(null);
     setLinkPortifolio('');
     setLinkLinkedin('');
-    setTccName('');
-    setTccUrl('');
-    setTccDate('');
+    setTccId(null);
     setSkillsId([]);
     setArticlesId([]);
     setProjectsId([]);
@@ -257,32 +227,19 @@ export default function AddMember() {
           </div>
           {includeTCC && (
             <>
-              <InputField
-                label="Nome do TCC"
-                type="text"
-                id="tccName"
-                value={tccName}
-                onChange={(e) => setTccName(e.target.value)}
-                required
-              />
-              <InputField
-                label="URL do TCC"
-                type="url"
-                id="tccUrl"
-                value={tccUrl}
-                onChange={(e) => setTccUrl(e.target.value)}
-                required
-              />
-              <InputField
-                label="Data do TCC"
-                type="date"
-                id="tccDate"
-                value={tccDate}
-                onChange={(e) => setTccDate(e.target.value)}
-                required
+              <AsyncSelect
+                id="tccId"
+                label="Vincule um TCC existente ao Membro"
+                placeholder="Selecione o TCC"
+                value={tccId}
+                onChange={setTccId}
+                service={tccService}
+                loadOptions={loadOptions}
+                additionalProps={{ page: 0 }}
               />
             </>
           )}
+          
           <AsyncSelect
             id="skillsId"
             label="Habilidades"

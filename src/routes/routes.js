@@ -39,7 +39,7 @@ const routes = {
   },
   projects: {
     add: `${PROJECTS}`,
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '', lineOfResearchId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'title,asc', query = '', lineOfResearchId = '') => {
       let url = `${PROJECTS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
@@ -89,7 +89,7 @@ const routes = {
   },
   article: {
     add: `${ARTICLES}`,
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '', lineOfResearchId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'date,desc', query = '', lineOfResearchId = '') => {
       let url = `${ARTICLES}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&title=${query}`;
@@ -107,7 +107,7 @@ const routes = {
   },
   function: {
     add: `${FUNCTIONS}`,
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'name,asc', query = '') => {
       let url = `${FUNCTIONS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
         url += `&name=${query}`;
@@ -149,10 +149,10 @@ const routes = {
   },
   tccs: {
     add: `${TCCS}`,
-    list: (page = 0, resultsPerPage = 10, sort = '', query = '', lineOfResearchId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = 'date,desc', query = '', lineOfResearchId = '') => {
       let url = `${TCCS}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (query) {
-        url += `&name=${query}`;
+        url += `&title=${query}`;
       }
 
       if(lineOfResearchId) {

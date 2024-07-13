@@ -150,7 +150,6 @@ export default function ArticlesPage() {
       url,
       articleAbstract,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
-
     };
 
     try {

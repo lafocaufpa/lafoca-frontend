@@ -1,17 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Search from '@/components/search/Search';
-import styles from './ArticlesMain.module.css';
-import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
-import Article from '@components/articles/article/Article';
-import Line from '@images/icons/line.svg';
+import styles from '@components/viewer/section/SectionMain.module.css';
 import { articleService } from '@/services/api/article/ArticleService';
-import LineOfResearchSelect from '@/components/lineOfResearchSelect/LineOfResearchSelect';
-import Image from 'next/image';
 import Pagination from '@/components/pagination/PaginationView';
+import SectionMain from '@/components/viewer/section/SectionMain';
+import SearchView from '@/components/viewer/SearchView';
+import SectionMainHeader from '@/components/viewer/SectionMainHeader';
 
-export default function ArticlesMain() {
+export default function  ArticlesMain() {
   const [lineId, setLineId] = useState(null);
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,7 +42,7 @@ export default function ArticlesMain() {
   const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
     try {
       resultsPerPage = resultsPerPage ?? 5;
-      const data = await articleService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
+      const data = await articleService.list(page, resultsPerPage, undefined, searchTerm, lineOfResearchId);
       setArticles(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -77,32 +74,22 @@ export default function ArticlesMain() {
 
   return (
     <main className='global-container'>
-      <section className={`${styles.container}`}>
-        <h1>Artigos Publicados</h1>
-        <p>Todos os artigos publicados pelo grupo de pesquisa LA FocA</p>
-      </section>
-      <section>
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <div className={styles.lineOfResearchContainer}>
-          <LineOfResearchSelect
-            loadOptions={loadOptions}
-            placeholder="Filtrar por linha de pesquisa"
-            service={linesOfResearchService}
-            value={lineId}
-            onChange={setLineId}
-            additionalProps={{ page: 0 }}
-            id="lineId"
-            required
-          />
-        </div>
-      </section>
-      <section className={styles.sectionMain}>
-        <h2 className={styles.title}>{lineId?.label || 'Todos os artigos publicados'}</h2>
-        <Image src={Line} alt='' />
-        {articles?.map((article) =>
-          <Article key={article?.id} article={article} />
-        )}
-      </section>
+      <SectionMainHeader
+        titlePage={'Artigos Publicados'}
+        descriptionPage={'Todos os artigos publicados pelo grupo de pesquisa LA FocA'}
+      />
+
+      <SearchView
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm} 
+        loadOptions={loadOptions} 
+        lineId={lineId} 
+        setLineId={setLineId}
+      />
+      <SectionMain 
+        lineId={lineId} 
+        label={'Todos os Artigos publicados'} 
+        objs={articles}/>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

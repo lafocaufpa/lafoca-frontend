@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import { projectsService } from '@/services/api/Projects/ProjectsService';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
+import { MemberService } from '@/services/api/Members/MembersService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
@@ -21,10 +22,13 @@ export default function ProjectsPage() {
   const [projectToDelete, setProjectToDelete] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [year, setYear] = useState('');
-  const [completed, setCompleted] = useState(false);
+  const [abstractText, setAbstractText] = useState('');
+  const [date, setDate] = useState('');
+  const [endDate, setEndDate] = useState(null);
+  const [modality, setModality] = useState('');
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [externalMemberName, setExternalMemberName] = useState('');
   const [searchTerm, setSearchTerm] = useState(undefined);
   const [lineId, setLineId] = useState(null);
   const [error, showError, hideError] = useNotification(null);
@@ -36,13 +40,9 @@ export default function ProjectsPage() {
   const fetchData = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
     try {
       const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
-      console.log(data.content);
       setProjects(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
-      if(lineOfResearchId != 0 || searchTerm != undefined){
-        setCurrentPage(0);
-      }
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar projetos.');
     }
@@ -122,7 +122,7 @@ export default function ProjectsPage() {
   };
 
   const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
+    if (text?.length > maxLength) {
       return `${text.substring(0, maxLength)}...`;
     }
     return text;
@@ -134,7 +134,7 @@ export default function ProjectsPage() {
       return {
         options: response.content.map(item => ({
           value: item.id,
-          label: item.name || item.title || item.year,
+          label: item.name || item.title || item.year || item.fullName,
         })),
         hasMore: !response.lastPage,
         additional: {
@@ -150,20 +150,53 @@ export default function ProjectsPage() {
     }
   };
 
+  const loadMemberOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue, undefined);
+      return {
+        options: response.content.map(member => ({
+          value: member.slug,
+          label: member.fullName,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Erro ao carregar membros:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
+
   const handleAddProjectSubmit = async () => {
     const projectData = {
       title,
-      description,
-      completed,
-      year,
+      abstractText,
+      date,
+      endDate,
+      modality,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
+      members: selectedMembers.map(member => ({
+        name: member.label,
+        slug: member.value,
+      })),
     };
+
+    console.log(projectData);
 
     try {
       await projectsService.add(projectData);
       setTitle('');
-      setDescription('');
-      setYear('');
+      setAbstractText('');
+      setDate('');
+      setEndDate(null);
+      setModality('');
+      setSelectedLinesOfResearch([]);
+      setSelectedMembers([]);
       setShowAddModal(false);
       showSuccessMessage('Projeto adicionado com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
@@ -219,7 +252,7 @@ export default function ProjectsPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)} 
+              onChange={(e) => setSearchTerm(e.target.value)}
               isSearch
             />
           </div>
@@ -238,20 +271,20 @@ export default function ProjectsPage() {
               {projects.map((project) => (
                 <tr key={project.id}>
                   <td>{project.title}</td>
-                  <td>{truncateText(project.description, 250)}</td>
+                  <td>{truncateText(project.abstractText, 250)}</td>
                   <td>{project.year}</td>
-                  <td  style={{ minWidth: '137px' } }>
+                  <td style={{ minWidth: '137px' }}>
                     <button
                       className="btn btn-primary btn-sm me-1"
                       onClick={() => handleEdit(project)}
                     >
-                        Editar
+                      Editar
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
                       onClick={() => confirmDelete(project.id)}
                     >
-                            Excluir
+                      Excluir
                     </button>
                   </td>
                 </tr>
@@ -268,7 +301,7 @@ export default function ProjectsPage() {
                   onClick={() => handlePageChange(currentPage - 1)}
                   aria-label="Previous"
                 >
-                    &laquo;
+                  &laquo;
                 </button>
               </li>
               {Array.from({ length: totalPages }, (_, index) => (
@@ -284,7 +317,7 @@ export default function ProjectsPage() {
                   onClick={() => handlePageChange(currentPage + 1)}
                   aria-label="Next"
                 >
-                    &raquo;
+                  &raquo;
                 </button>
               </li>
             </ul>
@@ -314,30 +347,43 @@ export default function ProjectsPage() {
                   type="text"
                   id="description"
                   as="textarea"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  maxLength={1000}
+                  value={abstractText}
+                  onChange={(e) => setAbstractText(e.target.value)}
+                  maxLength={5000}
                   required
                 />
                 <InputField
-                  label="Ano"
+                  label="Ano de início"
                   type="text"
-                  id="year"
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
+                  id="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  maxLength={4}
                   required
                 />
-                <div className="form-check mb-3">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id='completed'
-                    checked={completed}
-                    onChange={() => setCompleted(!completed)}
-                  />
-                  <label className="fw-bold mb-1" htmlFor='completed'>
-              Concluído
-                  </label>
+                <InputField
+                  label="Ano de fim"
+                  type="text"
+                  id="endDate"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  maxLength={4}
+                  required
+                />
+                <div className="form-group">
+                  <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>
+                  <select
+                    className="form-control"
+                    id="modality"
+                    value={modality}
+                    onChange={(e) => setModality(e.target.value)}
+                    required
+                  >
+                    <option value="">Selecione a Modalidade</option>
+                    <option value="PESQUISA">PESQUISA</option>
+                    <option value="ENSINO">ENSINO</option>
+                    <option value="EXTENSÃO">EXTENSÃO</option>
+                  </select>
                 </div>
                 <AsyncSelect
                   loadOptions={loadOptions}
@@ -351,20 +397,53 @@ export default function ProjectsPage() {
                   label="Linhas de Pesquisa"
                   required
                 />
+                <AsyncSelect
+                  loadOptions={loadMemberOptions}
+                  placeholder="Selecione colaboradores"
+                  service={MemberService}
+                  value={selectedMembers}
+                  onChange={setSelectedMembers}
+                  additional={{ page: 0 }}
+                  isMulti
+                  id="collab"
+                  label="Adicionar colaboradores"
+                  required
+                />
+                <label htmlFor="externalMember" className="fw-bold mb-1">Adicionar Membro Externo</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="externalMember"
+                  value={externalMemberName}
+                  onChange={(e) => setExternalMemberName(e.target.value)}
+                  placeholder="Nome do Membro Externo"
+                />
+                <button
+                  type="button"
+                  className="btn btn-secondary mt-2"
+                  onClick={() => {
+                    if (externalMemberName.trim()) {
+                      setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+                      setExternalMemberName('');
+                    }
+                  }}
+                >
+                  Adicionar Membro Externo
+                </button>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleCancelAdd}>
-                      Cancelar
+                  Cancelar
                 </button>
                 <button type="button" className="btn btn-primary" onClick={handleAddProjectSubmit}>
-                      Salvar
+                  Salvar
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-    
+
       {showConfirmModal && (
         <div className="modal show fade d-block" tabIndex="-1" role="dialog" onKeyDown={handleKeyDown}>
           <div className="modal-dialog modal-dialog-centered" role="document">
@@ -378,10 +457,10 @@ export default function ProjectsPage() {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                      Cancelar
+                  Cancelar
                 </button>
                 <button type="button" className="btn btn-danger" ref={deleteButtonRef} onClick={handleConfirmDelete}>
-                      Excluir
+                  Excluir
                 </button>
               </div>
             </div>
@@ -391,4 +470,3 @@ export default function ProjectsPage() {
     </div>
   );
 }
-    

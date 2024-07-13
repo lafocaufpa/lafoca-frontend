@@ -1,15 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import { AsyncPaginate } from 'react-select-async-paginate';
 import IconUp from '../icon/IconUp';
 import IconDown from '../icon/IconDown';
-import IconClose from '../icon/IconClose';
 import styles from './LineOfResearchSelect.module.css';
+import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 
-const LineOfResearchSelect = ({ service, id, label, loadOptions, additionalProps, ...props }) => {
+const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
-    return loadOptions(service, inputValue, loadedOptions, additional);
+    return loadOptions(linesOfResearchService, inputValue, loadedOptions, additional);
   };
 
   return (
@@ -24,7 +23,6 @@ const LineOfResearchSelect = ({ service, id, label, loadOptions, additionalProps
             ...base,
             zIndex: 9999,
             cursor: 'pointer',
-            // height: '41px'
           }),
           menuList: base => ({
             ...base,
@@ -71,7 +69,6 @@ const LineOfResearchSelect = ({ service, id, label, loadOptions, additionalProps
             'svg': {
               color: 'black'
             },
-
           }),
           dropdownIndicator: (styles, { isFocused }) => ({
             ...styles,

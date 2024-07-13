@@ -12,7 +12,7 @@ export const projectsService = {
     });
     return response.data;
   },
-  list: async (page = 0, resultsPerPage = 10, sort = 'title,asc', query = '', lineOfResearchId = '' ) => {
+  list: async (page = 0, resultsPerPage = 10, sort, query = '', lineOfResearchId = '' ) => {
     const url = routes.projects.list(page, resultsPerPage, sort, query, lineOfResearchId);
     const response = await api.get(url);
     return response.data;

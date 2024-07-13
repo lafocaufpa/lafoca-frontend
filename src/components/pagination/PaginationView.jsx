@@ -44,16 +44,6 @@ const PaginationView = ({ currentPage, totalPages, onPageChange, getResultMessag
             <Image className={styles.buttonNext} src={IconGreaterThan} width={15} height={15} onClick={ () => handlePageChange(currentPage + 1)}/>
           </li>
         </ul>
-        {/* <div className={styles.paginationGoTo}>
-          <p>Ir para a página</p>
-          <input
-            type="number"
-            className={styles.paginationInput}
-            value={inputPage}
-            onChange={handleInputChange}
-            style={{ width: '60px' }}
-          />
-        </div> */}
       </nav>
       <div className={styles.resultMessage}>{getResultMessage()}</div>
       

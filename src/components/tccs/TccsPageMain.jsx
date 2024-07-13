@@ -1,15 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import styles from '@components/viewer/section/SectionMain.module.css';
-import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import Pagination from '@/components/pagination/PaginationView';
-import SectionMainHeader from '@/components/viewer//SectionMainHeader';
-import SearchView from '@/components/viewer/SearchView';
-import { projectsService } from '@/services/api/Projects/ProjectsService';
+import { tccService } from '@/services/api/tcc/TccService';
+import { useEffect, useState } from 'react';
+import SectionMainHeader from '@components/viewer/SectionMainHeader';
+import SearchView from '@components/viewer/SearchView';
 import SectionMain from '@components/viewer/section/SectionMain';
 
-export default function ViewPageMain() {
+export default function TccsPageMain() {
+
   const [lineId, setLineId] = useState(null);
   const [objs, setObjs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -43,7 +43,7 @@ export default function ViewPageMain() {
   const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
     try {
       resultsPerPage = resultsPerPage ?? 5;
-      const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
+      const data = await tccService.list(page, resultsPerPage, undefined, searchTerm, lineOfResearchId);
       setObjs(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -75,16 +75,21 @@ export default function ViewPageMain() {
 
   return (
     <main className='global-container'>
-      <SectionMainHeader titlePage={'Projetos Realizados'} descriptionPage={'Todos os projetos realizados pelo grupo de pesquisa LA FocA'}/>
-      <SearchView 
+      <SectionMainHeader 
+        titlePage={'TCC'}
+        descriptionPage={'Todos os Trabalhos de Conclusão de Curso realizados pelos membros do LA FocA'}
+      />
+      <SearchView
         searchTerm={searchTerm} 
         setSearchTerm={setSearchTerm} 
         loadOptions={loadOptions} 
-        linesOfResearchService={linesOfResearchService} 
         lineId={lineId} 
         setLineId={setLineId}
       />
-      <SectionMain lineId={lineId} label={'Todos os projetos realizados'} type={'project'} objs={objs}/>
+      <SectionMain 
+        lineId={lineId} 
+        label={'Todos'} 
+        objs={objs}/>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

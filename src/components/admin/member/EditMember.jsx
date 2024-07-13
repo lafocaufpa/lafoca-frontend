@@ -8,6 +8,7 @@ import { functionService } from '@/services/api/function/FunctionService';
 import { skillService } from '@/services/api/skill/SkillService';
 import { articleService } from '@/services/api/article/ArticleService';
 import { projectsService } from '@/services/api/Projects/ProjectsService';
+import { tccService } from '@/services/api/tcc/TccService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import url from '@/routes/url';
 import AlertMessage from '@/components/notification/AlertMessage';
@@ -26,9 +27,7 @@ export default function EditMember({ memberId }) {
   const [functionMemberId, setFunctionMemberId] = useState(null);
   const [linkPortifolio, setLinkPortifolio] = useState('');
   const [linkLinkedin, setLinkLinkedin] = useState('');
-  const [tccName, setTccName] = useState('');
-  const [tccUrl, setTccUrl] = useState('');
-  const [tccDate, setTccDate] = useState('');
+  const [tccId, setTccId] = useState(null);
   const [includeTCC, setIncludeTCC] = useState(false);
   const [skillsId, setSkillsId] = useState([]);
   const [articlesId, setArticlesId] = useState([]);
@@ -53,12 +52,8 @@ export default function EditMember({ memberId }) {
         setFunctionMemberId({ value: member.functionMember.id, label: member.functionMember.name });
         setLinkPortifolio(member.linkPortifolio);
         setLinkLinkedin(member.linkLinkedin);
-        if (member.tcc) {
-          setIncludeTCC(true);
-          setTccName(member.tcc.name);
-          setTccUrl(member.tcc.url);
-          setTccDate(convertDateToInputFormat(member.tcc.date));
-        }
+        setTccId({ value: member?.tcc?.id, label: member?.tcc?.title }),
+        setIncludeTCC(member?.tcc?.id ? true : false);
         setSkillsId(member.skills.map(skill => ({ value: skill.id, label: skill.name })));
         setArticlesId(member.articles.map(article => ({ value: article.id, label: article.title })));
         setProjectsId(member.projects.map(project => ({ value: project.id, label: project.title })));
@@ -66,7 +61,7 @@ export default function EditMember({ memberId }) {
           setPhoto(member.urlPhoto);
         }
       } catch (error) {
-        showError(error?.userMessage || 'Erro ao carregar membro.');
+        showError(error?.userMessage || 'Erro ao buscar membros');
       }
     };
 
@@ -107,11 +102,7 @@ export default function EditMember({ memberId }) {
       functionMemberId: functionMemberId ? parseInt(functionMemberId?.value) : null,
       linkPortifolio: linkPortifolio?.trim() === '' ? null : linkPortifolio,
       linkLinkedin: linkLinkedin?.trim() === '' ? null : linkLinkedin,
-      tcc: includeTCC ? {
-        name: tccName,
-        url: tccUrl,
-        date: formatDate(tccDate),
-      } : null,
+      tccId: includeTCC ? parseInt(tccId?.value) : null,
       skillsId: skillsId.map(skill =>  parseInt(skill.value)),
       articlesId: articlesId.map(article =>  parseInt(article.value)),
       projectsId: projectsId.map(project => project.value),
@@ -169,16 +160,6 @@ export default function EditMember({ memberId }) {
     } catch (error) {
       showError(error?.userMessage || 'Erro ao remover a foto.');
     }
-  };
-  
-  const formatDate = (date) => {
-    const [year, month, day] = date.split('-');
-    return `${day}/${month}/${year}`;
-  };
-
-  const convertDateToInputFormat = (date) => {
-    const [day, month, year] = date.split('/');
-    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -284,29 +265,15 @@ export default function EditMember({ memberId }) {
           </div>
           {includeTCC && (
             <>
-              <InputField
-                label="Nome do TCC"
-                type="text"
-                id="tccName"
-                value={tccName}
-                onChange={(e) => setTccName(e.target.value)}
-                required
-              />
-              <InputField
-                label="URL do TCC"
-                type="text"
-                id="tccUrl"
-                value={tccUrl}
-                onChange={(e) => setTccUrl(e.target.value)}
-                required
-              />
-              <InputField
-                label="Data de Defesa do TCC"
-                type="date"
-                id="tccDate"
-                value={tccDate}
-                onChange={(e) => setTccDate(e.target.value)}
-                required
+              <AsyncSelect
+                id="tccId"
+                label="Vincule um TCC existente ao Membro"
+                placeholder="Selecione o TCC"
+                value={tccId}
+                onChange={setTccId}
+                service={tccService}
+                loadOptions={loadOptions}
+                additionalProps={{ page: 0 }}
               />
             </>
           )}

@@ -59,12 +59,30 @@
   font-size: 0.75rem;
 }
 
+.subtitle {
+  font-style: italic;
+  color: grey;
+  font-size: 0.75rem;
+}
+
+.linkName{
+  font-style: italic;
+  color: grey;
+  margin-top: 5px;
+  font-size: 0.75rem;
+}
+
+.linkName:hover {
+  text-decoration: underline;
+}
+
+
 .articleAbstract {
   margin-top: 6.25rem;
   line-height: 1.6;
   font-style: normal;
-font-weight: 400;
-line-height: 36.654px; 
+  font-weight: 400;
+  line-height: 36.654px;
 }
 
 .articleLink {

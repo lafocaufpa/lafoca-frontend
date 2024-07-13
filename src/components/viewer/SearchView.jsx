@@ -3,7 +3,7 @@ import Search from '@components/search/Search';
 import LineOfResearchSelect from '@components/lineOfResearchSelect/LineOfResearchSelect';
 import styles from './SearchView.module.css';
 
-export default function SearchView({searchTerm, setSearchTerm, loadOptions, linesOfResearchService, lineId, setLineId}) {
+export default function SearchView({searchTerm, setSearchTerm, loadOptions, lineId, setLineId}) {
   return (
     <section>
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -11,7 +11,6 @@ export default function SearchView({searchTerm, setSearchTerm, loadOptions, line
         <LineOfResearchSelect
           loadOptions={loadOptions}
           placeholder="Filtrar por linha de pesquisa"
-          service={linesOfResearchService}
           value={lineId}
           onChange={setLineId}
           additionalProps={{ page: 0 }}

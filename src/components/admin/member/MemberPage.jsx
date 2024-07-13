@@ -10,8 +10,6 @@ import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import { classService } from '@/services/api/yearClass/YearClasses';
 import InputField from '@/components/inputField/InputField';
-import IconMembers from '@/components/icon/IconMembers';
-import HeaderPageCms from '../HeaderPageCms/HeaderPageCms';
 
 export default function MemberPage() {
   const [members, setMembers] = useState([]);
