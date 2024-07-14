@@ -39,7 +39,6 @@ export const MemberService = {
 
   list: async (page = 0, resultsPerPage = 10, sort = 'fullName,asc', fullName, yearClassId) => {
     const url = routes.members.list(page, resultsPerPage, sort, fullName, yearClassId);
-    console.log(fullName);
     const response = await api.get(url);
     return response.data;
   },

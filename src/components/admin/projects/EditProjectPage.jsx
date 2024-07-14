@@ -65,8 +65,6 @@ export default function EditProject({ projectId }) {
       })),
     };
 
-    console.log(projectData);
-
     try {
       await projectsService.update(projectId, projectData);
       showSuccessMessage('Projeto editado com sucesso!');
