@@ -93,11 +93,9 @@ export default function EditTccsPage({ tccId }) {
       date: formatDate(date), 
       abstractText,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
-      nameMember: selectedMember.label,
-      slugMember: selectedMember.value
+      nameMember: selectedMember?.label,
+      slugMember: selectedMember?.value
     };
-
-    console.log(data);
 
     try {
       await tccService.update(tccId, data);

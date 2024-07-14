@@ -177,8 +177,8 @@ export default function TccsPage() {
       date: formatDate(tccDate),
       abstractText,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
-      nameMember: selectedMember.label,
-      slugMember: selectedMember.value
+      nameMember: selectedMember?.label,
+      slugMember: selectedMember?.value
     };
 
     try {
