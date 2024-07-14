@@ -6,7 +6,8 @@ import IconDown from '../icon/IconDown';
 import styles from './LineOfResearchSelect.module.css';
 
 const YearSelect = ({ id, label, ...props }) => {
-  const years = Array.from({ length: 2024 - 2017 + 1 }, (_, i) => ({
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - 2017 + 1 }, (_, i) => ({
     value: (2017 + i).toString(),
     label: (2017 + i).toString(),
   }));

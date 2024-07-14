@@ -11,6 +11,7 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import urlPath from '@/routes/url';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
+import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -23,7 +24,7 @@ export default function ProjectsPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
   const [abstractText, setAbstractText] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [modality, setModality] = useState('');
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
@@ -123,7 +124,7 @@ export default function ProjectsPage() {
 
   const truncateText = (text, maxLength) => {
     if (text?.length > maxLength) {
-      return `${text.substring(0, maxLength)}...`;
+      return `${text?.substring(0, maxLength)}...`;
     }
     return text;
   };
@@ -176,9 +177,9 @@ export default function ProjectsPage() {
     const projectData = {
       title,
       abstractText,
-      date,
-      endDate,
-      modality,
+      date: date?.value || null,
+      endDate: endDate?.value || null,
+      modality: modality || null,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
       members: selectedMembers.map(member => ({
         name: member.label,
@@ -186,13 +187,11 @@ export default function ProjectsPage() {
       })),
     };
 
-    console.log(projectData);
-
     try {
       await projectsService.add(projectData);
       setTitle('');
       setAbstractText('');
-      setDate('');
+      setDate(null);
       setEndDate(null);
       setModality('');
       setSelectedLinesOfResearch([]);
@@ -352,28 +351,23 @@ export default function ProjectsPage() {
                   maxLength={5000}
                   required
                 />
-                <InputField
-                  label="Ano de início"
-                  type="text"
-                  id="date"
+                <YearSelect
+                  placeholder="Ano de início"
                   value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  maxLength={4}
-                  required
+                  onChange={setDate}
+                  id="date"
                 />
-                <InputField
-                  label="Ano de fim"
-                  type="text"
-                  id="endDate"
+                <YearSelect
+                  placeholder="Ano de fim"
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  maxLength={4}
-                  required
+                  onChange={setEndDate}
+                  id="endDate"
                 />
                 <div className="form-group">
                   <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>
                   <select
-                    className="form-control"
+                    className="form-control" 
+                    style={{color: 'hsl(0, 0%, 20%)'}}
                     id="modality"
                     value={modality}
                     onChange={(e) => setModality(e.target.value)}

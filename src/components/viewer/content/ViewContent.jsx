@@ -6,8 +6,8 @@ import urlRoutes from '@/routes/url';
 export default function ViewContent({ text, title, linesOfResearch, date, url, journal, endDate, type, modality, members, tccOwner}) {
   const [showFullAbstract, setShowFullAbstract] = useState(false);
 
-  const abstractToShow = showFullAbstract ? text : text.substring(0, 300);
-  const showButton = text.length > 300;
+  const abstractToShow = showFullAbstract ? text : text?.substring(0, 300);
+  const showButton = text?.length > 300;
 
   const displayDate = type === 'project'
     ? `${date} - ${endDate ? endDate : 'atual'}`
@@ -32,6 +32,7 @@ export default function ViewContent({ text, title, linesOfResearch, date, url, j
         ) : (
           <h2 className={styles.articleTitle}>{title}</h2>
         )}
+        {journal && <p className={styles.articleJournal}>{journal}</p>}
         {members && (
           <div className={styles.subtitle}>
             {members.map((member, index) => (
@@ -52,7 +53,6 @@ export default function ViewContent({ text, title, linesOfResearch, date, url, j
         {tccOwner && <Link href={urlRoutes.membros.buscarPeloSlug(tccOwner.slugMember)} className={styles.linkName}>
           {tccOwner.nameMember}
         </Link>}
-        {journal && <p className={styles.articleJournal}>{journal}</p>}
         <p className={styles.articleAbstract}>{abstractToShow}{!showFullAbstract && '...'}</p>
         {showButton && (
           <button 

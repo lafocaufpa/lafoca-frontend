@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import { articleService } from '@/services/api/article/ArticleService';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
+import { MemberService } from '@/services/api/Members/MembersService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
@@ -12,6 +13,7 @@ import urlPath from '@/routes/url';
 import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import Pagination from '@/components/pagination/Pagination';
+import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState([]);
@@ -23,10 +25,13 @@ export default function ArticlesPage() {
   const [articleToDelete, setArticleToDelete] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
+  const [date, setDate] = useState(null);
   const [journal, setJournal] = useState('');
-  const [articleAbstract, setArticleAbstract] = useState('');
+  const [abstractText, setAbstractText] = useState('');
   const [url, setUrl] = useState('');
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [externalMemberName, setExternalMemberName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [lineId, setLineId] = useState(null);
   const [error, showError, hideError] = useNotification(null);
@@ -143,13 +148,41 @@ export default function ArticlesPage() {
     }
   };
 
+  const loadMemberOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue, undefined);
+      return {
+        options: response.content.map(member => ({
+          value: member.slug,
+          label: member.fullName,
+        })),
+        hasMore: !response.lastPage,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } catch (error) {
+      console.error('Erro ao carregar membros:', error);
+      return {
+        options: [],
+        hasMore: false,
+      };
+    }
+  };
+
+
   const handleAddArticleSubmit = async () => {
     const articleData = {
       title,
       journal,
       url,
-      articleAbstract,
+      date: date?.value,
+      abstractText,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
+      members: selectedMembers.map(member => ({
+        name: member.label,
+        slug: member.value,
+      })),
     };
 
     try {
@@ -157,7 +190,10 @@ export default function ArticlesPage() {
       setTitle('');
       setJournal('');
       setUrl('');
+      setDate(null);
+      setAbstractText('');
       setShowAddModal(false);
+      setSelectedMembers([]);
       showSuccessMessage('Artigo adicionado com sucesso!');
       fetchData(currentPage, resultsPerPage, searchTerm);
     } catch (error) {
@@ -291,8 +327,8 @@ export default function ArticlesPage() {
                     type="text"
                     id="articleAbstract"
                     as="textarea"
-                    value={articleAbstract}
-                    onChange={(e) => setArticleAbstract(e.target.value)}
+                    value={abstractText}
+                    onChange={(e) => setAbstractText(e.target.value)}
                     maxLength={5000}
                     required
                   />
@@ -303,6 +339,12 @@ export default function ArticlesPage() {
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     required
+                  />
+                  <YearSelect
+                    placeholder="Selecione o ano da publicação"
+                    value={date}
+                    onChange={setDate}
+                    id="year"
                   />
                   <AsyncSelect
                     loadOptions={loadOptions}
@@ -316,6 +358,39 @@ export default function ArticlesPage() {
                     id="selectedLinesOfResearch"
                     required
                   />
+                  <AsyncSelect
+                    loadOptions={loadMemberOptions}
+                    placeholder="Selecione colaboradores"
+                    service={MemberService}
+                    value={selectedMembers}
+                    onChange={setSelectedMembers}
+                    additional={{ page: 0 }}
+                    isMulti
+                    id="collab"
+                    label="Adicionar colaboradores"
+                    required
+                  />
+                  <label htmlFor="externalMember" className="fw-bold mb-1">Adicionar Membro Externo</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="externalMember"
+                    value={externalMemberName}
+                    onChange={(e) => setExternalMemberName(e.target.value)}
+                    placeholder="Nome do Membro Externo"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-secondary mt-2"
+                    onClick={() => {
+                      if (externalMemberName.trim()) {
+                        setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+                        setExternalMemberName('');
+                      }
+                    }}
+                  >
+                  Adicionar Membro Externo
+                  </button>
                 </form>
               </div>
               <div className="modal-footer">

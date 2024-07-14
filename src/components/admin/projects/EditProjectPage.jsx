@@ -12,12 +12,13 @@ import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import InputField from '@/components/inputField/InputField';
 import { MemberService } from '@/services/api/Members/MembersService';
+import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
 
 export default function EditProject({ projectId }) {
   const [title, setTitle] = useState('');
   const [modality, setModality] = useState(false);
   const [abstractText, setAbstractText] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
   const [externalMemberName, setExternalMemberName] = useState('');
@@ -34,8 +35,8 @@ export default function EditProject({ projectId }) {
         const project = await projectsService.readById(projectId);
         setTitle(project?.title);
         setAbstractText(project?.abstractText);
-        setDate(project?.date || '');
-        setEndDate(project?.endDate|| '');
+        setDate({ value: project?.date, label: project?.date } || null);
+        setEndDate({ value: project?.date, label: project?.endDate }|| null);
         setModality(project?.modality || '');
         setSelectedLinesOfResearch(project.linesOfResearch.map(line => ({ value: line.id, label: line.name })));
         setSelectedMembers(project.members.map(member => ({value: member.slug, label: member.name})));
@@ -54,15 +55,17 @@ export default function EditProject({ projectId }) {
     const projectData = {
       title,
       abstractText,
-      date,
-      endDate,
-      modality,
+      date: date?.value || null,
+      endDate: endDate?.value || null,
+      modality: modality || null,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
       members: selectedMembers.map(member => ({
         name: member.label,
         slug: member.value,
       })),
     };
+
+    console.log(projectData);
 
     try {
       await projectsService.update(projectId, projectData);
@@ -151,23 +154,17 @@ export default function EditProject({ projectId }) {
             maxLength={5000}
             required
           />
-          <InputField
-            label="Ano de início"
-            type="text"
-            id="date"
+          <YearSelect
+            placeholder="Ano de início"
             value={date}
-            onChange={(e) => setDate(e.target.value)}
-            maxLength={4}
-            required
+            onChange={setDate}
+            id="date"
           />
-          <InputField
-            label="Ano de fim"
-            type="text"
-            id="endDate"
+          <YearSelect
+            placeholder="Ano de fim"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)} 
-            maxLength={4}
-            required
+            onChange={setEndDate}
+            id="endDate"
           />
           <div className="form-group">
             <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>
