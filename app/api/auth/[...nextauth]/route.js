@@ -29,7 +29,7 @@ const handler = NextAuth({
             path: '/',
             httpOnly: true,
             sameSite: 'strict',
-            maxAge: parseInt(process.env.NEXTAUTH_EXPIRES_TOKEN, 10),  // Parse as integer
+            maxAge: parseInt(process.env.NEXTAUTH_EXPIRES_TOKEN, 10),
           });
 
           return {
@@ -43,12 +43,12 @@ const handler = NextAuth({
     })
   ],
   session: {
-    maxAge: parseInt(process.env.NEXTAUTH_EXPIRES_TOKEN, 10),  // Parse as integer
-    strategy: 'jwt',  // Ensure to use JWT strategy if not already configured
+    maxAge: parseInt(process.env.NEXTAUTH_EXPIRES_TOKEN, 10),
+    strategy: 'jwt', 
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
-    maxAge: parseInt(process.env.NEXTAUTH_EXPIRES_TOKEN, 10),  // Parse as integer
+    maxAge: parseInt(process.env.NEXTAUTH_EXPIRES_TOKEN, 10),
   },
 });
 

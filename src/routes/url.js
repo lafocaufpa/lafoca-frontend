@@ -10,7 +10,7 @@ const FUNCOES = '/funcoes';
 const SKILLS = '/habilidades';
 const CLASSES = '/turmas';
 const SEGURANCA = '/seguranca';
-
+const INFO = '/info';
 const INSTAGRAM ='https://www.instagram.com/lafocameta/';
 const FACEBOOK ='https://www.facebook.com/lafocameta/';
 const LINKEDIN ='https://www.linkedin.com/company/lafoca-laboratório-de-abordagens-de-ensino-focada-no-aluno/';
@@ -81,6 +81,9 @@ const url = {
       home: `${ADMIN}${SEGURANCA}`,
       editar: (groupId) => `editar/${encodeURIComponent(groupId)}`
 
+    },
+    system: {
+      info: `${ADMIN}${INFO}`
     }
   },
   redes: {

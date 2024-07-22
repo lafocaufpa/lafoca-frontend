@@ -10,11 +10,18 @@ const YEARCLASSES = '/year-classes';
 const SKILLS = '/skills';
 const TCCS = '/tccs';
 const LINESOFRESEARCH = '/lines-of-research';
+const HOSTCHECK = '/host-check';
 
 const routes = {
   auth: {
     login: '/login',
     session: '/check-token',
+  },
+  hostCheck: {
+    read: `${HOSTCHECK}`,
+    update: `${HOSTCHECK}`,
+    dbBackup: `${HOSTCHECK}/backup`,
+    restoreBackup: `${HOSTCHECK}/backup`
   },
   members: {
     list: (page = 0, resultsPerPage = 10, sort = '', fullName = '', yearClassId = '') => {

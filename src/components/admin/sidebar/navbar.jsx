@@ -19,6 +19,7 @@ import IconProjects from '@/components/icon/IconProjects';
 import IconSecurity from '@/components/icon/IconSecurity';
 import IconEdit from '@/components/icon/IconEdit';
 import { useRouter } from 'next/navigation';
+import IconInfo from '@/components/icon/IconInfo';
 
 export default function NavBar({user}){
 
@@ -82,6 +83,10 @@ export default function NavBar({user}){
 
           <NavLink href={url.admin.seguranca.home} Icon={IconSecurity}>
           Segurança
+          </NavLink>
+
+          <NavLink href={url.admin.system.info} Icon={IconInfo}>
+          Informações do Sistema
           </NavLink> 
            
         </nav>

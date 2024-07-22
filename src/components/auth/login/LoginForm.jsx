@@ -56,10 +56,6 @@ export default function Login() {
       setLoading(false);
       setToggle(!toggle);
     }, 2000);
-    
-    
-
-   
   }
   
   return (
