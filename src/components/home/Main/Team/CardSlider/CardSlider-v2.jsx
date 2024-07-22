@@ -3,23 +3,24 @@ import styles from './CardSlider-v2.module.css';
 import stylesAnimate from '@components/home/Custom-Slider/Animate.module.css';
 import Link from 'next/link';
 import url from '@/routes/url';
+import stylesView from './ViewAllCard.module.css';
 
-export default function CardSlider({member}) {
+export default function CardSlider({member, height, viewAll}) {
 
   return (
     <Link href={url.membros.buscarPeloSlug(member.slug)}>
 
-      <div className={`${styles.card} ${stylesAnimate.hover_animate}`} >
-        <div className={styles.card_content} >
+      <div className={`${styles.card} ${stylesAnimate.hover_animate}`} style={height ? { height: `${height}px` } : {}} >
+        <div className={`${viewAll ? stylesView.card_content : styles.card_content}`} >
           <div className={styles.text_container}>
-            <h2 className={`${styles.card_content_name} 
+            <h2 className={`${viewAll ? stylesView.card_content_name : styles.card_content_name}
             ${member.displayName.length > 21 ? styles.horizontally_animated_text : ''}
             `}>
               {member.displayName}
             </h2>
             <p
               className={
-                `${styles.card_content_function} 
+                `${viewAll ? stylesView.card_content_function : styles.card_content_function}
                ${member.function.length > 21 ? styles.horizontally_animated_text : ''}`
               }>
 

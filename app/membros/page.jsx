@@ -1,8 +1,10 @@
+import PageMember from '@/components/pageMember/PageMember';
+
 const MembersPage = () => {
   return (
-    <div>
-      <h1>LISTAGEM DE MEMBROS</h1>
-    </div>
+    <>
+      <PageMember/>
+    </>
   );
 };
 

@@ -1,0 +1,39 @@
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5rem 0;
+}
+
+.textContainer {
+  max-width: 55%;
+}
+
+.title {
+  color: #222;
+font-family: Inter;
+font-size: 28px;
+font-style: normal;
+text-align: left;
+font-weight: 800;
+line-height: 46px;
+letter-spacing: 0.56px;
+text-transform: uppercase;
+
+}
+
+.description {
+  color: rgba(34, 34, 34, 0.65);
+  font-size: 1.1875rem;
+  font-style: normal;
+  text-align: left;
+  font-weight: 500;
+  max-width: 80%;
+  line-height: 2.283375rem;
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -24,13 +24,19 @@ const routes = {
     restoreBackup: `${HOSTCHECK}/backup`
   },
   members: {
-    list: (page = 0, resultsPerPage = 10, sort = '', fullName = '', yearClassId = '') => {
+    list: (page = 0, resultsPerPage = 10, sort = '', fullName = '', yearClassId = '', functionId = '', skillId = '') => {
       let url = `${MEMBERS}/resumed?page=${page}&size=${resultsPerPage}&sort=${sort}`;
       if (fullName) {
         url += `&fullName=${fullName}`;
       }
       if(yearClassId){
         url += `&yearClassId=${yearClassId}`;
+      }
+      if(functionId){
+        url += `&functionId=${functionId}`;
+      }
+      if(skillId){
+        url += `&skillId=${skillId}`;
       }
       return url;
     },

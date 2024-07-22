@@ -86,7 +86,6 @@ export default function HostCheck() {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [error, showError, hideError] = useNotification(null);
-  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
   const [isBackingUp, setIsBackingUp] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
   const [backupFile, setBackupFile] = useState(null);

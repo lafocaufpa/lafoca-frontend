@@ -1,0 +1,37 @@
+.card_content {
+  position: absolute;
+  width: 90%;
+  padding: 11px 11px;
+  background-color: var(--color-white);
+  border-radius: 14.886px;
+  left: 0;
+  right: 0;
+  bottom: 1.875rem;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card_content_name {
+  font-family: Inter;
+  font-size: 15.157px;
+  font-style: normal;
+  font-weight: 800;
+  text-transform: none;
+  /* 229.087% */
+  letter-spacing: 0.303px;
+  color: var(--color-black);
+  margin-bottom: auto;
+}
+
+.card_content_function {
+  color: var(--function);
+  font-size: 13.262px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34.723px;
+  /* 261.814% */
+  letter-spacing: 0.265px;
+}

@@ -1,7 +1,6 @@
 import getCookie from '@/components/auth/authorization/getCookie';
 import routes from '@/routes/routes';
 import httpClientService from '@services/api/httpClientService';
-import { HttpStatusCode } from 'axios';
 
 export const hostCheckService = {
 

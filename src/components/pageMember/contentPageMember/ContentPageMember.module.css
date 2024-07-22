@@ -1,0 +1,11 @@
+.gridContainer {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.sectionContentPageMember {
+  margin-top: 6.25rem;
+}

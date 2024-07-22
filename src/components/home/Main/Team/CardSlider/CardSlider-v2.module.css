@@ -13,7 +13,7 @@
 
 .card_content {
   position: absolute;
-  width: 80%;
+  width: 90%;
   padding: 17px 20px;
   background-color: var(--color-white);
   border-radius: 1.1931875rem;
@@ -25,13 +25,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 
 .card_content_name {
   font-size: 1rem;
   font-weight: 800;
-  margin-bottom: 0.9rem;
+  text-transform: none;
+  margin-bottom: 0.4rem;
   color: var(--color-black);
 }
 
