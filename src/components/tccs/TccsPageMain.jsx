@@ -84,6 +84,7 @@ export default function TccsPageMain() {
         searchTerm={searchTerm} 
         setSearchTerm={setSearchTerm} 
         loadOptions={loadOptions} 
+        lineOfResearch={true}
         lineId={lineId} 
         setLineId={setLineId} 
         year={year} 

@@ -22,6 +22,8 @@ export default function ContentPageMember() {
   const [resultsPerPage, setResultsPerPage] = useState(12);
   const [yearClassId, setYearClassId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [functionId, setFunctionId] = useState(null);
+  const [skillId, setSkillId] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
 
@@ -31,9 +33,9 @@ export default function ContentPageMember() {
   const router = useRouter();
   const deleteButtonRef = useRef(null);
 
-  const fetchData = async (page = 0, resultsPerPage = 10, fullName = '', yearClassId = '') => {
+  const fetchData = async (page = 0, resultsPerPage = 10, fullName = '', yearClassId = '', functionId, skillId) => {
     try {
-      const data = await MemberService.list(page, resultsPerPage, 'fullName,asc', fullName, yearClassId);
+      const data = await MemberService.list(page, resultsPerPage, 'fullName,asc', fullName, yearClassId, functionId, skillId);
       setMembers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
@@ -43,8 +45,8 @@ export default function ContentPageMember() {
   };
 
   useEffect(() => {
-    fetchData(currentPage, resultsPerPage, searchTerm, yearClassId?.value);
-  }, [currentPage, resultsPerPage, searchTerm, yearClassId]);
+    fetchData(currentPage, resultsPerPage, searchTerm, yearClassId?.value, functionId?.value, skillId?.value);
+  }, [currentPage, resultsPerPage, searchTerm, yearClassId, functionId, skillId]);
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
@@ -84,8 +86,11 @@ export default function ContentPageMember() {
     <section className={styles.sectionContentPageMember}>
       <SearchView
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        loadOptions={loadOptions}
+        setSearchTerm={setSearchTerm} 
+        loadOptions={loadOptions} 
+        functionId={functionId} 
+        functionSelect={true}
+        setFunctionId={setFunctionId}
         year={yearClassId}
         setYear={setYearClassId}
       />

@@ -81,8 +81,8 @@ export default function ViewPageMain() {
       <SearchView 
         searchTerm={searchTerm} 
         setSearchTerm={setSearchTerm} 
-        loadOptions={loadOptions} 
-        linesOfResearchService={linesOfResearchService} 
+        loadOptions={loadOptions}
+        lineOfResearch={true}
         lineId={lineId} 
         setLineId={setLineId} 
         year={year} 

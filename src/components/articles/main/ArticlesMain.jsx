@@ -84,6 +84,7 @@ export default function  ArticlesMain() {
         searchTerm={searchTerm} 
         setSearchTerm={setSearchTerm} 
         loadOptions={loadOptions} 
+        lineOfResearch={true}
         lineId={lineId} 
         setLineId={setLineId} 
         year={year} 

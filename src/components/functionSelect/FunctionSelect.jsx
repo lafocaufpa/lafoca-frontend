@@ -3,13 +3,12 @@
 import { AsyncPaginate } from 'react-select-async-paginate';
 import IconUp from '@components/icon/IconUp';
 import IconDown from '@components/icon/IconDown';
-import styles from './LineOfResearchSelect.module.css';
-import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
+import styles from '@components/lineOfResearchSelect/LineOfResearchSelect.module.css';
+import { functionService } from '@/services/api/function/FunctionService';
 
-
-const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
+const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
-    return loadOptions(linesOfResearchService, inputValue, loadedOptions, additional);
+    return loadOptions(functionService, inputValue, loadedOptions, additional);
   };
 
   return (
@@ -106,4 +105,4 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
   );
 };
 
-export default LineOfResearchSelect;
+export default FunctionSelect;
