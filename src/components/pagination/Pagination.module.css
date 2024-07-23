@@ -9,7 +9,9 @@
 .pagContainer {
   display: flex;
   align-items: center;
+  gap: 20px;
   justify-content: space-between;
+  flex-flow: wrap;
 }
 
 .pagination {
@@ -76,4 +78,22 @@
 
 .resultMessage {
   color: rgba(34, 34, 34, 0.65);
+}
+
+@media (width <=840px) {
+
+  .pagContainer {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .resultMessage {
+    margin-left: auto;
+    font-size: 0.875rem;
+  }
+}
+
+@media (width <=768px) {
+
 }

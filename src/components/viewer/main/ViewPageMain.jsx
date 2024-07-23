@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import styles from '@components/viewer/section/SectionMain.module.css';
-import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import Pagination from '@/components/pagination/PaginationView';
 import SectionMainHeader from '@/components/viewer//SectionMainHeader';
 import SearchView from '@/components/viewer/SearchView';
@@ -72,7 +71,7 @@ export default function ViewPageMain() {
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} artigos de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} projetos de ${totalResults} resultados`;
   };
 
   return (

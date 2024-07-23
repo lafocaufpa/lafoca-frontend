@@ -30,6 +30,7 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
             maxHeight: '150px',
             overflowY: 'auto',
             cursor: 'pointer',
+            fontSize: '12px',
             textAlign: 'left',
             '::-webkit-scrollbar': {
               display: 'none'
@@ -40,7 +41,8 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
           }),
           placeholder: base => ({
             ...base,
-            color: ''
+            color: '',
+            fontSize: '12px'
           }),
           singleValue: styles => ({
             ...styles,

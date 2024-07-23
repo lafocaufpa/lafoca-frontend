@@ -7,7 +7,7 @@ export default function TccsPage() {
     <>
       <Header/>
       <TccsPageMain/>
-      <Footer/>
+      <Footer marginTop={6.375}/>
     </>
   );
 }

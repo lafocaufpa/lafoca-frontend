@@ -6,16 +6,34 @@
   gap: 90px;
 }
 
-.container > h1 {
+.container>h1 {
   font-size: 5.8125rem;
+  font-weight: 800;
+  line-height: 7.0625rem;
+  letter-spacing: 0.12rem;
   width: 20%;
 }
 
-.container > p {
+.container>p {
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.25rem;
   letter-spacing: 0.0225rem;
   margin-bottom: 1.125rem;
+}
+
+@media (width <=768px) {
+  .container>h1 {
+    font-size: 5.25rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.105rem;
+    width: 20%;
+  }
+
+  .container > p {
+    font-size: 1rem;
+    letter-spacing: 0.02rem
+  }
 }

@@ -30,6 +30,7 @@ const YearSelect = ({ id, label, ...props }) => {
             overflowY: 'auto',
             cursor: 'pointer',
             textAlign: 'left',
+            fontSize: '12px',
             '::-webkit-scrollbar': {
               display: 'none'
             },
@@ -39,7 +40,8 @@ const YearSelect = ({ id, label, ...props }) => {
           }),
           placeholder: base => ({
             ...base,
-            color: ''
+            color: '',
+            fontSize: '12px',
           }),
           singleValue: styles => ({
             ...styles,

@@ -24,11 +24,18 @@
   flex-direction: column;
   justify-content: flex-end;
   height: 100%;
+
 }
 
 .researchLines p {
   margin: 0;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(34, 34, 34, 0.65);
+  line-height: 22.446px; /* 140.288% */
 }
+
 
 .articleDetails {
   flex: 1;
@@ -57,12 +64,13 @@
   color: grey;
   margin-top: 5px;
   font-size: 0.75rem;
+  line-height: normal;
 }
 
 .subtitle {
   font-style: italic;
   color: grey;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
 }
 
 .linkName{
@@ -106,4 +114,28 @@
 
 .showMoreButton:hover {
   color: rgba(0,0,0,0.5);
+}
+
+
+@media (width <=768px) {
+
+  .dateAndResearch p {
+    font-size: 1rem;
+  }
+
+  .articleTitle{
+    font-size: 1.25rem;
+  }
+
+  .articleAbstract {
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+  .researchLines p {
+    font-size: 1rem;
+  }
+  .subtitle, .linkName {
+    font-size: 0.625rem;
+  }
+  
 }

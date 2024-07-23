@@ -258,7 +258,7 @@ export default function ArticlesPage() {
             <thead className="thead-dark">
               <tr>
                 <th>Título</th>
-                <th>Jornal</th>
+                <th>Revista</th>
                 <th>URL</th>
                 <th>Ações</th>
               </tr>

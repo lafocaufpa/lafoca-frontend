@@ -3,9 +3,10 @@
   align-items: center;
   margin-top: 0.5rem;
   gap: 10px;
+  flex-flow: wrap;
 }
 
 .checkboxContainer > label{
   margin: 0.3125rem;
-
+  font-size: 0.75rem;
 }

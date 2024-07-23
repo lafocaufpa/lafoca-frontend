@@ -71,7 +71,7 @@ export default function TccsPageMain() {
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} artigos de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} tccs de ${totalResults} resultados`;
   };
 
   return (

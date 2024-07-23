@@ -9,3 +9,9 @@
 .title {
   text-align: left;
 }
+
+@media (width <=768px) {
+  .title {
+      font-size: 1.625rem;
+  }
+}
