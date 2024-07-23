@@ -25,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
 }
 
 .card_content_name {
@@ -57,6 +58,7 @@
   font-weight: 900;
   border-radius: 0.9rem;
   height: min-content;
+  cursor: pointer;
 }
 
 @keyframes scroll {

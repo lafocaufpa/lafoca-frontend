@@ -10,7 +10,7 @@ export default function CardSlider({member, height, viewAll}) {
   return (
     <Link href={url.membros.buscarPeloSlug(member.slug)}>
 
-      <div className={`${styles.card} ${stylesAnimate.hover_animate}`} style={height ? { height: `${height}px` } : {}} >
+      <div className={`${styles.card} ${viewAll ? '' : stylesAnimate.hover_animate}`} style={height ? { height: `${height}px` } : {}} >
         <div className={`${viewAll ? stylesView.card_content : styles.card_content}`} >
           <div className={styles.text_container}>
             <h2 className={`${viewAll ? stylesView.card_content_name : styles.card_content_name}
@@ -29,7 +29,14 @@ export default function CardSlider({member, height, viewAll}) {
           
           <button className={styles.card_content_button}>{'>'}</button>
         </div>
-        <Image src={member.photo} alt={member.displayName} width={100} height={100} quality={100}/>
+        <Image 
+          src={member.photo} 
+          alt={member.displayName} 
+          width={100} 
+          height={100} 
+          quality={100} 
+          className={`${viewAll ? stylesAnimate.hover_animate_img : ''}`}
+        />
       </div>
       
     </Link>

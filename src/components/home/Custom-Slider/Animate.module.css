@@ -6,6 +6,14 @@
   transform: translateY(-50px);
 }
 
+.hover_animate_img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover_animate_img:hover {
+  transform: scale(1.1);
+}
+
 .card_link {
   font-weight: 600;
   margin-bottom: 1.40625rem; 
