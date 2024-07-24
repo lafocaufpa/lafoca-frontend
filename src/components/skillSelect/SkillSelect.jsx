@@ -4,12 +4,11 @@ import { AsyncPaginate } from 'react-select-async-paginate';
 import IconUp from '@components/icon/IconUp';
 import IconDown from '@components/icon/IconDown';
 import styles from '@components/lineOfResearchSelect/LineOfResearchSelect.module.css';
-import { functionService } from '@/services/api/function/FunctionService';
 import { skillService } from '@/services/api/skill/SkillService';
 
-const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
+const SkillSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
-    return loadOptions(functionService, inputValue, loadedOptions, additional);
+    return loadOptions(skillService, inputValue, loadedOptions, additional);
   };
 
   return (
@@ -109,4 +108,4 @@ const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) =
   );
 };
 
-export default FunctionSelect;
+export default SkillSelect;

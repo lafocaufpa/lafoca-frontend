@@ -7,7 +7,7 @@ export default function PageMainMember() {
   return (
     <main className='global-container'>
       <section className={styles.container}>
-        <IconLogoLafoca/>
+        <IconLogoLafoca className={styles.iconLogo}/>
         <h1>
         Conheça Nossa Equipe de Pesquisa: Diversidade de Habilidades e Experiências
         </h1>

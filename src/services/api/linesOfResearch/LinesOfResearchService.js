@@ -13,12 +13,7 @@ export const linesOfResearchService = {
     return response.data;
   },
   list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', name) => {
-    const token = await getCookie();
-    const response = await api.get(routes.linesOfResearch.list(page, resultsPerPage, sort, name), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    } );
+    const response = await api.get(routes.linesOfResearch.list(page, resultsPerPage, sort, name));
     return response.data;
   },
   update: async (lineId, data) => {

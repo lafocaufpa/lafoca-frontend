@@ -36,4 +36,42 @@ text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 50%;
+}
+
+@media (width <= 880px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .textContainer {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    max-width: 100%;
+    font-size: 1.125rem;
+  }
+
+  .iconContainer {
+    margin-top: 1.875rem;
+    width: 100%;
+  }
+}
+
+@media (width <= 480px) {
+  .title {
+    font-size: 1.75rem;
+  }
+  .description {
+    font-size: 0.875rem;
+  }
+
+  .iconContainer {
+    
+  }
 }

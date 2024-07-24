@@ -1,5 +1,5 @@
 import CardInfo from '@/components/member/cardInfo/CardInfo';
-import IconTcc from '@images/icons/icon-about.svg';
+import IconTcc from '@images/icons/tcc.png';
 import stylesMember from '@components/member/Member.module.css';
 
 export default function Tcc({member}) {

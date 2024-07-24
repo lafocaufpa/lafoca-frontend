@@ -4,8 +4,9 @@ import LineOfResearchSelect from '@components/lineOfResearchSelect/LineOfResearc
 import styles from './SearchView.module.css';
 import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
 import FunctionSelect from '@components/functionSelect/FunctionSelect';
+import SkillSelect from '@components/skillSelect/SkillSelect';
 
-export default function SearchView({lineOfResearch, functionSelect, searchTerm, setSearchTerm, loadOptions, lineId, setLineId, year, setYear, functionId, setFunctionId, onGoing, setOnGoing, as}) {
+export default function SearchView({lineOfResearch, functionSelect, searchTerm, setSearchTerm, skillId, setSkillId, skillSelect, loadOptions, lineId, setLineId, year, setYear, functionId, setFunctionId, onGoing, setOnGoing, as}) {
   return (
     <section>
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -19,6 +20,17 @@ export default function SearchView({lineOfResearch, functionSelect, searchTerm, 
           id="lineId"
           required
         /> }
+
+        {skillSelect && 
+        <SkillSelect 
+          loadOptions={loadOptions}
+          placeholder="Filtrar por habilidade" 
+          value={skillId}
+          onChange={setSkillId}
+          additionalProps={{ page: 0 }}
+          id="skillId"
+          required/>
+        }
 
         {functionSelect && <FunctionSelect 
           loadOptions={loadOptions}

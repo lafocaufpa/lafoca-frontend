@@ -3,11 +3,9 @@
 import { MemberService } from '@/services/api/Members/MembersService';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import url from '@/routes/url';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
-import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
-import { classService } from '@/services/api/yearClass/YearClasses';
+
 import Pagination from '@/components/pagination/PaginationView';
 import SearchView from '@/components/viewer/SearchView';
 import CardSlider from '@/components/home/Main/Team/CardSlider/CardSlider-v2';
@@ -90,9 +88,12 @@ export default function ContentPageMember() {
         loadOptions={loadOptions} 
         functionId={functionId} 
         functionSelect={true}
+        skillSelect={true}
         setFunctionId={setFunctionId}
         year={yearClassId}
-        setYear={setYearClassId}
+        setYear={setYearClassId} 
+        skillId={skillId} 
+        setSkillId={setSkillId} 
       />
 
       <div className={styles.gridContainer}>

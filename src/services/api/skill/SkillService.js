@@ -14,14 +14,10 @@ export const skillService = {
     return response.data;
   },
   list: async (page = 0, resultsPerPage = 10, sort = 'name,asc', query = '') => {
-    const token = await getCookie();
+
     const url = routes.skills.list(page, resultsPerPage, sort, query);
 
-    const response = await api.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(url);
     return response.data;
   },
   update: async (skillsId, data) => {

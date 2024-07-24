@@ -1,6 +1,6 @@
 import stylesMember from '@components/member/Member.module.css';
 import CardInfo from '@components/member/cardInfo/CardInfo';
-import Icon from '@images/icons/icon-about.svg';
+import Icon from '@images/icons/article.png';
 
 export default function Articles({member}) {
   return (

@@ -20,11 +20,6 @@
   margin-left: auto;
 }
 
-.img {
-  width: 33px;
-  height: 33px;
-}
-
 @media (width <=768px) {
   .img {
     width: 28.417px;
@@ -32,8 +27,17 @@
   }
 }
 
-@media (width <=600px) {
+
+@media (width <=768px) {
   .img {
-    display: none;
+    width: 65px;
+    height: 65px;
+  }
+}
+
+@media (width <=480px) {
+  .img {
+    width: 45px;
+    height: 45px;
   }
 }

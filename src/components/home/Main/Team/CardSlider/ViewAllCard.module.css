@@ -27,6 +27,16 @@
   margin-bottom: auto;
 }
 
+.card_content_button {
+  padding: 0.96125rem 1.3rem;
+  background-color: var(--button);
+  color: var(--color-white);
+  font-weight: 900;
+  border-radius: 0.9rem;
+  height: min-content;
+  cursor: pointer;
+}
+
 .card_content_function {
   color: var(--function);
   font-size: 13.262px;
@@ -36,3 +46,30 @@
   /* 261.814% */
   letter-spacing: 0.265px;
 }
+
+@media (width <=480px) {
+
+  .card_content_name {
+    font-size: 0.5625rem;
+    margin-bottom: 5px !important;
+  }
+
+  .card_content {
+    bottom: 0.875rem;
+  }
+
+  .card_content_function {
+    font-size: 0.508375rem;
+  }
+  .card {
+    height: 186px !important;
+    
+  }
+}
+
+
+/* @media (width <=880px) {
+  .card {
+    height: 350px !important;
+  }
+} */

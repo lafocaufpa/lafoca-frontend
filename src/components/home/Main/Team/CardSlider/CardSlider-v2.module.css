@@ -77,3 +77,31 @@
 
   }
 }
+
+@media (width <=480px) {
+
+  .card_content {
+    bottom: 0.875rem;
+    padding: 11px 11px;
+  }
+  .card_content_name {
+    font-size: 0.5625rem;
+    margin-bottom: 5px !important;
+  }
+  .card_content_function {
+    font-size: 0.508375rem;
+  }
+  .card {
+    height: 325px !important;
+  }
+
+  .horizontally_animated_text {
+    animation: none;
+  }
+}
+
+@media (width <=880px) {
+  .card {
+    height: 260px !important;
+  }
+}

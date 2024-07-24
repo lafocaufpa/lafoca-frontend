@@ -28,3 +28,12 @@
   -webkit-line-clamp: 3; 
   max-height: 3 * 1.2em; 
 }
+
+
+@media (width <= 480px) {
+  .hover_animate:hover {
+    transform: none;
+  }
+
+  
+}

@@ -92,9 +92,9 @@ export default function TccsPageMain() {
       />
       <SectionMain 
         lineId={lineId} 
-        label={'Todos'} 
+        label={'Todos os tccs'} 
+        type={'tcc'}
         objs={objs}/>
-      {console.log(objs)}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

@@ -10,7 +10,7 @@ export default function CardSlider({member, height, viewAll}) {
   return (
     <Link href={url.membros.buscarPeloSlug(member.slug)}>
 
-      <div className={`${styles.card} ${viewAll ? '' : stylesAnimate.hover_animate}`} style={height ? { height: `${height}px` } : {}} >
+      <div className={`${styles.card} ${viewAll ? stylesView.card: ''} ${viewAll ? '' : stylesAnimate.hover_animate}`} style={height ? { height: `${height}px` } : {}} >
         <div className={`${viewAll ? stylesView.card_content : styles.card_content}`} >
           <div className={styles.text_container}>
             <h2 className={`${viewAll ? stylesView.card_content_name : styles.card_content_name}

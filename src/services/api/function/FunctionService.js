@@ -13,14 +13,10 @@ export const functionService = {
     return response.data;
   },
   list: async (page = 0, resultsPerPage = 10, sort, query = '') => {
-    const token = await getCookie();
+ 
     const url = routes.function.list(page, resultsPerPage, sort, query);
 
-    const response = await api.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(url);
     return response.data;
   },
   update: async (functionId, data) => {

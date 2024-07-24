@@ -23,3 +23,24 @@
   letter-spacing: 0.36px;
   max-width: 80%;
 }
+
+@media (width <= 768px) {
+  .container {
+    margin-top: 16.821875rem;
+  }
+
+  .container > h1 {
+    font-size: 1.875rem;
+    line-height: normal;
+  }
+
+  .container > h3 {
+    font-size: 1.125rem;
+    max-width: 100%;
+  }
+
+  .iconLogo {
+    width: 45px;
+  }
+
+}

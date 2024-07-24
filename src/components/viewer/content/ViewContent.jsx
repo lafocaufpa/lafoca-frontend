@@ -55,6 +55,8 @@ export default function ViewContent({ text, title, linesOfResearch, date, url, j
           </div>
         )}
         <p className={`${styles.renderDateBasedScreen} ${type === 'project' ? styles.project : ''} ${styles.item}`}>{displayDate}</p>
+        <p className={`${styles.renderDateBasedScreen} ${type === 'tcc' ? styles.tcc : ''} ${styles.item}`}>{displayDate}</p>
+
         {modality && <p className={`${styles.projectModality}`}>{modality}</p>}
         {tccOwner && (
           <Link href={urlRoutes.membros.buscarPeloSlug(tccOwner.slugMember)} className={`${styles.linkName} ${styles.item}`}>
