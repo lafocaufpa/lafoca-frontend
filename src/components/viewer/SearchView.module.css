@@ -6,7 +6,19 @@
   flex-flow: wrap;
 }
 
-.checkboxContainer > label{
+.checkboxContainer>label {
   margin: 0.3125rem;
   font-size: 0.75rem;
+}
+
+@media (width <=480px) {
+  .lineOfResearchContainer {
+    flex-direction: column;
+
+  }
+
+  .lineOfResearchContainer>div {
+    width: 100%;
+  }
+
 }

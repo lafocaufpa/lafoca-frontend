@@ -94,6 +94,7 @@ export default function TccsPageMain() {
         lineId={lineId} 
         label={'Todos'} 
         objs={objs}/>
+      {console.log(objs)}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

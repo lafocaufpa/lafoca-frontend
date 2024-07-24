@@ -45,7 +45,8 @@ const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) =
           }),
           singleValue: styles => ({
             ...styles,
-            textAlign: 'left'
+            textAlign: 'left',
+            fontSize: '12px',
           }),
           control: (styles, { isFocused }) => ({
             ...styles,

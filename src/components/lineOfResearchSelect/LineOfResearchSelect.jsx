@@ -46,7 +46,8 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
           }),
           singleValue: styles => ({
             ...styles,
-            textAlign: 'left'
+            textAlign: 'left',
+            fontSize: '12px',
           }),
           control: (styles, { isFocused }) => ({
             ...styles,

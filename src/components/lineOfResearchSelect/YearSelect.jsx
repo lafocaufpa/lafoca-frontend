@@ -45,7 +45,8 @@ const YearSelect = ({ id, label, ...props }) => {
           }),
           singleValue: styles => ({
             ...styles,
-            textAlign: 'left'
+            textAlign: 'left',
+            fontSize: '12px',
           }),
           control: (styles, { isFocused }) => ({
             ...styles,

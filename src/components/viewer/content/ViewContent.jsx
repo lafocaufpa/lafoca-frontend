@@ -18,45 +18,53 @@ export default function ViewContent({ text, title, linesOfResearch, date, url, j
       <div className={styles.dateAndResearch}>
         <p>{displayDate}</p>
         {modality && <p>{modality}</p>}
-        <div className={styles.researchLines}>
+        <div className={`${styles.researchLines} ${styles.displayBlock}`}>
           {linesOfResearch.map(line => (
             <p key={line.id}>{line.name}</p>
           ))}
         </div>
+        <div className={`${styles.researchLines} ${styles.displayNone}`}>
+          <p>{linesOfResearch.map(line => line.name).join(', ')}</p>
+        </div>
       </div>
       <div className={styles.articleDetails}>
         {url ? (
-          <Link className={styles.articleUrl} href={url} target='_blank' rel="noreferrer">
+          <Link className={`${styles.articleUrl} ${styles.item}`} href={url} target='_blank' rel="noreferrer">
             <h2 className={styles.articleTitle}>{title}</h2>
           </Link>
         ) : (
-          <h2 className={styles.articleTitle}>{title}</h2>
+          <h2 className={`${styles.articleTitle} ${styles.item}`}>{title}</h2>
         )}
-        {journal && <p className={styles.articleJournal}>{journal}</p>}
+        {journal && <p className={`${styles.articleJournal} ${styles.item}`}>{journal}</p>}
+        {journal && <p className={`${styles.articleJournalMobile} ${styles.articleJournal} ${styles.item}`}>{`${journal}, ${displayDate}`}</p>}
+
         {members && (
-          <div className={styles.subtitle}>
+          <div className={`${styles.subtitle} ${type === 'project' ? styles.projectMembers: ''} ${styles.item}`}>
             {members.map((member, index) => (
-              // eslint-disable-next-line react/jsx-no-undef
               <React.Fragment key={index}>
                 {member.slug ? (
                   <Link href={urlRoutes.membros.buscarPeloSlug(member.slug)} className={styles.linkName}>
                     {member.name}
                   </Link>
                 ) : (
-                  <span  className={styles.subtitle}>{member.name}</span>
+                  <span className={styles.subtitle}>{member.name}</span>
                 )}
                 {index !== members.length - 1 && ', '}
               </React.Fragment>
             ))}
           </div>
         )}
-        {tccOwner && <Link href={urlRoutes.membros.buscarPeloSlug(tccOwner.slugMember)} className={styles.linkName}>
-          {tccOwner.nameMember}
-        </Link>}
-        <p className={styles.articleAbstract}>{abstractToShow}{!showFullAbstract && '...'}</p>
+        <p className={`${styles.renderDateBasedScreen} ${type === 'project' ? styles.project : ''} ${styles.item}`}>{displayDate}</p>
+        {modality && <p className={`${styles.projectModality}`}>{modality}</p>}
+        {tccOwner && (
+          <Link href={urlRoutes.membros.buscarPeloSlug(tccOwner.slugMember)} className={`${styles.linkName} ${styles.item}`}>
+            {tccOwner.nameMember}
+          </Link>
+        )}
+        <p className={`${styles.articleAbstract} ${styles.item}`}>{abstractToShow}{!showFullAbstract && '...'}</p>
         {showButton && (
-          <button 
-            className={styles.showMoreButton}
+          <button
+            className={`${styles.showMoreButton} ${styles.item}`}
             onClick={() => setShowFullAbstract(!showFullAbstract)}
           >
             {showFullAbstract ? 'Ver menos' : 'Ver mais'}

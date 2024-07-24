@@ -9,7 +9,6 @@
 .container>h1 {
   font-size: 5.8125rem;
   font-weight: 800;
-  line-height: 7.0625rem;
   letter-spacing: 0.12rem;
   width: 20%;
 }
@@ -36,4 +35,25 @@
     font-size: 1rem;
     letter-spacing: 0.02rem
   }
+
+  .container {
+    gap: 70px;
+  }
+}
+
+@media (width <= 480px) {
+
+  .container {
+    margin-top: 6.25rem;
+    gap: 13px;
+  }
+  .container>h1 {
+    font-size: 3rem;
+  }
+
+  .container > p{
+   font-size: 0.  875rem;
+  }
+
+  
 }
