@@ -77,7 +77,7 @@ export default function  ArticlesMain() {
     <main className='global-container'>
       <SectionMainHeader
         titlePage={'Artigos Publicados'}
-        descriptionPage={'Todos os artigos publicados pelo grupo de pesquisa LA FocA'}
+        descriptionPage={'Explore os artigos publicados pelos pesquisadores do grupo LAFocA, um centro dedicado ao ensino focado no aluno. Nossa produção acadêmica abrange diversas áreas do conhecimento, refletindo a interdisciplinaridade e a inovação que caracterizam nossas pesquisas. De metodologias educacionais a avanços tecnológicos, nossos artigos são contribuições significativas para a comunidade acadêmica. Mantenha-se atualizado com nossas descobertas e leia sobre os tópicos mais relevantes e atuais em nossas publicações.'}
       />
 
       <SearchView

@@ -16,7 +16,7 @@ export default function CardProject({title, image, description, link, durationFa
 
       <div className={styles.card_info}>
         <h4>{title}</h4>
-        <p className={stylesAnimate.text_wrap}>
+        <p>
           {description}
         </p>
         <Link href={link} className={stylesAnimate.card_link}>

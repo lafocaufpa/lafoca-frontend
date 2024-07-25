@@ -19,21 +19,21 @@ export default function Projects() {
     
         <CardProject 
           title={'Artigos Publicados'} 
-          description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+          description={'Explore os artigos publicados pelos pesquisadores do grupo LAFocA, abrangendo diversas áreas do conhecimento e refletindo a interdisciplinaridade e inovação que caracterizam nossas pesquisas.'}
           image={Artigos} 
           link={url.artigos.listarArtigos} 
           durationFade={1000}
         />
         <CardProject 
           title={'Tccs Defendidos'} 
-          description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+          description={'Descubra os Trabalhos de Conclusão de Curso (TCCs) defendidos pelos estudantes do LAFocA, abordando temas variados e demonstrando a dedicação à excelência acadêmica.'}
           image={Tccs} 
           link={url.tccs.listarTccs} 
           durationFade={1500}
         />
         <CardProject 
           title={'Projetos'} 
-          description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in scelerisque nibh'}
+          description={'Conheça os projetos desenvolvidos pelo grupo LAFocA, que buscam soluções práticas e inovadoras para desafios em diversas áreas, incluindo educação, tecnologia, meio ambiente e saúde.'}
           image={Projetos} 
           link={url.projetos.listarProjetos} 
           durationFade={2000}

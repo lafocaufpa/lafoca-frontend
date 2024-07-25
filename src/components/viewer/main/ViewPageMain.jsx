@@ -76,7 +76,8 @@ export default function ViewPageMain() {
 
   return (
     <main className='global-container'>
-      <SectionMainHeader titlePage={'Projetos Realizados'} descriptionPage={'Todos os projetos realizados pelo grupo de pesquisa LA FocA'}/>
+      <SectionMainHeader titlePage={'Projetos Realizados'} 
+        descriptionPage={'Conheça os projetos desenvolvidos pelo grupo de pesquisa LAFocA. Nossa equipe está constantemente envolvida em projetos que buscam soluções práticas e inovadoras para diversos desafios. Desde projetos voltados à educação até iniciativas em áreas como tecnologia, meio ambiente e saúde, nosso trabalho visa promover o desenvolvimento e a aplicação do conhecimento. Explore nossos projetos e veja como estamos fazendo a diferença através de pesquisa aplicada e colaboração interdisciplinar.'}/>
       <SearchView 
         searchTerm={searchTerm} 
         setSearchTerm={setSearchTerm} 

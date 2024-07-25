@@ -4,7 +4,7 @@ import styles from './Logo.module.css';
 
 export default function Logo() {
   return (
-    <div className={styles.containerImg} data-aos="fade-up" data-aos-duration="2000">
+    <div className={styles.containerImg}>
       <Image src={LogoLAFocABlack} alt='Logo Background'/>
     </div>
   );

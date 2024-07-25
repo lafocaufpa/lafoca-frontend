@@ -20,7 +20,7 @@
 }
 
 .card_info {
-  height: 14.586875rem;
+  min-height: 390px;
   padding: 1.328125rem 0;
   background-color: #fff;
   border-radius: 0 0 0.9375rem 0.9375rem;

@@ -78,7 +78,7 @@ export default function TccsPageMain() {
     <main className='global-container'>
       <SectionMainHeader 
         titlePage={'TCC'}
-        descriptionPage={'Todos os Trabalhos de Conclusão de Curso realizados pelos membros do LA FocA'}
+        descriptionPage={'Descubra os Trabalhos de Conclusão de Curso (TCCs) defendidos pelos estudantes do LAFocA. Cada TCC representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Estes trabalhos são resultado de uma pesquisa aprofundada e refletem a dedicação e o compromisso dos nossos estudantes com a excelência acadêmica. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
       />
       <SearchView
         searchTerm={searchTerm} 
