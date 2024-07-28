@@ -30,16 +30,16 @@ export default function ViewContent({ text, title, linesOfResearch, date, url, j
       <div className={styles.articleDetails}>
         {url ? (
           <Link className={`${styles.articleUrl} ${styles.item}`} href={url} target='_blank' rel="noreferrer">
-            <h2 className={styles.articleTitle}>{title}</h2>
+            <h2 className={styles.articleTitle} style={{textDecoration:'underline'}}>{title}</h2>
           </Link>
         ) : (
-          <h2 className={`${styles.articleTitle} ${styles.item}`}>{title}</h2>
+          <h2 className={`${styles.articleTitle} ${styles.item} `}>{title}</h2>
         )}
         {journal && <p className={`${styles.articleJournal} ${styles.item}`}>{journal}</p>}
         {journal && <p className={`${styles.articleJournalMobile} ${styles.articleJournal} ${styles.item}`}>{`${journal}, ${displayDate}`}</p>}
 
         {members && (
-          <div className={`${styles.subtitle} ${type === 'project' ? styles.projectMembers: ''} ${styles.item}`}>
+          <div style={type === 'article' ? {order: '1'} : {}} className={`${styles.subtitle} ${type === 'project' ? styles.projectMembers: ''} ${styles.item}`}>
             {members.map((member, index) => (
               <React.Fragment key={index}>
                 {member.slug ? (

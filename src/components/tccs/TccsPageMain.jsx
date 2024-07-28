@@ -1,23 +1,29 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import styles from '@components/viewer/section/SectionMain.module.css';
 import Pagination from '@/components/pagination/PaginationView';
 import { tccService } from '@/services/api/tcc/TccService';
-import { useEffect, useState } from 'react';
 import SectionMainHeader from '@components/viewer/SectionMainHeader';
 import SearchView from '@components/viewer/SearchView';
 import SectionMain from '@components/viewer/section/SectionMain';
+import LoadingPage from '@/components/loading/LoadingPage';
+import LoadingSection from '@components/loading/LoadingSection';
+import stylesSearchView from '@components/viewer/SearchView.module.css';
+
 
 export default function TccsPageMain() {
-
   const [lineId, setLineId] = useState(null);
   const [year, setYear] = useState(null);
   const [objs, setObjs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
-  const [resultsPerPage, setResultsPerPage] = useState(5);
+  const resultsPerPage = 5;
   const [searchTerm, setSearchTerm] = useState('');
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
@@ -42,6 +48,7 @@ export default function TccsPageMain() {
   };
 
   const fetchArticles = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '', year) => {
+    setIsFetching(true);
     try {
       resultsPerPage = resultsPerPage ?? 5;
       const data = await tccService.list(page, resultsPerPage, undefined, searchTerm, lineOfResearchId, year);
@@ -49,7 +56,12 @@ export default function TccsPageMain() {
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
-      console.error('Erro ao buscar projetos:', error);
+      console.error('Erro ao buscar TCCs:', error);
+    } finally {
+      setTimeout(() => {
+        setIsFetching(false);
+      }, 500);
+
     }
   };
 
@@ -58,49 +70,67 @@ export default function TccsPageMain() {
   }, [currentPage, resultsPerPage, searchTerm, lineId, year]);
 
   useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     setCurrentPage(0);
   }, [lineId, searchTerm, year]);
 
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
       setCurrentPage(page);
-      document.querySelector(`.${styles.sectionMain}`).scrollIntoView({ behavior: 'smooth' });
+      document.querySelector(`.${stylesSearchView.container}`).scrollIntoView({ behavior: 'instant' });
     }
   };
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
     const end = Math.min((currentPage + 1) * resultsPerPage, totalResults);
-    return `Exibindo ${start} a ${end} tccs de ${totalResults} resultados`;
+    return `Exibindo ${start} a ${end} TCCs de ${totalResults} resultados`;
   };
 
   return (
     <main className='global-container'>
-      <SectionMainHeader 
-        titlePage={'TCC'}
-        descriptionPage={'Descubra os Trabalhos de Conclusão de Curso (TCCs) defendidos pelos estudantes do LAFocA. Cada TCC representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Estes trabalhos são resultado de uma pesquisa aprofundada e refletem a dedicação e o compromisso dos nossos estudantes com a excelência acadêmica. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
-      />
-      <SearchView
-        searchTerm={searchTerm} 
-        setSearchTerm={setSearchTerm} 
-        loadOptions={loadOptions} 
-        lineOfResearch={true}
-        lineId={lineId} 
-        setLineId={setLineId} 
-        year={year} 
-        setYear={setYear}
-      />
-      <SectionMain 
-        lineId={lineId} 
-        label={'Todos os tccs'} 
-        type={'tcc'}
-        objs={objs}/>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-        getResultMessage={getResultMessage}
-      />
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <SectionMainHeader
+            titlePage={'TCC'}
+            descriptionPage={'Descubra os Trabalhos de Conclusão de Curso (TCCs) defendidos pelos estudantes do LAFocA. Cada TCC representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Estes trabalhos são resultado de uma pesquisa aprofundada e refletem a dedicação e o compromisso dos nossos estudantes com a excelência acadêmica. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
+          />
+          <SearchView
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            loadOptions={loadOptions}
+            lineOfResearch={true}
+            lineId={lineId}
+            setLineId={setLineId}
+            year={year}
+            setYear={setYear}
+          />
+          {isFetching ? (
+            <div><LoadingSection/></div>
+          ) : (
+            <>
+              <SectionMain
+                lineId={lineId}
+                label={'Todos os TCCs'}
+                type={'tcc'}
+                objs={objs}
+              />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                getResultMessage={getResultMessage}
+              />
+            </>
+          )}
+        </>
+      )}
     </main>
   );
 }

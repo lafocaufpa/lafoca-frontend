@@ -7,7 +7,8 @@ export default function Header({paddingBottom}) {
       background={'/assets/img/header-banner/BG.png'} 
       height={30} 
       marginBotton={0} 
-      paddingBottom={paddingBottom}
+      paddingBottom={paddingBottom} 
+      as={'memberHeader'}
     > 
       <Logo/>
     </HeaderPage>

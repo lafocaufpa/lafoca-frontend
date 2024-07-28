@@ -5,7 +5,7 @@ import IconUp from '../icon/IconUp';
 import IconDown from '../icon/IconDown';
 import styles from './LineOfResearchSelect.module.css';
 
-const YearSelect = ({ id, label, ...props }) => {
+const YearSelect = ({ id, label, isSearchable, ...props }) => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 2016 + 1 }, (_, i) => ({
     value: (2016 + i).toString(),
@@ -17,7 +17,8 @@ const YearSelect = ({ id, label, ...props }) => {
       <label htmlFor={id} className={`${styles.label} fw-bold mb-1`}>{label}</label>
       <Select
         options={years}
-        isClearable
+        isClearable 
+        isSearchable={isSearchable}
         styles={{
           menu: base => ({
             ...base,
@@ -68,6 +69,10 @@ const YearSelect = ({ id, label, ...props }) => {
             'svg': {
               color: 'black'
             },
+          }),
+          clearIndicator: styles => ({
+            ...styles,
+            padding: '0px'
           }),
           dropdownIndicator: (styles, { isFocused }) => ({
             ...styles,

@@ -3,7 +3,7 @@
 .item {
   background: var(--bg-accordion);
   margin-bottom: 1.5rem;
-  padding: 1.25rem 2.8125rem;
+  padding: 1.25rem 2.8125rem 0rem 2.8125rem;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -16,31 +16,26 @@
   cursor: pointer;
 }
 
-
 .content {
   color: var(--text-color);
-  max-height: 0;
+  height: 0;
   overflow: hidden;
+  opacity: 0;
   padding-top: 15px;
-
-  transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+  transition: height 0.5s ease, opacity 0.5s ease;
   font-weight: 500;
   font-size: 0.8rem;
-
 }
 
 .contentShow {
   color: var(--text-color);
   height: auto;
-  padding-top: 15px;
-
-  max-height: 99999px;
-  transition: max-height 0.5s cubic-bezier(1, 0, 1, 0);
+  opacity: 1;
+  padding: 15px 0px;
+  transition: height 0.5s ease, opacity 0.5s ease;
   font-weight: 500;
   font-size: 0.8rem;
-
 }
-
 
 .icon {
   margin-right: 0.625rem;
@@ -55,9 +50,8 @@
   box-shadow: 0 2px 4px rgba(12, 0, 0, 0.1);
 }
 
-@media (width <=768px) {
-
-  .title>h4 {
+@media (width <= 768px) {
+  .title > h4 {
     font-size: 0.625rem;
   }
 }

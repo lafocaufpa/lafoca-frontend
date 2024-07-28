@@ -5,9 +5,8 @@ import IconUp from '@components/icon/IconUp';
 import IconDown from '@components/icon/IconDown';
 import styles from '@components/lineOfResearchSelect/LineOfResearchSelect.module.css';
 import { functionService } from '@/services/api/function/FunctionService';
-import { skillService } from '@/services/api/skill/SkillService';
 
-const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
+const FunctionSelect = ({ id, label, loadOptions, isSearchable, additionalProps, ...props }) => {
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
     return loadOptions(functionService, inputValue, loadedOptions, additional);
   };
@@ -17,7 +16,8 @@ const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) =
       <label htmlFor={id} className={`${styles.label} fw-bold mb-1`}>{label}</label>
       <AsyncPaginate
         loadOptions={loadOptionsHandler}
-        additional={additionalProps}
+        additional={additionalProps} 
+        isSearchable={isSearchable}
         isClearable
         styles={{
           menu: base => ({
@@ -69,6 +69,10 @@ const FunctionSelect = ({ id, label, loadOptions, additionalProps, ...props }) =
             '& span': {
               color: 'rgb(204, 204, 204)'
             }
+          }),
+          clearIndicator: styles => ({
+            ...styles,
+            padding: '0px'
           }),
           indicatorsContainer: styles => ({
             ...styles,

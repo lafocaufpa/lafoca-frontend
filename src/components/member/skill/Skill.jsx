@@ -3,7 +3,7 @@ import CardSkill from '@/components/member/skill/cardSkill/CardSkill';
 
 export default function Skill({member}) {
 
-  const sortedSkills = member?.skills.sort((a, b) => b.name.length - a.name.length);
+  const sortedSkills = member?.skills?.sort((a, b) => b.name.length - a.name.length);
 
 
   return (

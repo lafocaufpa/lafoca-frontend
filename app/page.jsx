@@ -1,11 +1,21 @@
 'use client';
 
 import HomePage from '@home/Home';
-import React from 'react';
+import LoadingPage from '@/components/loading/LoadingPage';
+import { useEffect, useState } from 'react';
+
 const Page = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+  
   return (
     <>
-      <HomePage/>
+      {isLoading ? <LoadingPage/> : <HomePage/>}
     </>
   );
 };

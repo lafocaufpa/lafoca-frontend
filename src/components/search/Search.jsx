@@ -17,8 +17,9 @@ export default function Search({searchTerm, setSearchTerm}) {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Buscar por título"
-        className={styles.searchInput}
+        placeholder="Buscar"
+        className={styles.searchInput} 
+        maxLength={15}
       />
       {searchTerm && <IconClose className={styles.clearIcon} onClick={handleClear} />}
     </div>

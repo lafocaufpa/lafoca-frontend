@@ -9,8 +9,8 @@ import Link from 'next/link';
 import url from '@/routes/url';
 
 export default function Team() {
-
   const [members, setMembers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +19,8 @@ export default function Team() {
         setMembers(response.content);
       } catch (error) {
         console.error('Erro ao buscar membros: ', error);
+      } finally {
+        setIsLoading(!isLoading);
       }
     };
 
@@ -28,15 +30,18 @@ export default function Team() {
   return (
     <section id='equipe' className={styles.team}>
       <div className='global-container'>
-        <h2 data-aos="fade-up" data-aos-duration="2000" >Nossa <span>Equipe</span></h2>
-        <p data-aos="fade-up" data-aos-duration="1500" className='global__paragraph_text'>Conheça a equipe que compõe o nosso laboratório de pesquisa e veja um pouco mais sobre  cada um deles e como eles contribuem para o sucesso das nossas atividades.</p>
+        <h2 data-aos="fade-up" data-aos-duration="2000">Nossa <span>Equipe</span></h2>
+        <p data-aos="fade-up" data-aos-duration="1500" className='global__paragraph_text'>
+          Conheça a equipe que compõe o nosso laboratório de pesquisa e veja um pouco mais sobre cada um deles e como eles contribuem para o sucesso das nossas atividades.
+        </p>
         
-        
-        <CustomSlider Slider={members.map((member, index) => (
+        <CustomSlider Slider={isLoading ? Array(5).fill(null).map((_, index) => (
+          <CardSlider key={index} loading={true} />
+        )) : members.map((member, index) => (
           <CardSlider key={index} member={member} />
-        ))}/>
+        ))} />
         <div style={{textAlign:'right'}}>
-          <Link data-aos="fade-up" data-aos-duration="1500" href={url.membros.listarMembros} className={stylesAnimate.card_link}> Ver mais {'>'}</Link>
+          <Link href={url.membros.listarMembros} className={stylesAnimate.card_link}> Ver mais</Link>
         </div>
       </div>
     </section>

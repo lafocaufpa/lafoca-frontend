@@ -44,3 +44,9 @@
   }
 
 }
+
+@media (width <= 768px) {
+  .container {
+    margin-top: 8.125rem;
+  }
+}

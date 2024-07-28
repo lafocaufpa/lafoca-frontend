@@ -1,3 +1,6 @@
+.container {
+  
+}
 .lineOfResearchContainer {
   display: flex;
   align-items: center;
@@ -5,6 +8,16 @@
   gap: 10px;
   flex-flow: wrap;
 }
+
+.checkboxContainer {
+  display: flex;
+}
+
+.checkboxContainer input[type="checkbox"]:checked {
+  accent-color: rgb(0, 0, 0);
+}
+
+
 
 .checkboxContainer>label {
   margin: 0.3125rem;

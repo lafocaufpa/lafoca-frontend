@@ -6,7 +6,7 @@ import IconDown from '@components/icon/IconDown';
 import styles from '@components/lineOfResearchSelect/LineOfResearchSelect.module.css';
 import { skillService } from '@/services/api/skill/SkillService';
 
-const SkillSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
+const SkillSelect = ({ id, label, loadOptions, additionalProps,isSearchable, ...props }) => {
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
     return loadOptions(skillService, inputValue, loadedOptions, additional);
   };
@@ -17,7 +17,8 @@ const SkillSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
       <AsyncPaginate
         loadOptions={loadOptionsHandler}
         additional={additionalProps}
-        isClearable
+        isClearable 
+        isSearchable={isSearchable}
         styles={{
           menu: base => ({
             ...base,
@@ -47,6 +48,10 @@ const SkillSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
             ...styles,
             textAlign: 'left',
             fontSize: '12px',
+          }),
+          clearIndicator: styles => ({
+            ...styles,
+            padding: '0px'
           }),
           control: (styles, { isFocused }) => ({
             ...styles,

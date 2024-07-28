@@ -7,12 +7,14 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { lafocaService } from '@services/api/Lafoca/LafocaService';
 
-export default function Results () {
-
-  const [lafoca, setLafoca] = useState([]);
+export default function Results() {
+  const [lafoca, setLafoca] = useState({
+    numberOfPublishedArticles: '...',
+    numberOfDefendedTCCs: '...',
+    numberOfProjects: '...',
+  });
 
   useEffect(() => {
-    
     const fetchData = async () => {
       try {
         const response = await lafocaService.listInfo();
@@ -24,36 +26,33 @@ export default function Results () {
     fetchData();
   }, []);
 
-
   return (
     <section id='resultados' className={styles.results_background} >
-
       <div className='global-container'>
         <div className={styles.results}>
           <div>
-            <h2 data-aos="fade-up" data-aos-duration="2000" >RESULTADOS DE <br/> PESQUISAS</h2>
+            <h2 data-aos="fade-up" data-aos-duration="2000">RESULTADOS DE <br /> PESQUISAS</h2>
             <div data-aos="fade-up" data-aos-duration="1100" className={styles.results_counts}>
               <div className={styles.container_count}>
-                <span>{lafoca?.numberOfPublishedArticles || '00'}</span>
+                <span>{lafoca.numberOfPublishedArticles}</span>
                 <p>Artigos Publicados</p>
               </div>
-              <div data-aos="fade-up" data-aos-duration="1500"  className={styles.container_count}>
-                <span>{lafoca?.numberOfDefendedTCCs || '00'}</span>
+              <div data-aos="fade-up" data-aos-duration="1500" className={styles.container_count}>
+                <span>{lafoca.numberOfDefendedTCCs}</span>
                 <p>TCCs Defendidos</p>
               </div>
               <div data-aos="fade-up" data-aos-duration="1900" className={styles.container_count}>
-                <span>{lafoca?.numberOfProjects || '00'}</span>
+                <span>{lafoca.numberOfProjects}</span>
                 <p>Projetos</p>
               </div>
             </div>
           </div>
-          <div  data-aos="fade-up" data-aos-duration="2000" className={styles.results_images}>
-            <Image src={Selo} alt='Selo-Lafoca'/>
-            <Image src={ResultsBg} alt='Equipe'/>
+          <div data-aos="fade-up" data-aos-duration="2000" className={styles.results_images}>
+            <Image src={Selo} alt='Selo-Lafoca' unoptimized='false' />
+            <Image src={ResultsBg} alt='Equipe' />
           </div>
         </div>
       </div>
-
     </section>
   );
 }

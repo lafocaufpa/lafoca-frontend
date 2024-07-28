@@ -1,11 +1,10 @@
-import Image from 'next/image';
-import LogoLAFocABlack from '@images/icons/Logo-LAFocA-black.png';
 import styles from './Logo.module.css';
+import IconLogoWhite from '@/components/icon/IconLogoWhite';
 
 export default function Logo() {
   return (
     <div className={styles.containerImg}>
-      <Image src={LogoLAFocABlack} alt='Logo Background'/>
+      <IconLogoWhite color='black'/>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Logo() {
       
     }>
       <Link href="/">
-        <Image src={LogoLafoca} alt="Logo Lafoca" />
+        <Image src={LogoLafoca} alt="Logo Lafoca" quality={100} unoptimized/>
       </Link>
     </div>
   );

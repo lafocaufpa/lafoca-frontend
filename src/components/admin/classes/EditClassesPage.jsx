@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import { classService } from '@/services/api/yearClass/YearClasses';
+import InputField from '@/components/inputField/InputField';
 
 export default function EditClassPage({ turmaId }) {
   const [year, setYear] = useState('');

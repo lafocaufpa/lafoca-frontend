@@ -7,7 +7,7 @@ import styles from './LineOfResearchSelect.module.css';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 
 
-const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...props }) => {
+const LineOfResearchSelect = ({ id, label, loadOptions, isSearchable, additionalProps, ...props }) => {
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
     return loadOptions(linesOfResearchService, inputValue, loadedOptions, additional);
   };
@@ -17,7 +17,8 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
       <label htmlFor={id} className={`${styles.label} fw-bold mb-1`}>{label}</label>
       <AsyncPaginate
         loadOptions={loadOptionsHandler}
-        additional={additionalProps}
+        additional={additionalProps} 
+        isSearchable={isSearchable}
         isClearable
         styles={{
           menu: base => ({
@@ -69,6 +70,10 @@ const LineOfResearchSelect = ({ id, label, loadOptions, additionalProps, ...prop
             '& span': {
               color: 'rgb(204, 204, 204)'
             }
+          }),
+          clearIndicator: styles => ({
+            ...styles,
+            padding: '0px'
           }),
           indicatorsContainer: styles => ({
             ...styles,

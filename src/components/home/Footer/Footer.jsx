@@ -4,6 +4,7 @@ import Logo from '@images/footer/Logo_LaFocA.png';
 import Facebook from '@images/footer/facebook.svg';
 import Instagram from '@images/footer/instagram.svg';
 import url from '@/routes/url';
+import Link from 'next/link';
 
 export default function Footer({ marginTop, ...props }) {
   const footerStyle = {
@@ -26,10 +27,10 @@ export default function Footer({ marginTop, ...props }) {
 
             <div className={styles.footer_nav_column}>
               <h3>Saiba Mais</h3>
-              <ul>
-                <li>Sobre Nós</li>
+              <ul className={styles.link}>
+                <li><Link href={url.about.sobreNos}>Sobre Nós</Link></li>
                 <li>Política de Privacidade</li>
-                <li>Política de Cookies</li>
+                <li><Link href={url.about.cookies}>Política de Cookies</Link></li>
               </ul>
             </div>
 
@@ -45,7 +46,7 @@ export default function Footer({ marginTop, ...props }) {
             <div  className={styles.footer_nav_column}>
               <h3>Alguma dúvida? Nos mande um e-mail! 😉🚩</h3>
               <ul>
-                <li>lafoca@ufpa.com.br</li>
+                <li>lafoca.3cp@gmail.com</li>
               </ul>
             </div>
      

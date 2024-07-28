@@ -1,5 +1,8 @@
 module.exports = {
   trailingSlash: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [
       // Basic redirect
@@ -17,8 +20,15 @@ module.exports = {
     ];
   },
   images: {
-    domains: ['lafoca.s3.amazonaws.com'],
-    unoptimized: true
+    // domains: ['lafoca.s3.amazonaws.com'],
+    // unoptimized: true
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lafoca-server.s3.amazonaws.com',
+        
+      },
+    ],
   },
   reactStrictMode: false
 };

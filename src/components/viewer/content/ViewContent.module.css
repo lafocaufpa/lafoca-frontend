@@ -69,7 +69,7 @@
 
 .articleJournal {
   font-style: italic;
-  color: grey;
+  color: rgba(34, 34, 34, 0.65);
   margin-top: 5px;
   font-size: 0.75rem;
   line-height: normal;
@@ -92,7 +92,7 @@
 
 .linkName {
   font-style: italic;
-  color: grey;
+  color: rgba(34, 34, 34, 0.65);
   margin-top: 5px;
   font-size: 0.75rem;
 }
@@ -150,8 +150,18 @@
 
   .articleTitle {
     font-size: 1.25rem;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     text-underline-offset: 5px;
+  }
+
+  .articleTitle:focus, .articleTitle:active, .articleTitle:visited, .articleTitle:hover {
+    outline: none;
+    text-decoration: none !important;
+  }
+
+
+  .articleTitle:hover {
+    text-decoration: none;
   }
 
   .articleAbstract {
@@ -163,8 +173,7 @@
     font-size: 1rem;
   }
 
-  .subtitle,
-  .linkName {
+  .subtitle {
     font-size: 0.625rem;
   }
 }
@@ -218,6 +227,7 @@
 
   .articleAbstract {
     margin-top: 3.4375rem;
+    order: 2;
   }
 
   .articleTitle {
@@ -232,6 +242,7 @@
 
   .projectMembers {
     order: 2 !important;
+
   }
 
   .projectModality {

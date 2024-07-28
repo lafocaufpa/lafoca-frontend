@@ -36,7 +36,7 @@ export default function CustomSlider({ Slider }) {
 
   return (
 
-    <div className={`${styles['slider-content']}`}>
+    <div  data-aos="fade-up" data-aos-duration="1500"  className={`${styles['slider-content']}`}>
       <Swiper
         slidesPerView={3}
         spaceBetween={23}

@@ -16,7 +16,7 @@ export default function PermissionsPage() {
   const [resultsPerPage, setResultsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, showError, hideError] = useNotification(null);
-  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
+  const [successMessage, hideSuccessMessage] = useNotification(null);
 
   const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {

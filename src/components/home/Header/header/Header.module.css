@@ -7,14 +7,22 @@
   padding-top: var(--padding-top-body-default);
 }
 
-@media (width <= 1000px){
-  .header {
-    padding-bottom: 17.25rem !important;
+
+@media (width >= 769px){
+  .memberHeader {
+    padding-bottom: 14rem !important;
   }
+  
 }
 
 @media (width <= 768px){
   .header {
-    padding-bottom: 12.25rem !important;
+    padding-bottom: 14rem ;
+  }
+}
+
+@media (width <= 480px){
+  .header {
+    padding-bottom: 0.25rem;
   }
 }
