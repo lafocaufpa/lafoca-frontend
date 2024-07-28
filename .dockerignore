@@ -5,6 +5,7 @@ docker-compose.yml
 .dockerignore
 .git
 .next
+.env
 .vscode
 run_lafoca.sh
 public/assets/video/mock2.mp4

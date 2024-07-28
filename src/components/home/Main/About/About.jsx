@@ -61,7 +61,7 @@ export default function About () {
           data-aos="fade-right"
           data-aos-offset="300"
           data-aos-easing="ease-in-sine">
-          <Image src={Menina} alt='Girl Lafoca'/>
+          <Image src={Menina} alt='Girl Lafoca' unoptimized/>
         </div>
         <div className={styles.container__accordion}>
           <h2 data-aos="fade-up" data-aos-duration="2000" > Compromissos que <br/> <span>desenvolvemos</span></h2>

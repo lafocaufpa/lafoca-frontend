@@ -1,4 +1,4 @@
-./run_lafoca.sh
+.run_lafoca.sh
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -121,7 +121,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
-
+.run_lafoca
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
