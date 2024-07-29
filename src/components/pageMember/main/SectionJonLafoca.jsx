@@ -8,7 +8,7 @@ export default function SectionJoinLafoca() {
           <span>JUNTE-SE AO LAFOCA: </span>OPORTUNIDADE PARA NOVOS PESQUISADORES
         </h2>
         <p className={styles.description}>
-          Você é um aluno apaixonado por pesquisa? O LAFoca está recrutando novos membros. Venha contribuir para projetos
+          Você é um aluno apaixonado por pesquisa? O La FocA está recrutando novos membros. Venha contribuir para projetos
           inovadores e desenvolva suas habilidades em uma equipe dinâmica e diversificada.
         </p>
       </div>

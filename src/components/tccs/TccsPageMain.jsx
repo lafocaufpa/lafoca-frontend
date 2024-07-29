@@ -99,7 +99,7 @@ export default function TccsPageMain() {
         <>
           <SectionMainHeader
             titlePage={'TCC'}
-            descriptionPage={'Descubra os Trabalhos de Conclusão de Curso (TCCs) defendidos pelos estudantes do LAFocA. Cada TCC representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Estes trabalhos são resultado de uma pesquisa aprofundada e refletem a dedicação e o compromisso dos nossos estudantes com a excelência acadêmica. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
+            descriptionPage={'Cada Trabalho de Conclusão de Curso (TCC) representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
           />
           <SearchView
             searchTerm={searchTerm}

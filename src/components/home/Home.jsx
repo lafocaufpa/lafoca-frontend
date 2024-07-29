@@ -17,7 +17,6 @@ export default function HomePage() {
 
   return (
     <>
-      {console.log('rodou')}
       <Header />
       <Main />
       <Footer />

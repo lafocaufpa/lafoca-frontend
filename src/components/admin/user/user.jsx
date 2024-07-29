@@ -144,7 +144,7 @@ export default function UserPage() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {users?.map((user) => (
                 <tr key={user.id}>
                   <td>{user.name}</td>
                   <td>{user.email}</td>

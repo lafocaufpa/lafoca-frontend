@@ -94,7 +94,7 @@ export default function ArticlesMain() {
         <>
           <SectionMainHeader
             titlePage={'Artigos Publicados'}
-            descriptionPage={'Explore os artigos publicados pelos pesquisadores do grupo LAFocA, um centro dedicado ao ensino focado no aluno. Nossa produção acadêmica abrange diversas áreas do conhecimento, refletindo a interdisciplinaridade e a inovação que caracterizam nossas pesquisas. De metodologias educacionais a avanços tecnológicos, nossos artigos são contribuições significativas para a comunidade acadêmica. Mantenha-se atualizado com nossas descobertas e leia sobre os tópicos mais relevantes e atuais em nossas publicações.'}
+            descriptionPage={'Explore os artigos publicados pelos pesquisadores do grupo LAFocA. Nossa produção acadêmica abrange diversas áreas, desde metodologias educacionais a avanços tecnológicos.'}
           />
 
           <SearchView

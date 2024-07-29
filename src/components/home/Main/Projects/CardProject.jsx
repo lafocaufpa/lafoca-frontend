@@ -13,7 +13,7 @@ export default function CardProject({ title, image, description, link, durationF
           <h4>{title}</h4>
           <p>{description}</p>
         
-          Ver mais
+          <strong>Ver mais</strong>
         
         </div>
       </Link>

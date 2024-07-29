@@ -8,7 +8,7 @@ export default function Member({ member }) {
   return (
     <>
       <Header paddingBottom={11.6}/>
-      <Main member={member}/>
+      {member !== null ? <Main member={member} /> : <h1 style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>Não encontrado</h1>}
       <Footer marginTop={6.375}/>
     </>
   );
