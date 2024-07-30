@@ -15,7 +15,9 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.padding {}
+.navbar > .profile {
+  display: none;
+}
 
 
 .linkHoverEffect {
@@ -85,6 +87,14 @@
 
   .container {
     background-color: transparent;
+  }
+
+  .navbar > .profile {
+    display: block;
+  }
+
+  .container > .profile {
+    display: none;
   }
 
   .MenuHamburger {

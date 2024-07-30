@@ -100,7 +100,7 @@ export default function NavBar({ user }) {
           <NavLink href={url.admin.system.info} Icon={IconInfo}>
             Informações do Sistema
           </NavLink>
-
+          {/* Coomponente profile */}
           <div className={`mt-auto ${stylesNavBar.profile}`}>
             <div className='border-top border-secondary m-auto'></div>
             <div className={'text-center pt-4 pb-3 p-3 d-flex align-items-center justify-content-center'} >
@@ -128,6 +128,32 @@ export default function NavBar({ user }) {
           </div>
         </nav>
         <button className={stylesNavBar.MenuHamburger} onClick={toggleMenu}></button>
+      </div>
+      {/* Coomponente profile */}
+      <div className={`mt-auto ${stylesNavBar.profile}`}>
+        <div className='border-top border-secondary m-auto'></div>
+        <div className={'text-center pt-4 pb-3 p-3 d-flex align-items-center justify-content-center'} >
+          <div className={stylesNavBar.hoverEffect} role='button' onClick={() => handleEdit(user)}>
+            <div className="d-flex align-items-center">
+              <Image
+                className="rounded-circle me-3 mb-1"
+                src={urlImage}
+                alt={user.name}
+                width={50}
+                height={50}
+              />
+              <div className="flex-grow-1">
+                <h5 className="mb-0 fs-5">{user.name}</h5>
+                <p className="mb-0 text-white fs-6">{user.email}</p>
+                <IconEdit className={stylesNavBar.iconEdit} width={20} height={20} />
+              </div>
+
+            </div>
+          </div>
+          <div className='ms-3' role="button">
+            <LogoutButton />
+          </div>
+        </div>
       </div>
     </div>
   );
