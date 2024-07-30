@@ -1,3 +1,7 @@
+.container {
+  background-color: rgb(33, 37, 41);
+}
+
 .scrollableNav::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -11,8 +15,7 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.padding {
-}
+.padding {}
 
 
 .linkHoverEffect {
@@ -43,4 +46,136 @@
 
 .hoverEffect:hover .iconEdit {
   opacity: 1;
+}
+
+.hamburguerLine {
+  position: relative;
+  margin-top: 60px;
+  width: 94%;
+  margin: 5.3125rem auto 0 auto;
+  height: 1.6px;
+  display: none;
+  opacity: 0.2;
+  background: #e40c0c;
+}
+
+.MenuHamburger {
+  display: none;
+  position: relative;
+  border: none;
+  background: none;
+  border-top: 3px solid rgb(33, 37, 41);
+  cursor: pointer;
+}
+
+.MenuHamburger::after,
+.MenuHamburger::before {
+  content: " ";
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: rgb(33, 37, 41);
+  margin-top: 5px;
+  position: relative;
+  transition: 0.3s;
+}
+
+
+@media (width <=500px) {
+
+  .container {
+    background-color: transparent;
+  }
+
+  .MenuHamburger {
+    display: block;
+    z-index: 9999999999;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: white;
+  }
+
+  .MenuHamburger::after,
+.MenuHamburger::before {
+  color: white;
+}
+
+  .navbar {
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--background-nav-mobile);
+    clip-path: circle(40px at 112% -2%);
+    transition: 1s ease-out;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    pointer-events: all;
+  }
+
+  .navbar a {
+    font-size: 0.9375rem;
+    margin-left: 1.375rem;
+    margin-top: 2.375rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  /* .opacity0{
+    opacity: 0 !important;
+  } */
+
+
+  .navbar.active a {
+    opacity: 1;
+  }
+
+  .navbar.active a:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .navbar.active a:nth-child(3) {
+    transition-delay: 0.4s;
+  }
+
+  .navbar.active a:nth-child(4) {
+    transition-delay: 0.6s;
+  }
+
+  .navbar.active a:nth-child(5) {
+    transition-delay: 0.8s;
+  }
+
+  .navbar.active {
+    clip-path: circle(1500px at 70% 7%);
+
+  }
+
+  .navbar.active~.MenuHamburger {
+    border-top-color: transparent;
+  }
+
+  .navbar.active~.MenuHamburger::before {
+    transform: rotate(130deg);
+    background: white;
+  }
+
+  .navbar.active~.MenuHamburger::after {
+    transform: rotate(-130deg);
+    background: white;
+    top: -7px;
+  }
+
+  .linkHoverEffect a {
+    margin-top: 0;
+  }
+
+  .profile {
+    width: 100%;
+  }
 }

@@ -59,7 +59,8 @@ export default function EditClassPage({ turmaId }) {
             label="Ano"
             type="text"
             value={year}
-            onChange={(e) => setYear(e.target.value)}
+            onChange={(e) => setYear(e.target.value)} 
+            maxLength={4}
             required
           />
         </form>

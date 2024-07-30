@@ -1,0 +1,6 @@
+@media (width <= 500px) {
+
+  .container {
+    margin-top: 30px;
+  }
+}

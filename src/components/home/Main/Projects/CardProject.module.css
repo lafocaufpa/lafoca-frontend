@@ -20,6 +20,9 @@
 }
 
 .card_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
   background-color: #fff;
   text-align: left;
@@ -34,7 +37,6 @@
   font-size: 20px;
   color: rgba(34, 34, 34, 0.87);
   font-weight: 600;
-
 }
 
 .card_info p {
@@ -45,30 +47,19 @@
   line-height: 22px;
 }
 
+.card_info strong {
+  margin-top: auto;
+}
+
 .card_link {
   color: #EE972D;
   font-weight: 600;
   text-decoration: none;
 }
 
-/* @media (width <= 1024px) {
-  .card_project {
-    max-width: 15.3rem;
-    min-width: 15.3rem;
-  }
-  
-  .card_content_img {
-    max-width: 15.3rem;
-    min-width: 15.3rem;
-    max-height: 15.8125rem;
-    
-  }
-} */
-
 @media (width <= 480px) {
   .card_info h4 {
     margin-top: 20px;
-    
   }
 
   .card_info p {

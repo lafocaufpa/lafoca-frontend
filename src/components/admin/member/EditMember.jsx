@@ -120,7 +120,7 @@ export default function EditMember({ memberId }) {
 
       setTimeout(() => {
         router.push(url.admin.membro.home);
-      }, 3000);
+      }, 1000);
 
     } catch (error) {
       showError(error?.userMessage || 'Erro ao editar membro.');
@@ -179,7 +179,7 @@ export default function EditMember({ memberId }) {
             id="fullName"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            maxLength={500}
+            maxLength={225}
             required
           />
           <InputField
@@ -187,7 +187,8 @@ export default function EditMember({ memberId }) {
             type="text"
             id="displayName"
             value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
+            onChange={(e) => setDisplayName(e.target.value)} 
+            maxLength={225}
             required
           />
           <InputField
@@ -195,7 +196,8 @@ export default function EditMember({ memberId }) {
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} 
+            maxLength={225}
             required
           />
           <InputField
@@ -214,7 +216,8 @@ export default function EditMember({ memberId }) {
             id="biography"
             as="textarea"
             value={biography}
-            onChange={(e) => setBiography(e.target.value)}
+            onChange={(e) => setBiography(e.target.value)} 
+            maxLength={950}
             required
           />
           <AsyncSelect
@@ -244,14 +247,16 @@ export default function EditMember({ memberId }) {
             type="text"
             id="linkPortifolio"
             value={linkPortifolio}
-            onChange={(e) => setLinkPortifolio(e.target.value)}
+            onChange={(e) => setLinkPortifolio(e.target.value)} 
+            maxLength={225}
           />
           <InputField
             label="Link do Linkedin"
             type="text"
             id="linkLinkedin"
             value={linkLinkedin}
-            onChange={(e) => setLinkLinkedin(e.target.value)}
+            onChange={(e) => setLinkLinkedin(e.target.value)} 
+            maxLength={225}
           />
           <div className="form-check mb-3">
             <input

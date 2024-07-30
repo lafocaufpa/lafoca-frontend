@@ -261,7 +261,8 @@ export default function ClassesPage() {
                     id="year"
                     className="form-control"
                     value={year}
-                    onChange={(e) => setYear(e.target.value)}
+                    onChange={(e) => setYear(e.target.value)} 
+                    maxLength={4}
                   />
                 </div>
               </div>

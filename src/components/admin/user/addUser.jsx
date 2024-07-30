@@ -145,7 +145,8 @@ export default function AddUser() {
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} 
+            maxLength={255}
             required
           />
           <InputField
@@ -153,7 +154,8 @@ export default function AddUser() {
             type="text"
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)} 
+            maxLength={255}
             required
           />
           <InputField
@@ -162,7 +164,8 @@ export default function AddUser() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onBlur={(e) => handlePasswordIsValid(e.target.value)}
+            onBlur={(e) => handlePasswordIsValid(e.target.value)} 
+            maxLength={255}
             required
           />
           <InputField
@@ -170,7 +173,8 @@ export default function AddUser() {
             type={showPassword ? 'text' : 'password'}
             id="confirmPassword"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)} 
+            maxLength={255}
             onBlur={handleConfirmPasswordBlur}
             required
           />

@@ -105,7 +105,7 @@ export default function EditUser({ userId }) {
 
       setTimeout(() => {
         router.push(url.admin.usuario.home);
-      }, 3000);
+      }, 1000);
 
     } catch (error) {
       showError(error?.userMessage || 'Erro ao editar usuário.');
@@ -192,7 +192,8 @@ export default function EditUser({ userId }) {
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} 
+            maxLength={255}
             required
           />
           <InputField
@@ -200,7 +201,8 @@ export default function EditUser({ userId }) {
             type="text"
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)} 
+            maxLength={255}
             required
           />
           <AsyncSelect
@@ -233,7 +235,8 @@ export default function EditUser({ userId }) {
                 className="form-control"
                 id="currentPassword"
                 value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
+                onChange={(e) => setCurrentPassword(e.target.value)} 
+                maxLength={255}
               />
               <button
                 type="button"
@@ -251,7 +254,8 @@ export default function EditUser({ userId }) {
               className="form-control"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)} 
+              maxLength={255}
             />
           </div>
           <div className="form-group mb-3">
@@ -261,7 +265,8 @@ export default function EditUser({ userId }) {
               className="form-control"
               id="confirmPassword"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)} 
+              maxLength={255}
               onBlur={handleConfirmPasswordBlur}
             />
           </div>

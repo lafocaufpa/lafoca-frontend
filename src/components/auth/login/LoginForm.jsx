@@ -31,10 +31,6 @@ export default function Login() {
   async function login(e) {
     e.preventDefault();
     setLoading(true);
-    
-    const timeout = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
 
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -49,10 +45,7 @@ export default function Login() {
       }
     } catch (error) {
       setToggle(true);
-    } finally {
-      clearTimeout(timeout);
-      setLoading(false);
-    }
+    } 
   }
 
   async function resetPassword(e) {
@@ -71,7 +64,7 @@ export default function Login() {
     } catch (error) {
       setToggle(true);
     } finally {
-      clearTimeout(timeout); // Limpa o timeout se a operação terminar antes dos 2 segundos
+      clearTimeout(timeout);
       setLoading(false);
     }
   }

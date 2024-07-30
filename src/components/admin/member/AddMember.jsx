@@ -173,7 +173,7 @@ export default function AddMember() {
             as="textarea"
             value={biography}
             onChange={(e) => setBiography(e.target.value)}
-            maxLength={500}
+            maxLength={950}
             required
           />
           <AsyncSelect

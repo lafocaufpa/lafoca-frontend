@@ -288,7 +288,8 @@ export default function SkillsPage() {
                       className="form-control"
                       id="name"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => setName(e.target.value)} 
+                      maxLength={50}
                     />
                   </div>
                   <div className="mb-3">

@@ -301,8 +301,6 @@ export default function HostCheck() {
           </Button>
           {isRestoring && <Spinner animation="border" />}
         </Form.Group>
-
-
       </div>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -316,7 +314,8 @@ export default function HostCheck() {
               <Form.Control
                 type="text"
                 placeholder="Digite o valor"
-                value={modalContent.value}
+                value={modalContent.value} 
+                maxLength={50}
                 onChange={handleChange}
               />
             </Form.Group>

@@ -140,6 +140,7 @@ export default function EditProject({ projectId }) {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            maxLength={255}
             required
           />
           <InputField
@@ -209,7 +210,8 @@ export default function EditProject({ projectId }) {
             className="form-control"
             id="externalMember"
             value={externalMemberName}
-            onChange={(e) => setExternalMemberName(e.target.value)}
+            onChange={(e) => setExternalMemberName(e.target.value)} 
+            maxLength={255}
             placeholder="Nome do Membro Externo"
           />
           <button

@@ -25,10 +25,13 @@ export function middleware(req) {
 
   // Verifica se a rota é privada
   if (pathname.startsWith(PRIVATE_ROUTES_PREFIX)) {
-    const isAuthenticated = req.cookies.has('next-auth.token') && req.cookies.has('next-auth.session-token');
-    if (!isAuthenticated) {
+
+    const hasToken = req.cookies.has('next-auth.token') || req.cookies.has('__Secure-next-auth.token');
+    const hasSessionToken = req.cookies.has('next-auth.session-token') || req.cookies.has('__Secure-next-auth.session-token');
+    if (!hasToken || !hasSessionToken) {
       return NextResponse.redirect(new URL(url.auth.login, req.url)); // Redireciona para a página de login se não estiver autenticado
     }
+
     return NextResponse.next(); // Permite o acesso à próxima etapa de processamento
   }
 

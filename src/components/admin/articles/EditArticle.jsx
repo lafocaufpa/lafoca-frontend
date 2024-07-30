@@ -166,7 +166,8 @@ export default function EditArticle({ articleId }) {
             type="url"
             id="url"
             value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={(e) => setUrl(e.target.value)} 
+            maxLength={700}
             required
           />
           <YearSelect
@@ -205,7 +206,8 @@ export default function EditArticle({ articleId }) {
             className="form-control"
             id="externalMember"
             value={externalMemberName}
-            onChange={(e) => setExternalMemberName(e.target.value)}
+            onChange={(e) => setExternalMemberName(e.target.value)} 
+            maxLength={255}
             placeholder="Nome do Membro Externo"
           />
           <button

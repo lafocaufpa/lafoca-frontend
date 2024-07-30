@@ -222,6 +222,7 @@ export default function LinesOfResearchPage() {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    maxLength={50}
                     required
                   />
                   <InputField
@@ -229,7 +230,8 @@ export default function LinesOfResearchPage() {
                     type="text"
                     id="description"
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => setDescription(e.target.value)} 
+                    maxLength={225}
                     required
                   />
                 </form>

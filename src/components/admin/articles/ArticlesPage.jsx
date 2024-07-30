@@ -311,7 +311,8 @@ export default function ArticlesPage() {
                     type="text"
                     id="title"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => setTitle(e.target.value)} 
+                    maxLength={255}
                     required
                   />
                   <InputField
@@ -319,7 +320,8 @@ export default function ArticlesPage() {
                     type="text"
                     id="journal"
                     value={journal}
-                    onChange={(e) => setJournal(e.target.value)}
+                    onChange={(e) => setJournal(e.target.value)} 
+                    maxLength={255}
                     required
                   />
                   <InputField
@@ -337,7 +339,8 @@ export default function ArticlesPage() {
                     type="text"
                     id="url"
                     value={url}
-                    onChange={(e) => setUrl(e.target.value)}
+                    onChange={(e) => setUrl(e.target.value)} 
+                    maxLength={700}
                     required
                   />
                   <YearSelect
@@ -376,7 +379,8 @@ export default function ArticlesPage() {
                     className="form-control"
                     id="externalMember"
                     value={externalMemberName}
-                    onChange={(e) => setExternalMemberName(e.target.value)}
+                    onChange={(e) => setExternalMemberName(e.target.value)} 
+                    maxLength={255}
                     placeholder="Nome do Membro Externo"
                   />
                   <button

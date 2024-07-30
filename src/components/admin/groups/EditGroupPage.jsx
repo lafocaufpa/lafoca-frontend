@@ -96,7 +96,8 @@ export default function EditGroup({ groupId }) {
             type="text"
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)} 
+            maxLength={255}
             required
           />
           <AsyncSelect

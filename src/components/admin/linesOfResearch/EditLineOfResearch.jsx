@@ -61,14 +61,16 @@ export default function EditLine({ lineId }) {
             label="Nome"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)} 
+            maxLength={50} 
             required
           />
           <InputField
             label="Descrição"
             type="text"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)} 
+            maxLength={225}
             required
           />
         </form>

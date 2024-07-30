@@ -20,12 +20,23 @@ import IconSecurity from '@/components/icon/IconSecurity';
 import IconEdit from '@/components/icon/IconEdit';
 import { useRouter } from 'next/navigation';
 import IconInfo from '@/components/icon/IconInfo';
+import { useState } from 'react';
 
-export default function NavBar({user}){
+export default function NavBar({ user }) {
 
   const router = useRouter();
 
   const urlImage = user.urlPhoto || UserDefault;
+
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleMenu = () => {
+    setIsActive(!isActive);
+  };
+
+  const closeMenu = () => {
+    setIsActive(false);
+  };
 
   const NavLink = ({ href, children, Icon, size = '20' }) => (
     <div className={stylesNavBar.linkHoverEffect}>
@@ -41,11 +52,12 @@ export default function NavBar({user}){
   };
 
   return (
-    <div className={'d-flex flex-column bg-dark text-white'} style={{ minHeight: '100vh', maxWidth: '280px'}}>
-      <div className={`${stylesNavBar.scrollableNav} mb-auto`} style={{maxHeight: 'calc(80vh)', overflowY:'auto'}}>
-        <nav className="nav flex-column pt-3">
-
-          <NavLink href={url.admin.usuario.home} Icon={IconUsers}>
+    <div className={`d-flex flex-column text-white ${stylesNavBar.container }`} style={{ minHeight: '100vh'}}>
+      <div className={stylesNavBar.hamburguerLine}></div>
+      <div className={`${stylesNavBar.scrollableNav} mb-auto`} style={{ maxHeight: 'calc(80vh)', overflowY: 'auto' }}>
+        <nav className={`nav flex-column pt-3 ${stylesNavBar.navbar} ${isActive ? stylesNavBar.active : ''}`} >
+          {/* "nav flex-column pt-3" */}
+          <NavLink href={url.admin.usuario.home} Icon={IconUsers} onClick={closeMenu}>
             Usuarios
           </NavLink>
 
@@ -58,63 +70,64 @@ export default function NavBar({user}){
           </NavLink>
 
           <NavLink href={url.admin.funcoes.home} Icon={IconFunctions}>
-          Funções de Membros
+            Funções de Membros
           </NavLink>
 
           <NavLink href={url.admin.habilidades.home} Icon={IconSkills} size='20'>
-          Habilidades
+            Habilidades
           </NavLink>
 
           <NavLink href={url.admin.turmas.home} Icon={IconClasses}>
-          Turmas
+            Turmas
           </NavLink>
 
           <NavLink href={url.admin.tccs.home} Icon={IconTccs}>
-          Tccs
+            Tccs
           </NavLink>
 
           <NavLink href={url.admin.artigos.home} Icon={IconArticles}>
-          Artigos
+            Artigos
           </NavLink>
 
           <NavLink href={url.admin.projetos.home} Icon={IconProjects}>
-          Projetos
+            Projetos
           </NavLink>
 
           <NavLink href={url.admin.seguranca.home} Icon={IconSecurity}>
-          Segurança
+            Segurança
           </NavLink>
 
           <NavLink href={url.admin.system.info} Icon={IconInfo}>
-          Informações do Sistema
-          </NavLink> 
-           
-        </nav>
-      </div>
-      <div className="mt-auto">
-        <div className='border-top border-secondary m-auto'></div>
-        <div className={'text-center pt-4 pb-3 p-3 d-flex align-items-center'} >
-          <div className={stylesNavBar.hoverEffect} role='button' onClick={() => handleEdit(user)}>
-            <div className="d-flex align-items-center">
-              <Image
-                className="rounded-circle me-3 mb-1"
-                src={urlImage}
-                alt={user.name}
-                width={50}
-                height={50}
-              />
-              <div className="flex-grow-1">
-                <h5 className="mb-0 fs-5">{user.name}</h5>
-                <p className="mb-0 text-white fs-6">{user.email}</p>
-                <IconEdit className={stylesNavBar.iconEdit} width={20} height={20} />
+            Informações do Sistema
+          </NavLink>
+
+          <div className={`mt-auto ${stylesNavBar.profile}`}>
+            <div className='border-top border-secondary m-auto'></div>
+            <div className={'text-center pt-4 pb-3 p-3 d-flex align-items-center justify-content-center'} >
+              <div className={stylesNavBar.hoverEffect} role='button' onClick={() => handleEdit(user)}>
+                <div className="d-flex align-items-center">
+                  <Image
+                    className="rounded-circle me-3 mb-1"
+                    src={urlImage}
+                    alt={user.name}
+                    width={50}
+                    height={50}
+                  />
+                  <div className="flex-grow-1">
+                    <h5 className="mb-0 fs-5">{user.name}</h5>
+                    <p className="mb-0 text-white fs-6">{user.email}</p>
+                    <IconEdit className={stylesNavBar.iconEdit} width={20} height={20} />
+                  </div>
+
+                </div>
               </div>
-              
+              <div className='ms-3' role="button">
+                <LogoutButton />
+              </div>
             </div>
           </div>
-          <div className='ms-3' role="button">
-            <LogoutButton />
-          </div>
-        </div>
+        </nav>
+        <button className={stylesNavBar.MenuHamburger} onClick={toggleMenu}></button>
       </div>
     </div>
   );
