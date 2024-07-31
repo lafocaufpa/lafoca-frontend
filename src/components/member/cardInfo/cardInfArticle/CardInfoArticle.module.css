@@ -56,18 +56,6 @@
   }
 }
 
-/* @media (width <= 600px) {
-  
-}
-
-@media (width <=768px) {
-  .img {
-    width: 28.417px;
-    height: 28.417px;
-  }
-} */
-
-
 @media (width <=768px) {
   .img {
     width: 65px;
