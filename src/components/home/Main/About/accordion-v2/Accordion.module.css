@@ -50,7 +50,7 @@
   box-shadow: 0 2px 4px rgba(12, 0, 0, 0.1);
 }
 
-@media (width <= 768px) {
+@media (width <= 480px) {
   .title > h4 {
     font-size: 0.625rem;
   }

@@ -40,4 +40,15 @@
     width: 45px;
     height: 45px;
   }
+
+  .cardContent_title {
+    font-size: 12px;
+    line-height: normal !important;
+    margin-bottom: 5px;
+  }
+
+  .cardContent_desc {
+    font-size: 10px;
+    line-height: normal !important;
+  }
 }

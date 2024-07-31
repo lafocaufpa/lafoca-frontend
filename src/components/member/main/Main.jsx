@@ -13,7 +13,7 @@ export default function Main ({member}) {
         <MemberInfo member={member}/>
         {member?.biography?.length > 0 && <About member={member}/>}
         {member?.skills?.length > 0 && <Skill member={member}/>}
-        <Tcc member={member}/>
+        {member?.tcc?.length > 0 && <Tcc member={member}/>}
         {member?.projects?.length > 0 &&  <Projects member={member}/>}
         {member?.articles?.length > 0 && <Articles member={member}/>}
       </div>

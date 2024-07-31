@@ -10,7 +10,6 @@
 
 .memberPhoto {
   margin-top: -6rem;
-  margin-bottom: 3.3125rem;
   width: 12rem;
   height: 12rem;
   border-radius: 6rem;
@@ -42,6 +41,12 @@
   flex-basis: 100%;
 }
 
+@media (width <=768px) {
+  .name {
+    margin-top: 2.6rem !important;
+    margin-bottom: 8px !important;
+  }
+}
 
 
 @media (width <=600px) {

@@ -2,11 +2,12 @@ import CardInfo from '@/components/member/cardInfo/CardInfo';
 import IconTcc from '@images/icons/tcc.png';
 import stylesMember from '@components/member/Member.module.css';
 
+
 export default function Tcc({member}) {
 
   return (
     member?.tcc && <section className={stylesMember.globalPageMemberSection} style={{marginTop: '2.375rem'}}>
-      <h1 className={stylesMember.globalPageMemberTitle}>TCC</h1>
+      <h1 className={`${stylesMember.globalPageMemberTitle}`}>TCC</h1>
       <CardInfo icon={IconTcc} title={member?.tcc?.title} description={member?.tcc?.date} link={member?.tcc?.url} />
     </section>
   );

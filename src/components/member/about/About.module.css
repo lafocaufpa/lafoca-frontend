@@ -1,0 +1,5 @@
+@media (width <= 768px) {
+  .biography {
+    line-height: 30px;
+  }
+}

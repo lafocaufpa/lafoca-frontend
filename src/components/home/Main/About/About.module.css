@@ -35,6 +35,13 @@
 }
 
 
+@media(width <=768px) {
+  .container__accordion > p {
+    line-height: 30px !important;
+  }
+}
+
+
 @media(width <=1200px) {
   .appointments {
     flex-flow: wrap;
@@ -61,6 +68,12 @@
   }
 }
 
+@media(width <=1200px) {
+  .about_lafoca > div > p {
+    line-height: 36px; 
+  }
+}
+
 @media (max-width: 480px) {
   
   .about_lafoca h2::before {
@@ -75,6 +88,10 @@
 
   .about_lafoca h2 {
     text-transform: uppercase;
+  }
+
+  .about_lafoca > div > p {
+    line-height: 25px; 
   }
 
   .container__accordion span {

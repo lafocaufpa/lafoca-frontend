@@ -47,9 +47,8 @@
   position: relative;
   margin-top: 60px;
   width: 94%;
-  margin: 5.3125rem auto 0 auto;
+  margin: 0 auto;
   height: 1.6px;
-  display: none;
   opacity: 0.2;
   background: #FFF;
 }
@@ -76,11 +75,11 @@
     background: var(--background-nav-mobile);
     clip-path: circle(40px at 112% -2%);
     transition: 1s ease-out;
-
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
     pointer-events: all;
+    padding-top: 96px;
   }
 
   .navbar a {

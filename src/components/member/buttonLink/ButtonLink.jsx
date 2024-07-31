@@ -1,11 +1,13 @@
 import styles from './ButtonLink.module.css';
 import IconLink from '@images/icons/icon-link.svg';
+import IconLinkWhite from '@images/icons/icon-link-white.svg';
 import Image from 'next/image';
 
-export default function ButtonLink() {
+export default function ButtonLink({white, black}) {
   return (
     <span className={styles.buttonLink}>
-      <Image src={IconLink} alt=''/>
+      {white && <Image src={IconLinkWhite} alt=''/>}
+      {black && <Image src={IconLink} alt=''/>}
     </span>
   );
 }

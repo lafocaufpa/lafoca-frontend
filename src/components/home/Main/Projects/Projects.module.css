@@ -1,7 +1,8 @@
 .projects_container {
-  margin-bottom: var(--margin-default-bottom-section);
-  
+  margin-bottom: 40px;
 }
+
+
 
 .projects_card {
   display: flex;
@@ -16,9 +17,6 @@
     grid-template-rows: auto auto;
     gap: 20px;
   }
-  /* . > div:nth-child(3) {
-    grid-column: span 2;
-  } */
 }
 
 @media (max-width: 620px) {
@@ -26,5 +24,18 @@
     display: flex;
     flex-direction: column;
     flex-flow: wrap;
+  }
+}
+
+@media (width <= 480px) {
+  .container > p {
+    line-height: 36px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .container > p {
+    line-height: 36px;
   }
 }

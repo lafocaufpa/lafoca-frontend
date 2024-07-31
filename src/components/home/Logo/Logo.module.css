@@ -1,3 +1,24 @@
 .logo {
   text-align: left;
 }
+
+@media (width <= 1440px) {
+  .logo img {
+    width: 161px;
+    height: auto;
+  }
+}
+
+@media (width <= 768px) {
+  .logo img {
+    width: 152px;
+    height: auto;
+  }
+}
+
+@media (width <= 480px) {
+  .logo img {
+    width: 78px;
+    height: auto;
+  }
+}
