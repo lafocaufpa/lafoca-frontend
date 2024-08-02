@@ -1,19 +1,25 @@
 .cardInfo {
-  margin-top: 3rem;
   display: flex;
   align-items: center;
 }
 
 .cardContent {
-  margin-left: 1.5rem;
+  margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .cardContent_title {
   font-weight: 600;
+  font-size: 1.125rem;
+  line-height: normal !important;
+  width: 95%;
 }
 
 .cardContent_desc {
   font-weight: 400;
+  line-height: normal;
 }
 
 .cardLink {
@@ -22,17 +28,23 @@
 
 @media (width <=768px) {
   .img {
-    width: 28.417px;
-    height: 28.417px;
-  }
-}
-
-
-@media (width <=768px) {
-  .img {
     width: 65px;
     height: 65px;
   }
+
+  .cardContent_title {
+    font-size: 1rem;
+  }
+
+  .cardContent_desc {
+    font-size: 0.875rem;
+  }
+
+  .cardContent {
+    margin-left: 16px;
+    gap: 15px;
+  }
+
 }
 
 @media (width <=480px) {
@@ -41,10 +53,13 @@
     height: 45px;
   }
 
+.cardContent {
+  gap: 10px;
+}
+
   .cardContent_title {
     font-size: 12px;
     line-height: normal !important;
-    margin-bottom: 5px;
   }
 
   .cardContent_desc {

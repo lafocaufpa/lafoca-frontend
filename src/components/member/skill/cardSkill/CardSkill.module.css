@@ -51,6 +51,18 @@
   }
 }
 
+@media (width <=768px) {
+  .cardSkill {
+    margin-bottom: 36px;
+  }
+}
+
+@media (width <=480px) {
+  .cardSkill {
+    margin-bottom: 21px;
+  }
+}
+
 @media (width <=390px) {
 
   .skillNameFont {

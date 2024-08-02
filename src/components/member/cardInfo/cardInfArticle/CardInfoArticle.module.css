@@ -1,20 +1,27 @@
 .cardInfo {
-  margin-top: 3rem;
   display: flex;
   align-items: center;
 
 }
 
 .cardContent {
-  margin-left: 1.5rem;
+  margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardContent > p {
+  line-height: normal;
 }
 
 .cardContent_title {
   font-weight: 600;
+  margin-bottom: 23px;
 }
 
 .cardContent_desc {
   font-weight: 400;
+  line-height: normal !important;
 }
 
 .cardLink {
@@ -47,6 +54,8 @@
 }
 
 @media (width <=768px) {
+
+
   .buttonLink {
     height: 49.083px;
   }
@@ -54,6 +63,7 @@
   .buttonLink > p {
     font-size: 0.8125rem;
   }
+
 }
 
 @media (width <=768px) {
@@ -69,6 +79,12 @@
 
   .cardContent_title {
     line-height: 24px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .cardContent_desc {
+    font-size: 0.875rem;
   }
 
 }
@@ -84,7 +100,6 @@
   }
 
   .cardInfo {
-    margin-top: 3rem;
     display: flex;
     align-items: center;
     border-radius: 5px;
@@ -104,6 +119,7 @@
   .cardContent_title {
     font-size: 12px;
     line-height: 18px !important;
+    margin-bottom: 10px;
   }
 
   .cardContent_desc {

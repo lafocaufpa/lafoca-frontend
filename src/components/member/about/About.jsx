@@ -6,8 +6,8 @@ import styles from './About.module.css';
 export default function About ({member}) {
 
   return (
-    <section className={`${stylesMember.globalPageMemberSection}`}>
-      <h1 className={stylesMember.globalPageMemberTitle}>Sobre</h1>
+    <section className={`${stylesMember.globalPageMemberSection} ${styles.container}`}>
+      <h1 className={`${styles.title}`}>Sobre</h1>
       <p className={styles.biography}>{member?.biography}</p>
       <CardInfo icon={Icon} title={member?.functionMember?.name} description={member?.functionMember?.description}/>
     </section>

@@ -1,5 +1,4 @@
 import styles from './MemberInfo.module.css';
-import stylesMember from '@components/member/Member.module.css';
 import Link from 'next/link';
 import Linkedin from '@images/socialMedia/linkedin.svg';
 import Portifolio from '@images/socialMedia/portifolio.svg';
@@ -36,7 +35,7 @@ export default function MemberInfo({ member }) {
         <div className={styles.memberPhoto}>
           <Image src={member?.urlPhoto || userDefault} alt={member?.fullName} width={196} height={196} quality={100} />
         </div>
-        <h1 className={`${stylesMember.globalPageMemberTitle} ${styles.name}`}>{member?.fullName}</h1>
+        <h1 className={`${styles.name}`}>{member?.fullName}</h1>
         <p className="global__paragraph">{member?.description}</p>
       </div>
 

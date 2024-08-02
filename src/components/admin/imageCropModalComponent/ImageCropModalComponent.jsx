@@ -2,7 +2,7 @@
 
 import { readFile } from '@components/utils/HelperCropImage';
 import { useImageCropContext } from '@/providers/ImageCropProvider';
-import Button from '@components/admin/ImageCropModal/Button';
+import Button from '@/components/admin/ImageCropModal/Button';
 import Cropper from '@components/admin/cropper/Cropper';
 import { RotationSlider, ZoomSlider } from '@components/admin/cropper/Sliders';
 import styles from './ImageCropModalComponent.module.css';

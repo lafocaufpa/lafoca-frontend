@@ -40,6 +40,10 @@ export default function NavBar() {
             PESQUISAS
             {hash === 'pesquisas' && <Image className={styles.arrow} src={arrow}/>}
           </Link>
+          <Link href="/login" onClick={closeMenu}>
+            LOGIN
+            {hash === 'login' && <Image className={styles.arrow} src={arrow}/>}
+          </Link>
         </nav>
         <button className={styles.MenuHamburger} onClick={toggleMenu}></button>
         

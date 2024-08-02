@@ -5,26 +5,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import IconLink from '@images/icons/icon-link.svg';
 import IconLinkWhite from '@images/icons/icon-link-white.svg';
-import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function CardInfo({icon, title, description, link}) {
-  const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
 
-  // Função para lidar com mudanças no tamanho da tela
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 480);
   };
 
-  // Define o estado inicial do tamanho da tela
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Função para lidar com o evento de clique
   const handleClick = (e) => {
     if (isMobile) {
       e.preventDefault();

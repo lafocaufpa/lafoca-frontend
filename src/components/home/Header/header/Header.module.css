@@ -17,12 +17,12 @@
 
 @media (width <= 768px){
   .header {
-    padding-bottom: 14rem ;
+    padding-bottom: 10.875rem ;
   }
 }
 
 @media (width <= 480px){
   .header {
-    padding-bottom: 0.25rem;
+    padding-bottom: 7.8125rem;
   }
 }

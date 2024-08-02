@@ -2,3 +2,10 @@
   text-align: left;
   margin-top: 2.125rem;
 }
+
+@media (width <= 480px) {
+  .containerImg svg {
+    width: 78px;
+    height: auto;
+  }
+}

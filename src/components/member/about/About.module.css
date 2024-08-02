@@ -1,5 +1,49 @@
+
+.biography {
+  margin-bottom: 1.625rem;
+}
+
+.container {
+  margin-top: 45px;
+  margin-bottom: 79px;
+}
+
+.biography {
+  line-height: 30px;
+  margin-bottom: 4.375rem;
+}
+
+
 @media (width <= 768px) {
   .biography {
     line-height: 30px;
+    margin-bottom: 3.1875rem;
+  }
+
+  .container {
+    margin-top: 58px;
+    margin-bottom: 55px;
+  }
+
+}
+
+.title {
+  margin-top: 44px;
+  margin-bottom: 1.6rem;
+}
+
+@media (width <= 480px){
+
+  .container {
+    margin-top: 45px;
+    margin-bottom: 35px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .biography {
+    line-height: 25px;
   }
 }

@@ -41,6 +41,11 @@
   flex-basis: 100%;
 }
 
+.name {
+  margin-top: 62px;
+  margin-bottom: 8px;
+}
+
 @media (width <=768px) {
   .name {
     margin-top: 2.6rem !important;
@@ -69,5 +74,11 @@
 
   .memberInfo > p {
     margin-bottom: 1.5rem;
+  }
+}
+
+@media (width <= 480px) {
+  .name {
+    font-size: 1.5rem;
   }
 }

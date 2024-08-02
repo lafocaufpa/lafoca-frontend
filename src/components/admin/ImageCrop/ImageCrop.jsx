@@ -2,7 +2,7 @@
 
 import { useState, useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import user1 from '@images/default_user.png';
-import Modal from '@components/admin/ImageCropModal/Modal';
+import Modal from '@/components/admin/ImageCropModal/Modal';
 import { readFile } from '@components/utils/HelperCropImage';
 import ImageCropModalContent from '@components/admin/imageCropModalComponent/ImageCropModalComponent';
 import { useImageCropContext } from '@/providers/ImageCropProvider';

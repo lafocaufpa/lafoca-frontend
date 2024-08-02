@@ -1,0 +1,31 @@
+.container > h1 {
+  margin-top: 69px;
+  margin-bottom: 59px;
+}
+
+.container {
+  margin-bottom: 58px;
+}
+
+@media (width <= 768px){
+  .container > h1 {
+    margin-top: 49px;
+    margin-bottom: 29px;
+  }
+
+  .container {
+    margin-bottom: 63px;
+  }
+}
+
+@media (width <= 480px){
+  .container > h1 {
+    font-size: 1.5rem;
+    margin-bottom: 33px;
+    margin-top: 37px;
+  }
+
+  .container {
+    margin-bottom: 40px;
+  }
+}
