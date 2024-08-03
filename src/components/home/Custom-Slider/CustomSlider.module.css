@@ -30,6 +30,11 @@
  }
  
  @media (width <= 480px) {
+
+  .slider-content {
+    display: none;
+  }
+  
   .slider-content {
     width: 70%;
     margin: 0 auto;

@@ -64,7 +64,7 @@
   }
 }
 
-@media (width <=500px) {
+@media (width <=550px) {
   .MenuHamburger {
     display: block;
     z-index: 5;

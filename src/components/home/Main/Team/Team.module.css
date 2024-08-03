@@ -1,3 +1,6 @@
+.membersMobile {
+  display: none;
+}
 
 .team {
   margin-bottom: var(--margin-default-bottom-section);
@@ -5,4 +8,17 @@
 
 .team > div > a {
   text-align: right;
+}
+
+@media (width <=480px) {
+  .team > div > p {
+    margin-bottom: 40px;
+  }
+
+  .membersMobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 54px;
+  }
 }
