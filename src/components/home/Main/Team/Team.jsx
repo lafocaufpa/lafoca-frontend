@@ -9,6 +9,7 @@ import CardSlider from '@components/home/Main/Team/CardSlider/CardSlider-v2';
 import Link from 'next/link';
 import url from '@/routes/url';
 import useWindowWidth from '@/hooks/useWindowWidth';
+import IconArrowRightWhite from '@/components/icon/IconArrowRightWhite';
 
 export default function Team() {
   const [members, setMembers] = useState([]);
@@ -59,9 +60,21 @@ export default function Team() {
         )
         }
 
-        <div style={{ textAlign: 'right' }}>
+        <div className={styles.button}>
           <Link href={url.membros.listarMembros} className={stylesAnimate.card_link}> Ver mais</Link>
         </div>
+
+        <div className={styles.moreButton}>
+          <Link href={url.membros.listarMembros}>
+            <button className={styles.buttonLink}>
+              Ver mais
+              <IconArrowRightWhite/>
+            </button>
+
+          </Link>
+        </div>
+
+
       </div>
     </section>
   );

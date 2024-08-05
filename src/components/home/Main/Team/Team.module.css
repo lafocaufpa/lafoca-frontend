@@ -10,6 +10,14 @@
   text-align: right;
 }
 
+.button {
+  text-align: right;
+}
+
+.moreButton {
+  display: none;
+}
+
 @media (width <=480px) {
   .team > div > p {
     margin-bottom: 40px;
@@ -20,5 +28,31 @@
     flex-direction: column;
     align-items: center;
     gap: 54px;
+  }
+
+  .button {
+    display: none;
+  }
+
+  .moreButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 54px;
+  }
+
+  .buttonLink {
+    border-radius: 4.375px;
+    padding: 18px 20px;
+    background: #222;
+    font-weight: 600;
+    color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .buttonLink svg {
+    width: 7px;
   }
 }
