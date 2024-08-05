@@ -52,7 +52,7 @@ export default function Login() {
         router.push(url.admin.usuario.home);
       } else {
         setLoading(false);
-        setToggle(true);
+        setToggle(false);
       }
     } catch (error) {
       setToggle(true);

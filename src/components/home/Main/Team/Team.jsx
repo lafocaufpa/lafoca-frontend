@@ -51,8 +51,8 @@ export default function Team() {
 
         {windowWidth <= 480 && (
           isLoading ? '' : (
-            <div className={styles.membersMobile}>
-              <CardSlider member={members[0]}/>
+            <div className={styles.membersMobile} data-aos="fade-up" data-aos-duration="1500" >
+              <CardSlider  member={members[0]}/>
               <CardSlider member={members[1]}/>
               <CardSlider member={members[2]}/>
             </div>
