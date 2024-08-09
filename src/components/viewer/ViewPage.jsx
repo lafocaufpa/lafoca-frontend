@@ -1,4 +1,4 @@
-// ViewPage.js
+'use client';
 import Header from '@components/header/Header';
 import ViewPageMain from '@components/viewer/main/ViewPageMain';
 import Footer from '@components/home/Footer/Footer';
