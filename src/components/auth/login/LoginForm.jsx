@@ -11,6 +11,7 @@ import Image from 'next/image';
 import logoLaFocA from '@images/icons/LogoLAFocA.png';
 import url from '@/routes/url';
 import LoadingPage from '@/components/loading/LoadingPage';
+import { loginAction } from '@/components/action/loginAction';
 
 export default function Login() {
   const router = useRouter();
@@ -46,13 +47,12 @@ export default function Login() {
     const password = e.target.password.value;
 
     try {
-      const res = await Authorization.login(email, password);
-
+      const res = await loginAction(email, password);
       if (res) {
         router.push(url.admin.usuario.home);
       } else {
         setLoading(false);
-        setToggle(false);
+        setToggle(true);
       }
     } catch (error) {
       setToggle(true);

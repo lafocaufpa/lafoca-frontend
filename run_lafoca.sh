@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Carrega as variáveis de ambiente do .bashrc ou .bash_profile
-source ./.env
+source ./.env.local
 source ~/.bashrc
 
 # Navega até o diretório do projeto

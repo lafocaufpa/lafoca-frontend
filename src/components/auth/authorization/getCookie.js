@@ -1,17 +1,9 @@
 'use server';
-import { cookies } from 'next/headers';
+import { auth } from '@app/auth';
 
 async function getCookie() {
-  const allCookies = cookies().getAll();
-
-  for (const cookie of allCookies) {
-    if (cookie.name === 'next-auth.token') {
-
-      return cookie.value;
-    }
-  }
-
-  return null;
+  const session = await auth();
+  return session?.sessionToken;
 }
 
 export default getCookie;

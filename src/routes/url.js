@@ -11,7 +11,6 @@ const SKILLS = '/habilidades';
 const CLASSES = '/turmas';
 const SEGURANCA = '/seguranca';
 const INFO = '/info';
-// const ABOUT = '/sobre';
 const COOKIESPOLICY = '/cookies';
 const ABOUTUS = '/sobre-nos';
 
