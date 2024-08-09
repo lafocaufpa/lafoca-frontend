@@ -1,16 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import styles from '@components/viewer/section/SectionMain.module.css';
+import stylesSearchView from '@components/viewer/SearchView.module.css';
 import Pagination from '@/components/pagination/PaginationView';
 import { tccService } from '@/services/api/tcc/TccService';
 import SectionMainHeader from '@components/viewer/SectionMainHeader';
 import SearchView from '@components/viewer/SearchView';
 import SectionMain from '@components/viewer/section/SectionMain';
-import LoadingPage from '@/components/loading/LoadingPage';
-import LoadingSection from '@components/loading/LoadingSection';
-import stylesSearchView from '@components/viewer/SearchView.module.css';
-
+import LoadingSection from '@/components/loading/LoadingSection';
 
 export default function TccsPageMain() {
   const [lineId, setLineId] = useState(null);
@@ -21,8 +18,6 @@ export default function TccsPageMain() {
   const [totalResults, setTotalResults] = useState(0);
   const resultsPerPage = 5;
   const [searchTerm, setSearchTerm] = useState('');
-
-  const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
@@ -61,18 +56,12 @@ export default function TccsPageMain() {
       setTimeout(() => {
         setIsFetching(false);
       }, 500);
-
     }
   };
 
   useEffect(() => {
     fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value, year?.value);
   }, [currentPage, resultsPerPage, searchTerm, lineId, year]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     setCurrentPage(0);
@@ -92,45 +81,39 @@ export default function TccsPageMain() {
   };
 
   return (
-    <main className='global-container'>
-      {isLoading ? (
-        <LoadingPage />
+    <>
+      <SectionMainHeader
+        titlePage={'TCC'}
+        descriptionPage={'Cada Trabalho de Conclusão de Curso (TCC) representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
+      />
+      <SearchView
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        loadOptions={loadOptions}
+        lineOfResearch={true}
+        lineId={lineId}
+        setLineId={setLineId}
+        year={year}
+        setYear={setYear}
+      />
+      {isFetching ? (
+        <div><LoadingSection/></div>
       ) : (
         <>
-          <SectionMainHeader
-            titlePage={'TCC'}
-            descriptionPage={'Cada Trabalho de Conclusão de Curso (TCC) representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
-          />
-          <SearchView
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            loadOptions={loadOptions}
-            lineOfResearch={true}
+          <SectionMain
             lineId={lineId}
-            setLineId={setLineId}
-            year={year}
-            setYear={setYear}
+            label={'Todos os TCCs'}
+            type={'tcc'}
+            objs={objs}
           />
-          {isFetching ? (
-            <div><LoadingSection/></div>
-          ) : (
-            <>
-              <SectionMain
-                lineId={lineId}
-                label={'Todos os TCCs'}
-                type={'tcc'}
-                objs={objs}
-              />
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                getResultMessage={getResultMessage}
-              />
-            </>
-          )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            getResultMessage={getResultMessage}
+          />
         </>
       )}
-    </main>
+    </>
   );
 }

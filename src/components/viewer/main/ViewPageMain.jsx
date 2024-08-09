@@ -7,7 +7,6 @@ import SectionMainHeader from '@/components/viewer/SectionMainHeader';
 import SearchView from '@/components/viewer/SearchView';
 import { projectsService } from '@/services/api/Projects/ProjectsService';
 import SectionMain from '@components/viewer/section/SectionMain';
-import LoadingPage from '@/components/loading/LoadingPage';
 import LoadingSection from '@/components/loading/LoadingSection';
 
 export default function ViewPageMain() {
@@ -21,7 +20,6 @@ export default function ViewPageMain() {
   const resultsPerPage = 5;
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false); 
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
@@ -60,18 +58,12 @@ export default function ViewPageMain() {
       setTimeout(() => {
         setIsFetching(false);
       }, 500);
-      
     }
   };
 
   useEffect(() => {
     fetchArticles(currentPage, resultsPerPage, searchTerm, lineId?.value, year?.value, onGoing);
   }, [currentPage, resultsPerPage, searchTerm, lineId, year, onGoing]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     setCurrentPage(0);
@@ -92,46 +84,39 @@ export default function ViewPageMain() {
 
   return (
     <main className='global-container'>
-      
-      {isLoading ? (
-        <LoadingPage />
+      <SectionMainHeader 
+        titlePage={'Projetos Realizados'} 
+        descriptionPage={'Conheça os projetos desenvolvidos pelo grupo de pesquisa LAFocA. Nossa equipe está constantemente envolvida em projetos que buscam soluções práticas e inovadoras para diversos desafios. Desde projetos voltados à educação até iniciativas em áreas como tecnologia, meio ambiente e saúde, nosso trabalho visa promover o desenvolvimento e a aplicação do conhecimento. Explore nossos projetos e veja como estamos fazendo a diferença através de pesquisa aplicada e colaboração interdisciplinar.'}
+      />
+      <SearchView 
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm} 
+        loadOptions={loadOptions}
+        lineOfResearch={true}
+        lineId={lineId} 
+        setLineId={setLineId} 
+        year={year} 
+        setYear={setYear} 
+        onGoing={onGoing} 
+        setOnGoing={setOnGoing} 
+        as={'checkbox'}
+      />
+      {isFetching ? (
+        <div><LoadingSection/></div>
       ) : (
         <>
-          <SectionMainHeader 
-            titlePage={'Projetos Realizados'} 
-            descriptionPage={'Conheça os projetos desenvolvidos pelo grupo de pesquisa LAFocA. Nossa equipe está constantemente envolvida em projetos que buscam soluções práticas e inovadoras para diversos desafios. Desde projetos voltados à educação até iniciativas em áreas como tecnologia, meio ambiente e saúde, nosso trabalho visa promover o desenvolvimento e a aplicação do conhecimento. Explore nossos projetos e veja como estamos fazendo a diferença através de pesquisa aplicada e colaboração interdisciplinar.'}
-          />
-          <SearchView 
-            searchTerm={searchTerm} 
-            setSearchTerm={setSearchTerm} 
-            loadOptions={loadOptions}
-            lineOfResearch={true}
+          <SectionMain 
             lineId={lineId} 
-            setLineId={setLineId} 
-            year={year} 
-            setYear={setYear} 
-            onGoing={onGoing} 
-            setOnGoing={setOnGoing} 
-            as={'checkbox'}
+            label={'Todos os projetos realizados'} 
+            type={'project'} 
+            objs={objs}
           />
-          {isFetching ? (
-            <div><LoadingSection/></div>
-          ) : (
-            <>
-              <SectionMain 
-                lineId={lineId} 
-                label={'Todos os projetos realizados'} 
-                type={'project'} 
-                objs={objs}
-              />
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                getResultMessage={getResultMessage} 
-              />
-            </>
-          )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            getResultMessage={getResultMessage} 
+          />
         </>
       )}
     </main>

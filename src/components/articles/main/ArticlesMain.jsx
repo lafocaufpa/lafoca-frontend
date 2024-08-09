@@ -7,7 +7,6 @@ import Pagination from '@/components/pagination/PaginationView';
 import SectionMain from '@/components/viewer/section/SectionMain';
 import SearchView from '@/components/viewer/SearchView';
 import SectionMainHeader from '@/components/viewer/SectionMainHeader';
-import LoadingPage from '@/components/loading/LoadingPage';
 import LoadingSection from '@/components/loading/LoadingSection';
 
 export default function ArticlesMain() {
@@ -19,7 +18,6 @@ export default function ArticlesMain() {
   const [totalResults, setTotalResults] = useState(0);
   const resultsPerPage = 5;
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true); 
   const [isFetching, setIsFetching] = useState(false);
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
@@ -65,9 +63,8 @@ export default function ArticlesMain() {
   }, [currentPage, resultsPerPage, searchTerm, lineId, year]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    setCurrentPage(0);
+  }, [lineId, searchTerm, year]);
 
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
@@ -75,10 +72,6 @@ export default function ArticlesMain() {
       document.querySelector(`.${stylesSearchView.container}`).scrollIntoView({ behavior: 'instant' });
     }
   };
-
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [lineId, searchTerm, year]);
 
   const getResultMessage = () => {
     const start = currentPage * resultsPerPage + 1;
@@ -88,46 +81,42 @@ export default function ArticlesMain() {
 
   return (
     <main className='global-container'>
-      {isLoading ? (
-        <LoadingPage />
-      ) : (
-        <>
-          <SectionMainHeader
-            titlePage={'Artigos Publicados'}
-            descriptionPage={'Explore os artigos publicados pelos pesquisadores do grupo LAFocA. Nossa produção acadêmica abrange diversas áreas, desde metodologias educacionais a avanços tecnológicos.'}
-          />
+      <>
+        <SectionMainHeader
+          titlePage={'Artigos Publicados'}
+          descriptionPage={'Explore os artigos publicados pelos pesquisadores do grupo LAFocA. Nossa produção acadêmica abrange diversas áreas, desde metodologias educacionais a avanços tecnológicos.'}
+        />
 
-          <SearchView
-            searchTerm={searchTerm} 
-            setSearchTerm={setSearchTerm} 
-            loadOptions={loadOptions} 
-            lineOfResearch={true}
-            lineId={lineId} 
-            setLineId={setLineId} 
-            year={year} 
-            setYear={setYear} 
-          />
+        <SearchView
+          searchTerm={searchTerm} 
+          setSearchTerm={setSearchTerm} 
+          loadOptions={loadOptions} 
+          lineOfResearch={true}
+          lineId={lineId} 
+          setLineId={setLineId} 
+          year={year} 
+          setYear={setYear} 
+        />
 
-          {isFetching ? (
-            <div><LoadingSection/></div>
-          ) : (
-            <>
-              <SectionMain 
-                lineId={lineId} 
-                label={'Todos os Artigos publicados'} 
-                objs={articles} 
-                type={'article'}
-              />
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                getResultMessage={getResultMessage}
-              />
-            </>
-          )}
-        </>
-      )}
+        {isFetching ? (
+          <div><LoadingSection/></div>
+        ) : (
+          <>
+            <SectionMain 
+              lineId={lineId} 
+              label={'Todos os Artigos publicados'} 
+              objs={articles} 
+              type={'article'}
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              getResultMessage={getResultMessage}
+            />
+          </>
+        )}
+      </>
     </main>
   );
 }
