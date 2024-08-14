@@ -56,7 +56,6 @@ export default function NavBar({ user }) {
       <div className={stylesNavBar.hamburguerLine}></div>
       <div className={`${stylesNavBar.scrollableNav} mb-auto`} style={{ maxHeight: 'calc(80vh)', overflowY: 'auto' }}>
         <nav className={`nav flex-column pt-3 ${stylesNavBar.navbar} ${isActive ? stylesNavBar.active : ''}`} >
-          {/* "nav flex-column pt-3" */}
           <NavLink href={url.admin.usuario.home} Icon={IconUsers} onClick={closeMenu}>
             Usuarios
           </NavLink>
@@ -129,7 +128,6 @@ export default function NavBar({ user }) {
         </nav>
         <button className={stylesNavBar.MenuHamburger} onClick={toggleMenu}></button>
       </div>
-      {/* Coomponente profile */}
       <div className={`mt-auto ${stylesNavBar.profile}`}>
         <div className='border-top border-secondary m-auto'></div>
         <div className={'text-center pt-4 pb-3 p-3 d-flex align-items-center justify-content-center'} >

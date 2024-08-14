@@ -11,7 +11,9 @@ export const {auth, signIn, handlers:{GET,POST}} = NextAuth({
         const user = await AuthApiService.login(credential.username, credential.password);
         if (user?.status == 401 || !user?.user_id) {
           // throw new Error(JSON.stringify(user));
-          //há um bug aqui. Nada pode ser feito até sair atualizações do NextAuth v5
+          // ao retornar null, lança um erro gerenciado pelo 
+          // "next-auth": "^5.0.0-beta.20",
+          //Nada pode ser feito até sair atualizações do NextAuth v5
           // https://github.com/nextauthjs/next-auth/issues/9900
           return null;
         }
@@ -43,6 +45,7 @@ export const {auth, signIn, handlers:{GET,POST}} = NextAuth({
         session.sessionToken = token.jwt;
         session.user.image = token.picture;
         session.user.name = token.name;
+        session.user.email = token.email;
       }
       return session;
     },
