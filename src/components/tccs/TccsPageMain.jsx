@@ -81,39 +81,41 @@ export default function TccsPageMain() {
   };
 
   return (
-    <>
-      <SectionMainHeader
-        titlePage={'TCC'}
-        descriptionPage={'Cada Trabalho de Conclusão de Curso (TCC) representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
-      />
-      <SearchView
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        loadOptions={loadOptions}
-        lineOfResearch={true}
-        lineId={lineId}
-        setLineId={setLineId}
-        year={year}
-        setYear={setYear}
-      />
-      {isFetching ? (
-        <div><LoadingSection/></div>
-      ) : (
-        <>
-          <SectionMain
-            lineId={lineId}
-            label={'Todos os TCCs'}
-            type={'tcc'}
-            objs={objs}
-          />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            getResultMessage={getResultMessage}
-          />
-        </>
-      )}
-    </>
+    <main className='global-container'>
+      <>
+        <SectionMainHeader
+          titlePage={'TCC'}
+          descriptionPage={'Cada Trabalho de Conclusão de Curso (TCC) representa um marco na jornada acadêmica dos nossos alunos, abordando uma variedade de temas que vão desde a educação até ciências exatas e sociais. Acesse os TCCs para conhecer as ideias inovadoras e as contribuições significativas dos nossos futuros profissionais.'}
+        />
+        <SearchView
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          loadOptions={loadOptions}
+          lineOfResearch={true}
+          lineId={lineId}
+          setLineId={setLineId}
+          year={year}
+          setYear={setYear}
+        />
+        {isFetching ? (
+          <div><LoadingSection/></div>
+        ) : (
+          <>
+            <SectionMain
+              lineId={lineId}
+              label={'Todos os TCCs'}
+              type={'tcc'}
+              objs={objs}
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              getResultMessage={getResultMessage}
+            />
+          </>
+        )}
+      </>
+    </main>
   );
 }
