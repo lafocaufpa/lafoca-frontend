@@ -99,7 +99,8 @@
     margin-bottom: 5px !important;
   }
   .container {
-    max-width: 361px;
+    max-width: 100%;
+    height: auto !important;
   }
 
   .card_content_button {
@@ -120,5 +121,6 @@
   .horizontally_animated_text {
     animation: none;
   }
+
 }
 

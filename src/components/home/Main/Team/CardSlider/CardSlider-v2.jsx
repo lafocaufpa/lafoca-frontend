@@ -35,8 +35,8 @@ export default function CardSlider({ member, height, viewAll, loading }) {
         </div>
         {!loading && (
           <Image 
-            src={member.photo} 
-            alt={member.displayName} 
+            src={member?.photo} 
+            alt={member?.displayName} 
             width={100} 
             height={100} 
             quality={100} 

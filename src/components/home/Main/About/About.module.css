@@ -36,6 +36,10 @@
   display: none;
 }
 
+.seeMoreButton {
+  display: none;
+}
+
 @media(width <=768px) {
   .container__accordion > p {
     line-height: 30px !important;
@@ -98,8 +102,13 @@
     font-size: 1.8rem;
   }
 
+  .container__accordion > p {
+    line-height: 25px !important;
+  }
+
   .lafocaHeadingMobile {
     display: block;
+    margin-bottom: 36px;
   }
 
   .lafocaHeadingMobile h2 {
@@ -108,5 +117,17 @@
 
   .lafocaHeadingMobile > h2 > span {
     display: inline;
+  }
+
+  .seeMoreButton {
+    display: block;
+    background: none;
+    color: var(--main-color);
+    font-weight: 500;
+  }
+
+  .accordion {
+    width: 100%;
+    margin-top: 27px;
   }
 }
