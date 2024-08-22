@@ -3,7 +3,7 @@ import '@globalCss/global.css';
 export default function RootLayout({children}) {
   return (
     <html lang="pt-BR">
-      <title>La Foca</title>
+      <title>LA FocA | Laboratório de Abordagens de Ensino Focadas no Aluno</title>
       <body>{children}</body>
     </html>
   );

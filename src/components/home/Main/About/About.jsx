@@ -53,7 +53,11 @@ export default function About () {
   return (
     <section id='sobre' className={styles.about_lafoca}>
       <div className='global-container'>
-        <h2 data-aos="fade-up" data-aos-duration="2000">sobre o <span>lafoca</span></h2>
+        <h2 className={styles.lafocaHeading} data-aos="fade-up" data-aos-duration="2000">sobre o <span>lafoca</span></h2>
+        <div className={styles.lafocaHeadingMobile}>
+          <h2>sobre</h2>
+          <h2 className={styles.lafocaHeadingMobile_secondH2}>o <span>lafoca</span></h2>
+        </div>
         <p className='global__paragraph_text' data-aos="fade-up" data-aos-duration="1500" >Fundado em 2017, o La FocA é formado por alunos e professores, além de parceiros de outras instituições de ensino e empresas do mercado de TI. Nosso foco é o aluno, buscando contribuir para o seu desenvolvimento pessoal, acadêmico e profissional. Esperamos ser reconhecidos como um grupo referência na formação de profissionais qualificados.</p>
       </div>
       <div className={styles.appointments}>

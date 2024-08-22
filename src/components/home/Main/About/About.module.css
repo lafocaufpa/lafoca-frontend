@@ -12,8 +12,6 @@
   object-fit: contain;
   object-position: center center;
   width: clamp(290px, calc(30.5833vw + 240px), 680px);
-
-
   height: auto;
   margin-top: -7.6rem;
 }
@@ -34,6 +32,9 @@
   margin-top: 1rem;
 }
 
+.lafocaHeadingMobile {
+  display: none;
+}
 
 @media(width <=768px) {
   .container__accordion > p {
@@ -75,10 +76,9 @@
 }
 
 @media (max-width: 480px) {
-  
-  .about_lafoca h2::before {
-    content: "";
-    display: block;
+
+  .lafocaHeading {
+    display: none !important;
   }
 
   .about_lafoca h2, .about_lafoca span {
@@ -96,5 +96,17 @@
 
   .container__accordion span {
     font-size: 1.8rem;
+  }
+
+  .lafocaHeadingMobile {
+    display: block;
+  }
+
+  .lafocaHeadingMobile h2 {
+    margin-bottom: 0px !important;
+  }
+
+  .lafocaHeadingMobile > h2 > span {
+    display: inline;
   }
 }
