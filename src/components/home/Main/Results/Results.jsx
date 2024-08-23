@@ -20,7 +20,7 @@ export default function Results() {
         const response = await lafocaService.listInfo();
         setLafoca(response);
       } catch (error) {
-        console.error('Erro ao buscar informações do La Foca: ', error);
+        console.error('Erro ao buscar informações do La FocA: ', error);
       }
     };
     fetchData();
@@ -37,6 +37,7 @@ export default function Results() {
                 <span>{lafoca.numberOfPublishedArticles}</span>
                 <p>Artigos Publicados</p>
               </div>
+              
               <div data-aos="fade-up" data-aos-duration="1500" className={styles.container_count}>
                 <span>{lafoca.numberOfDefendedTCCs}</span>
                 <p>TCCs Defendidos</p>

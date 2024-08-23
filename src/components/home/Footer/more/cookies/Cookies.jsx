@@ -4,12 +4,12 @@ import Header from '@components/header/Header';
 export default function Cookies() {
   return (
     <>
-    <Header/>
+      <Header/>
       <div className={styles.container}>
         <h1 className={styles.title}>Política de Cookies</h1>
         <p className={styles.date}>Atualizado em: 27/07/2024</p>
         <p>
-          No LAFocA - Laboratório de Abordagens de Ensino Focadas ao Aluno, reconhecemos a importância da privacidade e segurança de suas informações. Esta Política de Cookies explica como e por que utilizamos cookies em nosso site, e como isso impacta você.
+          No LA FocA - Laboratório de Abordagens de Ensino Focadas ao Aluno, reconhecemos a importância da privacidade e segurança de suas informações. Esta Política de Cookies explica como e por que utilizamos cookies em nosso site, e como isso impacta você.
         </p>
         <h2 className={styles.subtitle}>O que são Cookies?</h2>
         <p>

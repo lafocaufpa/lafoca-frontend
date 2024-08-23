@@ -36,14 +36,14 @@ export default function Footer({ marginTop, ...props }) {
 
             <div  className={styles.footer_nav_column}>
               <h3>Parceiros</h3>
-              <ul>
-                <li>NEES</li>
-                <li>LABTEC</li>
-                <li>LABEX</li>
+              <ul className={styles.link}>
+                <li><Link href={'https://www.nees.ufal.br'}  target='_blank' rel="noreferrer">NEES</Link></li>
+                <li><Link href={'https://sites.google.com/view/gplabtec'}  target='_blank' rel="noreferrer">LABTEC</Link></li>
+                <li><Link href={'https://projetoslabex.com.br'}  target='_blank' rel="noreferrer">LABEX</Link></li>
               </ul>
             </div>
 
-            <div  className={styles.footer_nav_column}>
+            <div className={styles.footer_nav_column}>
               <h3>Alguma dúvida? Nos mande um e-mail! 😉🚩</h3>
               <ul>
                 <li>lafoca.3cp@gmail.com</li>
@@ -60,7 +60,7 @@ export default function Footer({ marginTop, ...props }) {
       </div>
       
       <div className={`${styles.footer_details} ${'global-container'}`}>
-          Lafoca 2017 - {new Date().getFullYear()}
+          LA FocA 2017 - {new Date().getFullYear()}
         <div className={styles.footer_details_links}>
           <ul>
             <li><a href={url.redes.facebook} target='_blank' rel="noreferrer"><Image src={Facebook} alt='Facebook'/></a></li>
