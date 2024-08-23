@@ -112,14 +112,11 @@
   }
 
   .card_content_function {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
+  
   .card {
     height: 389px;
-  }
-
-  .horizontally_animated_text {
-    animation: none;
   }
 
 }

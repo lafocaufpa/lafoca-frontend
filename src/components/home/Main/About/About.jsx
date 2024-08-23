@@ -55,11 +55,11 @@ export default function About() {
       title: 'VALORES',
       text: 
       <>
-        <strong>Comunicação</strong> – Compartilhar informações, buscando transmitir conhecimento e valores.<br />
-        <strong>Proatividade</strong> – Tomar iniciativa e decisões na realização das suas atividades.<br />
-        <strong>Colaboração</strong> – Trabalhar ou cooperar com as atividades de uma ou mais pessoas do grupo.<br />
-        <strong>Protagonismo</strong> – Aceitar os méritos e resultados da realização das suas atividades.<br />
-        <strong>Comprometimento</strong> – Empenhar seus esforços e dedicação nas atividades das quais participa.<br />
+        <strong>Comunicação</strong> – Compartilhar informações, buscando transmitir conhecimento e valores.<br /><br />
+        <strong>Proatividade</strong> – Tomar iniciativa e decisões na realização das suas atividades.<br /><br />
+        <strong>Colaboração</strong> – Trabalhar ou cooperar com as atividades de uma ou mais pessoas do grupo.<br /><br />
+        <strong>Protagonismo</strong> – Aceitar os méritos e resultados da realização das suas atividades.<br /><br />
+        <strong>Comprometimento</strong> – Empenhar seus esforços e dedicação nas atividades das quais participa.<br /><br />
         <strong>Pertencimento</strong> – Fazer parte de um grupo, se identificando com a linha de pesquisa.
       </>
     },

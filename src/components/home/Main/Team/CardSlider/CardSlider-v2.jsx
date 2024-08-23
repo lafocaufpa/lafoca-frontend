@@ -21,11 +21,11 @@ export default function CardSlider({ member, height, viewAll, loading }) {
             ) : (
               <>
                 <h2 className={`${viewAll ? stylesView.card_content_name : styles.card_content_name}
-              ${member?.displayName.length > 21 ? styles.horizontally_animated_text : ''}`}>
+              ${member?.displayName.length > 25 ? styles.horizontally_animated_text : ''}`}>
                   {member?.displayName}
                 </h2>
                 <p className={`${viewAll ? stylesView.card_content_function : styles.card_content_function}
-              ${member?.function.length > 21 ? styles.horizontally_animated_text : ''}`}>
+              ${member?.function.length > 25 ? styles.horizontally_animated_text : ''}`}>
                   {member?.function}
                 </p>
               </>
