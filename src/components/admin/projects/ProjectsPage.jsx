@@ -11,7 +11,7 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import urlPath from '@/routes/url';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
-import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
+import YearSelect from '@/components/admin/adminSelects/YearSelect';
 import Pagination from '@/components/pagination/Pagination';
 
 export default function ProjectsPage() {
@@ -328,16 +328,18 @@ export default function ProjectsPage() {
                   required
                 />
                 <YearSelect
+                  label={'Ano de início'}
                   placeholder="Ano de início"
                   value={date}
                   onChange={setDate}
-                  id="date"
+                  id="yearClassId"
                 />
                 <YearSelect
+                  label={'Ano de fim'}
                   placeholder="Ano de fim"
                   value={endDate}
                   onChange={setEndDate}
-                  id="endDate"
+                  id="yearClassId"
                 />
                 <div className="form-group">
                   <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>

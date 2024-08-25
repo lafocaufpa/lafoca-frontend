@@ -12,7 +12,7 @@ import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import InputField from '@/components/inputField/InputField';
 import { MemberService } from '@/services/api/Members/MembersService';
-import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
+import YearSelect from '@/components/admin/adminSelects/YearSelect';
 
 export default function EditProject({ projectId }) {
   const [title, setTitle] = useState('');
@@ -154,16 +154,18 @@ export default function EditProject({ projectId }) {
             required
           />
           <YearSelect
-            placeholder="Ano de início"
+            id="yearClassId"
+            label="Ano de Início"
             value={date}
             onChange={setDate}
-            id="date"
+            placeholder="Selecione o ano"
           />
           <YearSelect
-            placeholder="Ano de fim"
+            id="yearClassId"
+            label="Ano de fim"
             value={endDate}
             onChange={setEndDate}
-            id="endDate"
+            placeholder="Selecione o ano"
           />
           <div className="form-group">
             <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>

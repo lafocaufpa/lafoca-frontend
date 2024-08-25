@@ -13,7 +13,7 @@ import urlPath from '@/routes/url';
 import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import Pagination from '@/components/pagination/Pagination';
-import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
+import YearSelect from '@/components/admin/adminSelects/YearSelect';
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState([]);
@@ -344,10 +344,11 @@ export default function ArticlesPage() {
                     required
                   />
                   <YearSelect
-                    placeholder="Selecione o ano da publicação"
+                    id="yearClassId"
+                    label="Ano da Turma"
                     value={date}
                     onChange={setDate}
-                    id="year"
+                    placeholder="Selecione o ano"
                   />
                   <AsyncSelect
                     loadOptions={loadOptions}

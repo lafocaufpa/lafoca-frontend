@@ -11,7 +11,7 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import InputField from '@/components/inputField/InputField';
-import YearSelect from '@/components/lineOfResearchSelect/YearSelect';
+import YearSelect from '@/components/admin/adminSelects/YearSelect';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 export default function EditArticle({ articleId }) {
@@ -171,10 +171,11 @@ export default function EditArticle({ articleId }) {
             required
           />
           <YearSelect
-            placeholder="Selecione o ano da publicação"
+            id="yearClassId"
+            label="Ano da Turma"
             value={date}
             onChange={setDate}
-            id="year"
+            placeholder="Selecione o ano"
           />
           <AsyncSelect
             loadOptions={loadOptions}
