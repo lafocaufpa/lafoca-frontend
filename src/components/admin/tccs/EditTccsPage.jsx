@@ -28,7 +28,7 @@ export default function EditTccsPage({ tccId }) {
         const tcc = await tccService.readById(tccId);
         setTitle(tcc.title);
         setUrl(tcc.url);
-        setDate(parseDate(tcc.date)); 
+        setDate(parseDate(tcc.date));
         setAbstractText(tcc.abstractText);
         setSelectedLinesOfResearch(tcc.linesOfResearch.map(line => ({ value: line.id, label: line.name })));
         setSelectedMember({ value: tcc.slugMember, label: tcc.nameMember });
@@ -87,10 +87,10 @@ export default function EditTccsPage({ tccId }) {
 
   const handleUpdate = async () => {
     setLoading(true);
-    const data = { 
-      title, 
-      url, 
-      date: formatDate(date), 
+    const data = {
+      title,
+      url,
+      date: formatDate(date),
       abstractText,
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
       nameMember: selectedMember?.label,
@@ -114,73 +114,79 @@ export default function EditTccsPage({ tccId }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+      show={show} 
+      onHide={handleClose} 
+      centered 
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          handleUpdate();
+        }
+      }}>
       <Modal.Header closeButton>
         <Modal.Title>Editar TCC</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {error && <div className="alert alert-danger">{error}</div>}
-        <form>
-          <InputField
-            label="Título"
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            maxLength={255}
-            required
-          />
-          <InputField
-            label="Url"
-            type="text"
-            id="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            maxLength={700}
-            required
-          />
-          <InputField
-            label="Data do TCC"
-            type="date"
-            id="tccDate"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-          <InputField
-            label="Resumo"
-            type="text"
-            id="abstractText"
-            as='textarea'
-            maxLength={5000}
-            value={abstractText}
-            onChange={(e) => setAbstractText(e.target.value)} 
-            required
-          />
-          <AsyncSelect
-            loadOptions={loadOptions}
-            service={linesOfResearchService}
-            placeholder="Selecione linhas de pesquisa"
-            label="Linhas de Pesquisa"
-            isMulti
-            value={selectedLinesOfResearch}
-            onChange={setSelectedLinesOfResearch}
-            additional={{ page: 0 }}
-            id="selectedLinesOfResearch"
-            required
-          />
-          <AsyncSelect
-            loadOptions={loadMemberOptions}
-            placeholder="Selecione um membro"
-            service={MemberService}
-            value={selectedMember}
-            onChange={setSelectedMember}
-            additional={{ page: 0 }}
-            id="collab"
-            label="Vincular membro"
-            required
-          />
-        </form>
+        <InputField
+          label="Título"
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={255}
+          required
+        />
+        <InputField
+          label="Url"
+          type="text"
+          id="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          maxLength={700}
+          required
+        />
+        <InputField
+          label="Data do TCC"
+          type="date"
+          id="tccDate"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
+        <InputField
+          label="Resumo"
+          type="text"
+          id="abstractText"
+          as='textarea'
+          maxLength={5000}
+          value={abstractText}
+          onChange={(e) => setAbstractText(e.target.value)}
+          required
+        />
+        <AsyncSelect
+          loadOptions={loadOptions}
+          service={linesOfResearchService}
+          placeholder="Selecione linhas de pesquisa"
+          label="Linhas de Pesquisa"
+          isMulti
+          value={selectedLinesOfResearch}
+          onChange={setSelectedLinesOfResearch}
+          additional={{ page: 0 }}
+          id="selectedLinesOfResearch"
+          required
+        />
+        <AsyncSelect
+          loadOptions={loadMemberOptions}
+          placeholder="Selecione um membro"
+          service={MemberService}
+          value={selectedMember}
+          onChange={setSelectedMember}
+          additional={{ page: 0 }}
+          id="collab"
+          label="Vincular membro"
+          required
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

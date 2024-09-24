@@ -50,7 +50,11 @@ export default function EditLine({ lineId }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} centered onHide={handleClose} onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        handleUpdate();
+      }
+    }}>
       <Modal.Header closeButton>
         <Modal.Title>Editar Linha de Pesquisa</Modal.Title>
       </Modal.Header>

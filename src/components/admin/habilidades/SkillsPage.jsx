@@ -10,6 +10,7 @@ import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import Image from 'next/image';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function SkillsPage() {
   const [skills, setSkills] = useState([]);
@@ -27,7 +28,6 @@ export default function SkillsPage() {
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
 
   const router = useRouter();
-  const deleteButtonRef = useRef(null);
 
   const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {
@@ -47,12 +47,6 @@ export default function SkillsPage() {
   useEffect(() => {
     setCurrentPage(0);
   }, [searchTerm]);
-
-  useEffect(() => {
-    if (showConfirmModal) {
-      deleteButtonRef.current.focus();
-    }
-  }, [showConfirmModal]);
 
   const handlePageChange = (page) => {
     if (page >= 0 && page < totalPages) {
@@ -101,16 +95,6 @@ export default function SkillsPage() {
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
     setSkillToDelete(null);
-  };
-
-  const handleCancelAdd = () => {
-    setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
   };
 
   const handleAddSkillSubmit = async () => {
@@ -184,7 +168,7 @@ export default function SkillsPage() {
               {skills.map((skill) => (
                 <tr key={skill.id}>
                   <td>
-                    {skill.skillPictureUrl ? <Image src={skill?.skillPictureUrl} alt={skill.name} width={30} height={30} /> : null }
+                    {skill.skillPictureUrl ? <Image src={skill?.skillPictureUrl} alt={skill.name} width={30} height={30} /> : null}
                   </td>
                   <td>{skill.name}</td>
                   <td className='text-center'>
@@ -192,13 +176,13 @@ export default function SkillsPage() {
                       className="btn btn-primary btn-sm me-1"
                       onClick={() => handleEdit(skill)}
                     >
-                        Editar
+                      Editar
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
                       onClick={() => confirmDelete(skill.id)}
                     >
-                        Deletar
+                      Deletar
                     </button>
                   </td>
                 </tr>
@@ -214,109 +198,70 @@ export default function SkillsPage() {
         />
       </div>
       {showConfirmModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block' }}
-          tabIndex="-1"
-          aria-labelledby="confirmModalLabel"
-          aria-hidden="true"
+        <Modal show={showConfirmModal}
+          onHide={handleCancelDelete}
+          centered
         >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="confirmModalLabel">Confirmar Exclusão</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={handleCancelDelete}
-                ></button>
-              </div>
-              <div className="modal-body">
-                Tem certeza de que deseja excluir esta habilidade?
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelDelete}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                  ref={deleteButtonRef}
-                >
-                  Excluir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Tem certeza de que deseja excluir esta habilidade?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+              Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              onClick={handleConfirmDelete}
+            >
+              Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
 
       {showAddModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block' }}
-          tabIndex="-1"
-          aria-labelledby="addSkillModalLabel"
-          aria-hidden="true"
+        <Modal
+          show={showAddModal}
+          onHide={() => {
+            setShowAddModal(false);
+          }}
+          centered
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddSkillSubmit();
+            }
+          }}
         >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="addSkillModalLabel">Adicionar Habilidade</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={handleCancelAdd}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">
-                      Nome
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)} 
-                      maxLength={50}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="photo" className="form-label">Foto da Habilidade</label>
-                    <input className="form-control" type="file" id="photo" onChange={(e) => setPhoto(e.target.files[0])} />
-                  </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelAdd}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={handleAddSkillSubmit}
-                >
-                  Adicionar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Turma</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Nome da Habilidade"
+              type="text"
+              id="nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              maxLength={50}
+              required
+            />
+            <InputField
+              label={'Nome da Habilidade'}
+              type={'file'} id={'photo'}
+              onChange={(e) => setPhoto(e.target.files[0])} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => {setShowAddModal(false)}}>
+              Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddSkillSubmit}>
+              Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

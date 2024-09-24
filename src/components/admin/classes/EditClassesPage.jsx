@@ -48,22 +48,29 @@ export default function EditClassPage({ turmaId }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+      show={show} 
+      onHide={handleClose} 
+      centered
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          handleUpdate();
+        }
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Editar Turma</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {error && <div className="alert alert-danger">{error}</div>}
-        <form>
-          <InputField
-            label="Ano"
-            type="text"
-            value={year}
-            onChange={(e) => setYear(e.target.value)} 
-            maxLength={4}
-            required
-          />
-        </form>
+        <InputField
+          label="Ano"
+          type="text"
+          value={year}
+          onChange={(e) => setYear(e.target.value)} 
+          maxLength={4}
+          required
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

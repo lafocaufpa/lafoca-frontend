@@ -51,26 +51,13 @@ export default function EditSkill({ skillId }) {
     }
   };
 
-  const handleFileChange = (e) => {
-    setPhoto(e.target.files[0]);
-  };
-
-  const handleRemovePhoto = async () => {
-    try {
-      await skillService.removePhoto(skillId);
-      setPhoto(null);
-    } catch (error) {
-      setError(error?.userMessage || 'Erro ao remover a foto.');
-    }
-  };
-
   const handleClose = () => {
     setShow(false);
     router.back();
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Editar Habilidade</Modal.Title>
       </Modal.Header>
@@ -84,23 +71,13 @@ export default function EditSkill({ skillId }) {
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <div className="form-group mb-3">
-            <label htmlFor="photo" className="fw-bold mb-1">Selecione uma foto</label>
-            <input
-              type="file"
-              className="form-control"
-              id="photo"
-              onChange={handleFileChange}
-            />
-            {photo && typeof photo === 'string' && (
-              <div className="mt-3">
-                <img src={photo} alt="Foto atual" style={{ width: '100%' }} />
-                <button type="button" className="btn btn-danger mt-3" onClick={handleRemovePhoto}>
-                  Remover Foto
-                </button>
-              </div>
-            )}
-          </div>
+          <InputField
+            label="Selecione o ícone da habilidade"
+            type="file"
+            onChange={(e) => setPhoto(e.target.files[0])}
+            required
+          />
+        
         </form>
       </Modal.Body>
       <Modal.Footer>

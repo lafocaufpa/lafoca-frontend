@@ -13,6 +13,7 @@ import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import InputField from '@/components/inputField/InputField';
 import { MemberService } from '@/services/api/Members/MembersService';
 import YearSelect from '@/components/admin/adminSelects/YearSelect';
+import { Form } from 'react-bootstrap';
 
 export default function EditProject({ projectId }) {
   const [title, setTitle] = useState('');
@@ -48,7 +49,7 @@ export default function EditProject({ projectId }) {
     fetchProject();
   }, [projectId]);
 
-  const handleProjectSubmit = async (event) => {
+  const handleUpdate = async (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -122,7 +123,16 @@ export default function EditProject({ projectId }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+      show={show} 
+      onHide={handleClose} 
+      centered
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          handleUpdate(e);
+        }
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Editar Projeto</Modal.Title>
       </Modal.Header>
@@ -133,108 +143,103 @@ export default function EditProject({ projectId }) {
         {error && (
           <AlertMessage type="error" message={error} onClose={hideError} />
         )}
-        <form onSubmit={handleProjectSubmit}>
-          <InputField
-            label="Título"
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            maxLength={255}
+        <InputField
+          label="Título"
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={255}
+          required
+        />
+        <InputField
+          label="Descrição"
+          type="text"
+          id="description"
+          as="textarea"
+          value={abstractText}
+          onChange={(e) => setAbstractText(e.target.value)}
+          maxLength={5000}
+          required
+        />
+        <YearSelect
+          id="yearClassId"
+          label="Ano de Início"
+          value={date}
+          onChange={setDate}
+          placeholder="Selecione o ano"
+        />
+        <YearSelect
+          id="yearClassId"
+          label="Ano de fim"
+          value={endDate}
+          onChange={setEndDate}
+          placeholder="Selecione o ano"
+        />
+        <Form.Group controlId="modality" className="mb-3">
+          <Form.Label className="fw-bold mb-1">Modalidade</Form.Label>
+          <Form.Control
+            as="select"
+            value={modality}
+            onChange={(e) => setModality(e.target.value)}
             required
-          />
-          <InputField
-            label="Descrição"
-            type="text"
-            id="description"
-            as="textarea"
-            value={abstractText}
-            onChange={(e) => setAbstractText(e.target.value)}
-            maxLength={5000}
-            required
-          />
-          <YearSelect
-            id="yearClassId"
-            label="Ano de Início"
-            value={date}
-            onChange={setDate}
-            placeholder="Selecione o ano"
-          />
-          <YearSelect
-            id="yearClassId"
-            label="Ano de fim"
-            value={endDate}
-            onChange={setEndDate}
-            placeholder="Selecione o ano"
-          />
-          <div className="form-group">
-            <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>
-            <select
-              className="form-control"
-              id="modality"
-              value={modality}
-              onChange={(e) => setModality(e.target.value)}
-              required
-            >
-              <option value="">Selecione a Modalidade</option>
-              <option value="PESQUISA">Pesquisa</option>
-              <option value="ENSINO">Ensino</option>
-              <option value="EXTENSÃO">Extensão</option>
-            </select>
-          </div>
-          <AsyncSelect
-            loadOptions={loadOptions}
-            service={linesOfResearchService}
-            placeholder="Selecione linhas de pesquisa"
-            label="Linhas de Pesquisa"
-            isMulti
-            value={selectedLinesOfResearch}
-            onChange={setSelectedLinesOfResearch}
-            additional={{ page: 0 }}
-            id="selectedLinesOfResearch"
-            required
-          />
-          <AsyncSelect
-            loadOptions={loadMemberOptions}
-            placeholder="Selecione colaboradores"
-            service={MemberService}
-            value={selectedMembers}
-            onChange={setSelectedMembers}
-            additional={{ page: 0 }}
-            isMulti
-            id="collab"
-            label="Adicionar colaboradores"
-            required
-          />
-          <label htmlFor="externalMember" className="fw-bold mb-1">Adicionar Membro Externo</label>
-          <input
-            type="text"
-            className="form-control"
-            id="externalMember"
-            value={externalMemberName}
-            onChange={(e) => setExternalMemberName(e.target.value)} 
-            maxLength={255}
-            placeholder="Nome do Membro Externo"
-          />
-          <button
-            type="button"
-            className="btn btn-secondary mt-2"
-            onClick={() => {
-              if (externalMemberName.trim()) {
-                setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
-                setExternalMemberName('');
-              }
-            }}
           >
-                  Adicionar Membro Externo
-          </button>
-        </form>
+            <option style={{ color: 'hsl(0, 0%, 50%)' }} value="">
+                Selecione a Modalidade
+            </option>
+            <option value="PESQUISA">Pesquisa</option>
+            <option value="ENSINO">Ensino</option>
+            <option value="EXTENSÃO">Extensão</option>
+          </Form.Control>
+        </Form.Group>
+        <AsyncSelect
+          loadOptions={loadOptions}
+          service={linesOfResearchService}
+          placeholder="Selecione linhas de pesquisa"
+          label="Linhas de Pesquisa"
+          isMulti
+          value={selectedLinesOfResearch}
+          onChange={setSelectedLinesOfResearch}
+          additional={{ page: 0 }}
+          id="selectedLinesOfResearch"
+          required
+        />
+        <AsyncSelect
+          loadOptions={loadMemberOptions}
+          placeholder="Selecione colaboradores"
+          service={MemberService}
+          value={selectedMembers}
+          onChange={setSelectedMembers}
+          additional={{ page: 0 }}
+          isMulti
+          id="collab"
+          label="Adicionar colaboradores"
+          required
+        />
+        <InputField
+          label="Nome do Membro Externo"
+          type="text" 
+          id="externalMember"
+          value={externalMemberName}
+          onChange={(e) => setExternalMemberName(e.target.value)} 
+          maxLength={255}
+        />
+        <Button 
+          variant="success" 
+          onClick={() => {
+            if (externalMemberName.trim()) {
+              setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+              setExternalMemberName('');
+            }
+          }}>
+            Adicionar Membro Externo
+        </Button>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={handleProjectSubmit} disabled={loading}>
+        <Button variant="primary" onClick={(e) => handleUpdate(e)} disabled={loading}>
           {loading ? 'Salvando...' : 'Salvar Alterações'}
         </Button>
       </Modal.Footer>

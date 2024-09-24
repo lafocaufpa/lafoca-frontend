@@ -50,7 +50,16 @@ export default function EditFunction({ functionId }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+      show={show} 
+      onHide={handleClose} 
+      centered
+      onKeyDown={(e) => {
+        if(e.key === 'Enter') {
+          handleUpdate();
+        }
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Editar Membro de Função</Modal.Title>
       </Modal.Header>

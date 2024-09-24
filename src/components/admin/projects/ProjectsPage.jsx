@@ -13,6 +13,7 @@ import urlPath from '@/routes/url';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import YearSelect from '@/components/admin/adminSelects/YearSelect';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Form, Modal } from 'react-bootstrap';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -111,16 +112,6 @@ export default function ProjectsPage() {
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
     setProjectToDelete(null);
-  };
-
-  const handleCancelAdd = () => {
-    setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
   };
 
   const truncateText = (text, maxLength) => {
@@ -300,145 +291,149 @@ export default function ProjectsPage() {
         />
       </div>
       {showAddModal && (
-        <div className="modal show fade d-block" tabIndex="-1" role="dialog">
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Adicionar Projeto</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={handleCancelAdd}></button>
-              </div>
-              <div className="modal-body">
-                <InputField
-                  label="Título"
-                  type="text"
-                  id="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)} 
-                  maxLength={255}
-                  required
-                />
-                <InputField
-                  label="Descrição"
-                  type="text"
-                  id="description"
-                  as="textarea"
-                  value={abstractText}
-                  onChange={(e) => setAbstractText(e.target.value)}
-                  maxLength={5000}
-                  required
-                />
-                <YearSelect
-                  label={'Ano de início'}
-                  placeholder="Ano de início"
-                  value={date}
-                  onChange={setDate}
-                  id="yearClassId"
-                />
-                <YearSelect
-                  label={'Ano de fim'}
-                  placeholder="Ano de fim"
-                  value={endDate}
-                  onChange={setEndDate}
-                  id="yearClassId"
-                />
-                <div className="form-group">
-                  <label htmlFor={modality} className="fw-bold mb-1">Modalidade</label>
-                  <select
-                    className="form-control" 
-                    style={{color: 'hsl(0, 0%, 20%)'}}
-                    id="modality"
-                    value={modality}
-                    onChange={(e) => setModality(e.target.value)}
-                    required
-                  >
-                    <option style={{color: 'hsl(0, 0%, 50%)'}} value="">Selecione a Modalidade</option>
-                    <option value="PESQUISA">Pesquisa</option>
-                    <option value="ENSINO">Ensino</option>
-                    <option value="EXTENSÃO">Extensão</option>
-                  </select>
-                </div>
-                <AsyncSelect
-                  loadOptions={loadOptions}
-                  placeholder="Selecione linhas de pesquisa"
-                  service={linesOfResearchService}
-                  value={selectedLinesOfResearch}
-                  onChange={setSelectedLinesOfResearch}
-                  additional={{ page: 0 }}
-                  isMulti
-                  id="linesOfResearch"
-                  label="Linhas de Pesquisa"
-                  required
-                />
-                <AsyncSelect
-                  loadOptions={loadMemberOptions}
-                  placeholder="Selecione colaboradores"
-                  service={MemberService}
-                  value={selectedMembers}
-                  onChange={setSelectedMembers}
-                  additional={{ page: 0 }}
-                  isMulti
-                  id="collab"
-                  label="Adicionar colaboradores"
-                  required
-                />
-                <label htmlFor="externalMember" className="fw-bold mb-1">Adicionar Membro Externo</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="externalMember"
-                  value={externalMemberName}
-                  onChange={(e) => setExternalMemberName(e.target.value)} 
-                  maxLength={255}
-                  placeholder="Nome do Membro Externo"
-                />
-                <button
-                  type="button"
-                  className="btn btn-secondary mt-2"
-                  onClick={() => {
-                    if (externalMemberName.trim()) {
-                      setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
-                      setExternalMemberName('');
-                    }
-                  }}
-                >
-                  Adicionar Membro Externo
-                </button>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCancelAdd}>
-                  Cancelar
-                </button>
-                <button type="button" className="btn btn-primary" onClick={handleAddProjectSubmit}>
-                  Salvar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal
+          show={showAddModal}
+          onHide={() => setShowAddModal(false)}
+          centered
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddProjectSubmit();
+            }
+          }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Turma</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Título"
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)} 
+              maxLength={255}
+              required
+            />
+            <InputField
+              label="Descrição"
+              type="text"
+              id="description"
+              as="textarea"
+              value={abstractText}
+              onChange={(e) => setAbstractText(e.target.value)}
+              maxLength={5000}
+              required
+            />
+            <YearSelect
+              label={'Ano de início'}
+              placeholder="Ano de início"
+              value={date}
+              onChange={setDate}
+              id="yearClassId"
+            />
+            <YearSelect
+              label={'Ano de fim'}
+              placeholder="Ano de fim"
+              value={endDate}
+              onChange={setEndDate}
+              id="yearClassId"
+            />
+            <Form.Group controlId="modality" className="mb-3">
+              <Form.Label className="fw-bold mb-1">Modalidade</Form.Label>
+              <Form.Control
+                as="select"
+                value={modality}
+                onChange={(e) => setModality(e.target.value)}
+                required
+              >
+                <option style={{ color: 'hsl(0, 0%, 50%)' }} value="">
+                Selecione a Modalidade
+                </option>
+                <option value="PESQUISA">Pesquisa</option>
+                <option value="ENSINO">Ensino</option>
+                <option value="EXTENSÃO">Extensão</option>
+              </Form.Control>
+            </Form.Group>
+            <AsyncSelect
+              loadOptions={loadOptions}
+              placeholder="Selecione linhas de pesquisa"
+              service={linesOfResearchService}
+              value={selectedLinesOfResearch}
+              onChange={setSelectedLinesOfResearch}
+              additional={{ page: 0 }}
+              isMulti
+              id="linesOfResearch"
+              label="Linhas de Pesquisa"
+              required
+            />
+            <AsyncSelect
+              loadOptions={loadMemberOptions}
+              placeholder="Selecione colaboradores"
+              service={MemberService}
+              value={selectedMembers}
+              onChange={setSelectedMembers}
+              additional={{ page: 0 }}
+              isMulti
+              id="collab"
+              label="Adicionar colaboradores"
+              required
+            />
+            <InputField 
+              label={'Nome do Membro Externo'}
+              type="text"
+              id="externalMember"
+              value={externalMemberName}
+              onChange={(e) => setExternalMemberName(e.target.value)} 
+              maxLength={255}
+              placeholder="Nome do Membro Externo"
+            />
+            <Button 
+              variant="success" 
+              onClick={() => {
+                if (externalMemberName.trim()) {
+                  setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+                  setExternalMemberName('');
+                }
+              }}>
+           Adicionar Membro Externo
+            </Button>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+           Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddProjectSubmit}>
+           Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
       )}
 
       {showConfirmModal && (
-        <div className="modal show fade d-block" tabIndex="-1" role="dialog" onKeyDown={handleKeyDown}>
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={handleCancelDelete}></button>
-              </div>
-              <div className="modal-body">
-                <p>Tem certeza de que deseja excluir este projeto?</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
-                </button>
-                <button type="button" className="btn btn-danger" ref={deleteButtonRef} onClick={handleConfirmDelete}>
-                  Excluir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal show={showConfirmModal} 
+          onHide={handleCancelDelete} 
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+        Tem certeza de que deseja excluir este Projeto?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+          Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+          Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

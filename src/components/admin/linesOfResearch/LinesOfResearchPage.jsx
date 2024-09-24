@@ -9,6 +9,7 @@ import useNotification from '@/components/notification/useNotification';
 import url from '@/routes/url';
 import InputField from '@/components/inputField/InputField';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function LinesOfResearchPage() {
   const [linesOfResearch, setLinesOfResearch] = useState([]);
@@ -98,15 +99,6 @@ export default function LinesOfResearchPage() {
     setLineToDelete(null);
   };
 
-  const handleCancelAdd = () => {
-    setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
-  };
 
   const handleAddLineSubmit = async () => {
     const lineData = {
@@ -207,76 +199,76 @@ export default function LinesOfResearchPage() {
       </div>
 
       {showAddModal && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Adicionar Linha de Pesquisa</h5>
-                <button type="button" className="btn-close" onClick={handleCancelAdd}></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <InputField
-                    label="Nome"
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    maxLength={50}
-                    required
-                  />
-                  <InputField
-                    label="Descrição"
-                    type="text"
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)} 
-                    maxLength={225}
-                    required
-                  />
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={handleAddLineSubmit}>
-                  Adicionar
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal
+          show={showAddModal}
+          onHide={() => {
+            setShowAddModal(false);
+          }}
+          centered 
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddLineSubmit();
+            }
+          }}
+        > 
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Linha de Pesquisa</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Nome da Linha de Pesquisa"
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              maxLength={50}
+              required
+            />
+            <InputField
+              label="Descrição da Linha de Pesquisa"
+              type="text"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)} 
+              maxLength={225}
+              required
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+           Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddLineSubmit}>
+           Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
 
       {showConfirmModal && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button type="button" className="btn-close" onClick={handleCancelDelete}></button>
-              </div>
-              <div className="modal-body">
-                <p>Tem certeza que deseja excluir esta linha de pesquisa?</p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  ref={deleteButtonRef}
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                >
-                  Excluir
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal show={showConfirmModal} 
+          onHide={handleCancelDelete} 
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+        Tem certeza de que deseja excluir esta linha de pesquisa?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+          Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+          Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

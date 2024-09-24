@@ -50,7 +50,7 @@ export default function Cookies() {
           Se você tiver alguma dúvida sobre nossa Política de Cookies ou sobre como lidamos com cookies, entre em contato conosco:
         </p>
         <p>
-          <strong>Email:</strong> lafoca.3cp@gmail.com
+          <strong>E-mail:</strong> lafoca.3cp@gmail.com
         </p>
         <p>
           Obrigado por visitar o site do LAFocA. Agradecemos a sua confiança e compromisso com a sua privacidade.

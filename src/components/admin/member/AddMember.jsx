@@ -148,7 +148,7 @@ export default function AddMember() {
             required
           />
           <InputField
-            label="Email"
+            label="E-mail"
             type="email"
             id="email"
             value={email}

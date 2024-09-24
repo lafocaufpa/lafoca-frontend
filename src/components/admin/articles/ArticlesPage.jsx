@@ -14,6 +14,7 @@ import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import Pagination from '@/components/pagination/Pagination';
 import YearSelect from '@/components/admin/adminSelects/YearSelect';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState([]);
@@ -114,16 +115,6 @@ export default function ArticlesPage() {
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
     setArticleToDelete(null);
-  };
-
-  const handleCancelAdd = () => {
-    setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
   };
 
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
@@ -297,153 +288,142 @@ export default function ArticlesPage() {
       </div>
 
       {showAddModal && (
-        <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Adicionar Artigo</h5>
-                <button type="button" className="btn-close" onClick={handleCancelAdd}></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <InputField
-                    label="Título"
-                    type="text"
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)} 
-                    maxLength={255}
-                    required
-                  />
-                  <InputField
-                    label="Revista"
-                    type="text"
-                    id="journal"
-                    value={journal}
-                    onChange={(e) => setJournal(e.target.value)} 
-                    maxLength={255}
-                    required
-                  />
-                  <InputField
-                    label="Resumo"
-                    type="text"
-                    id="articleAbstract"
-                    as="textarea"
-                    value={abstractText}
-                    onChange={(e) => setAbstractText(e.target.value)}
-                    maxLength={5000}
-                    required
-                  />
-                  <InputField
-                    label="Link de Acesso"
-                    type="text"
-                    id="url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)} 
-                    maxLength={700}
-                    required
-                  />
-                  <YearSelect
-                    id="yearClassId"
-                    label="Ano da Turma"
-                    value={date}
-                    onChange={setDate}
-                    placeholder="Selecione o ano"
-                  />
-                  <AsyncSelect
-                    loadOptions={loadOptions}
-                    service={linesOfResearchService}
-                    placeholder="Selecione linhas de pesquisa"
-                    label="Linhas de Pesquisa"
-                    isMulti
-                    value={selectedLinesOfResearch}
-                    onChange={setSelectedLinesOfResearch}
-                    additional={{ page: 0 }}
-                    id="selectedLinesOfResearch"
-                    required
-                  />
-                  <AsyncSelect
-                    loadOptions={loadMemberOptions}
-                    placeholder="Selecione colaboradores"
-                    service={MemberService}
-                    value={selectedMembers}
-                    onChange={setSelectedMembers}
-                    additional={{ page: 0 }}
-                    isMulti
-                    id="collab"
-                    label="Adicionar colaboradores"
-                    required
-                  />
-                  <label htmlFor="externalMember" className="fw-bold mb-1">Adicionar Membro Externo</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="externalMember"
-                    value={externalMemberName}
-                    onChange={(e) => setExternalMemberName(e.target.value)} 
-                    maxLength={255}
-                    placeholder="Nome do Membro Externo"
-                  />
-                  <button
-                    type="button"
-                    className="btn btn-secondary mt-2"
-                    onClick={() => {
-                      if (externalMemberName.trim()) {
-                        setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
-                        setExternalMemberName('');
-                      }
-                    }}
-                  >
-                  Adicionar Membro Externo
-                  </button>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCancelAdd}>
-                  Cancelar
-                </button>
-                <button type="button" className="btn btn-primary" onClick={handleAddArticleSubmit}>
-                  Adicionar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal
+          show={showAddModal}
+          onHide={() => setShowAddModal(false)}
+          centered
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddArticleSubmit();
+            }
+          }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Artigo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Título"
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)} 
+              maxLength={255}
+              required
+            />
+            <InputField
+              label="Revista"
+              type="text"
+              id="journal"
+              value={journal}
+              onChange={(e) => setJournal(e.target.value)} 
+              maxLength={255}
+              required
+            />
+            <InputField
+              label="Resumo"
+              type="text"
+              id="articleAbstract"
+              as="textarea"
+              value={abstractText}
+              onChange={(e) => setAbstractText(e.target.value)}
+              maxLength={5000}
+              required
+            />
+            <InputField
+              label="Link de Acesso"
+              type="text"
+              id="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)} 
+              maxLength={700}
+              required
+            />
+            <YearSelect
+              id="yearPubli"
+              label="Ano de publicação"
+              value={date}
+              onChange={setDate}
+              placeholder="Selecione o ano"
+            />
+            <AsyncSelect
+              loadOptions={loadOptions}
+              service={linesOfResearchService}
+              placeholder="Selecione linhas de pesquisa"
+              label="Linhas de Pesquisa"
+              isMulti
+              value={selectedLinesOfResearch}
+              onChange={setSelectedLinesOfResearch}
+              additional={{ page: 0 }}
+              id="selectedLinesOfResearch"
+              required
+            />
+            <AsyncSelect
+              loadOptions={loadMemberOptions}
+              placeholder="Selecione colaboradores"
+              service={MemberService}
+              value={selectedMembers}
+              onChange={setSelectedMembers}
+              additional={{ page: 0 }}
+              isMulti
+              id="collab"
+              label="Adicionar colaboradores"
+              required
+            />
+            <InputField
+              label="Nome do Membro Externo"
+              type="text" 
+              id="externalMember"
+              value={externalMemberName}
+              onChange={(e) => setExternalMemberName(e.target.value)} 
+              maxLength={255}
+            />
+            <Button 
+              variant="success" 
+              onClick={() => {
+                if (externalMemberName.trim()) {
+                  setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+                  setExternalMemberName('');
+                }
+              }}>
+           Adicionar Membro Externo
+            </Button>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+           Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddArticleSubmit}>
+           Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
 
       {showConfirmModal && (
-        <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleCancelDelete}
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <p>Tem certeza que deseja excluir este artigo?</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                  ref={deleteButtonRef}
-                >
-                  Excluir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal show={showConfirmModal} 
+          onHide={handleCancelDelete} 
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+        Tem certeza de que deseja excluir este Artigo?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+          Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+          Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

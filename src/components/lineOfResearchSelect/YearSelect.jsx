@@ -7,9 +7,9 @@ import styles from './LineOfResearchSelect.module.css';
 
 const YearSelect = ({ id, label, isSearchable, ...props }) => {
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 2016 + 1 }, (_, i) => ({
-    value: (2016 + i).toString(),
-    label: (2016 + i).toString(),
+  const years = Array.from({ length: currentYear - 2011 + 1 }, (_, i) => ({
+    value: (2011 + i).toString(),
+    label: (2011 + i).toString(),
   }));
 
   return (

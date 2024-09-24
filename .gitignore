@@ -187,3 +187,4 @@ dist
 lafoca-frontend.zip
 lafoca.zip
 -.env.local
+.gitignore

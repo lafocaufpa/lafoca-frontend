@@ -44,14 +44,16 @@ export default function AddUser() {
   };
 
   const handlePasswordIsValid = (password) => {
-    if (password) {
-      const passwordError = validatePassword(password);
-      if (passwordError) {
-        showError(passwordError);
-        return;
-      }
+    console.log('Dentro da funcao handlePasswordIsValid: ');
+    console.log(password);
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      showError(passwordError);
+      
+      return false;
     }
     hideError();
+    return true;
   };
 
   const handleConfirmPasswordBlur = () => {
@@ -85,6 +87,7 @@ export default function AddUser() {
   };
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
     hideError();
 
@@ -92,7 +95,12 @@ export default function AddUser() {
       showError('As senhas não coincidem.');
       return;
     }
-
+    
+    if (!handlePasswordIsValid(password)) {
+      alert('senha invalida');
+      return; 
+    }
+  
     const userData = {
       email,
       name,
@@ -141,7 +149,7 @@ export default function AddUser() {
         )}
         <form onSubmit={handleSubmit}>
           <InputField
-            label="Email"
+            label="E-mail"
             type="email"
             id="email"
             value={email}

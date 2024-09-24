@@ -8,6 +8,7 @@ import { userService } from '@/services/api/Users/UserService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
@@ -98,12 +99,6 @@ export default function UserPage() {
     setUserToDelete(null);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
-  };
-
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
@@ -138,7 +133,7 @@ export default function UserPage() {
             <thead className="thead-dark">
               <tr>
                 <th>Nome</th>
-                <th>Email</th>
+                <th>E-mail</th>
                 <th>Grupos</th>
                 <th>Ações</th>
               </tr>
@@ -177,33 +172,29 @@ export default function UserPage() {
       </div>
 
       {showConfirmModal && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button type="button" className="btn-close" onClick={handleCancelDelete}></button>
-              </div>
-              <div className="modal-body">
-                <p>Tem certeza que deseja excluir este usuário?</p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  ref={deleteButtonRef} 
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                >
-                  Excluir
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal show={showConfirmModal}
+          onHide={handleCancelDelete}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          Tem certeza de que deseja excluir esse usuário?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+            Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+            Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

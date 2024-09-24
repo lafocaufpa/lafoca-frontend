@@ -9,6 +9,7 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function FunctionMemberPage() {
   const [functionMembers, setFunctionMembers] = useState([]);
@@ -102,17 +103,7 @@ export default function FunctionMemberPage() {
     setMemberToDelete(null);
   };
 
-  const handleCancelAdd = () => {
-    setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
-  };
-
-  const handleAddMemberSubmit = async () => {
+  const handleAddFuncMemberSubmit = async () => {
     const memberData = {
       name,
       description,
@@ -210,76 +201,78 @@ export default function FunctionMemberPage() {
         />
       </div>
       {showAddModal && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Adicionar Membro de Função</h5>
-                <button type="button" className="btn-close" onClick={handleCancelAdd}></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <InputField
-                    label="Nome"
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)} 
-                    maxLength={225}
-                    required
-                  />
-                  <InputField
-                    label="Descrição"
-                    type="text"
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)} 
-                    maxLength={225}
-                    required
-                  />
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={handleAddMemberSubmit}>
-                  Adicionar
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal
+          show={showAddModal}
+          onHide={() => {
+            setShowAddModal(false);
+          }}
+          centered
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddFuncMemberSubmit();
+            }
+          }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Função de Membro</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Nome da Função"
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)} 
+              maxLength={225}
+              required
+            />
+            <InputField
+              label="Descrição da Função"
+              type="text"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)} 
+              maxLength={225}
+              required
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => {
+              setShowAddModal(false);
+            }}>
+           Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddFuncMemberSubmit}>
+           Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
 
       {showConfirmModal && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmar Exclusão</h5>
-                <button type="button" className="btn-close" onClick={handleCancelDelete}></button>
-              </div>
-              <div className="modal-body">
-                <p>Tem certeza que deseja excluir este membro de função?</p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  ref={deleteButtonRef}
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                >
-                  Excluir
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={handleCancelDelete}>
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal show={showConfirmModal} 
+          onHide={handleCancelDelete} 
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+        Tem certeza de que deseja excluir esta função?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+          Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+          Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

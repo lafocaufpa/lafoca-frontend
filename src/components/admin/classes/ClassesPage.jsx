@@ -8,6 +8,8 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import url from '@/routes/url';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Modal } from 'react-bootstrap';
+import InputField from '@/components/inputField/InputField';
 
 export default function ClassesPage() {
   const [classes, setClasses] = useState([]);
@@ -58,6 +60,7 @@ export default function ClassesPage() {
   };
 
   const handleEdit = (classData) => {
+    console.log(classData);
     router.push(url.admin.turmas.editar(classData.id));
   };
 
@@ -97,12 +100,6 @@ export default function ClassesPage() {
 
   const handleCancelAdd = () => {
     setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
   };
 
   const handleAddClassSubmit = async () => {
@@ -190,101 +187,65 @@ export default function ClassesPage() {
       </div>
 
       {showConfirmModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block' }}
-          tabIndex="-1"
-          aria-labelledby="confirmModalLabel"
-          aria-hidden="true"
+        <Modal show={showConfirmModal} 
+          onHide={handleCancelDelete} 
+          centered
         >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="confirmModalLabel">Confirmar Exclusão</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={handleCancelDelete}
-                ></button>
-              </div>
-              <div className="modal-body">
-              Tem certeza de que deseja excluir esta turma?
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelDelete}
-                >
-                Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  ref={deleteButtonRef}
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                >
-                Excluir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          Tem certeza de que deseja excluir esta turma?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+            Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+            Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
 
       {showAddModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block' }}
-          tabIndex="-1"
-          aria-labelledby="addModalLabel"
-          aria-hidden="true"
+        <Modal
+          show={showAddModal}
+          onHide={handleCancelAdd}
+          centered
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddClassSubmit();
+            }
+          }}
         >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="addModalLabel">Adicionar Turma</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={handleCancelAdd}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="year">Ano</label>
-                  <input
-                    type="number"
-                    id="year"
-                    className="form-control"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)} 
-                    maxLength={4}
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelAdd}
-                >
-                Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleAddClassSubmit}
-                >
-                Adicionar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Turma</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Ano"
+              type="number"
+              id="year"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              maxLength={4}
+              required
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelAdd}>
+           Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddClassSubmit}>
+           Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

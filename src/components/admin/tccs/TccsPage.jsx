@@ -13,6 +13,7 @@ import InputField from '@/components/inputField/InputField';
 import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import Pagination from '@/components/pagination/Pagination';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function TccsPage() {
   const [tccs, setTccs] = useState([]);
@@ -156,16 +157,6 @@ export default function TccsPage() {
     setTccToDelete(null);
   };
 
-  const handleCancelAdd = () => {
-    setShowAddModal(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleConfirmDelete();
-    }
-  };
-
   const formatDate = (date) => {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
@@ -290,152 +281,116 @@ export default function TccsPage() {
         />
       </div>
       {showConfirmModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block' }}
-          tabIndex="-1"
-          aria-labelledby="confirmModalLabel"
-          aria-hidden="true"
+        <Modal show={showConfirmModal} 
+          onHide={handleCancelDelete} 
+          centered
         >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="confirmModalLabel">Confirmar Exclusão</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={handleCancelDelete}
-                ></button>
-              </div>
-              <div className="modal-body">
-                Tem certeza de que deseja excluir este TCC?
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={
-                    handleCancelDelete}
-                >
-                      Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  ref={deleteButtonRef}
-                  onClick={handleConfirmDelete}
-                  onKeyDown={handleKeyDown}
-                >
-                      Excluir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Exclusão</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+        Tem certeza de que deseja excluir este tcc?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancelDelete}>
+          Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              ref={deleteButtonRef}
+              onClick={handleConfirmDelete}
+            >
+          Excluir
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     
       {showAddModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block' }}
-          tabIndex="-1"
-          aria-labelledby="addModalLabel"
-          aria-hidden="true"
+      
+        <Modal
+          show={showAddModal}
+          onHide={() => setShowAddModal(false)}
+          centered
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddTccSubmit();
+            }
+          }}
         >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="addModalLabel">Adicionar TCC</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={handleCancelAdd}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <InputField
-                    label="Título"
-                    type="text"
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    maxLength={255}
-                    required
-                  />
-                  <InputField
-                    label="Url"
-                    type="text"
-                    id="url"
-                    value={urlTcc}
-                    onChange={(e) => setUrlTcc(e.target.value)}
-                    maxLength={700}
-                    required
-                  />
-                  <InputField
-                    label="Data do TCC"
-                    type="date"
-                    id="tccDate"
-                    value={tccDate}
-                    onChange={(e) => setTccDate(e.target.value)}
-                    required
-                  />
-                  <InputField
-                    label="Resumo"
-                    type="text"
-                    id="abstractText"
-                    as='textarea'
-                    maxLength={5000}
-                    value={abstractText}
-                    onChange={(e) => setAbstractText(e.target.value)} 
-                    required
-                  />
-                  <AsyncSelect
-                    loadOptions={loadOptions}
-                    service={linesOfResearchService}
-                    placeholder="Selecione linhas de pesquisa"
-                    label="Linhas de Pesquisa"
-                    isMulti
-                    value={selectedLinesOfResearch}
-                    onChange={setSelectedLinesOfResearch}
-                    additional={{ page: 0 }}
-                    id="selectedLinesOfResearch"
-                    required
-                  />
-                  <AsyncSelect
-                    loadOptions={loadMemberOptions}
-                    placeholder="Selecione um membro"
-                    service={MemberService}
-                    value={selectedMember}
-                    onChange={setSelectedMember}
-                    additional={{ page: 0 }}
-                    id="collab"
-                    label="Vincular membro"
-                    required
-                  />
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelAdd}
-                >
-                      Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleAddTccSubmit}
-                >
-                      Adicionar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Adicionar Tcc</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputField
+              label="Título"
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              maxLength={255}
+              required
+            />
+            <InputField
+              label="Url"
+              type="text"
+              id="url"
+              value={urlTcc}
+              onChange={(e) => setUrlTcc(e.target.value)}
+              maxLength={700}
+              required
+            />
+            <InputField
+              label="Data do TCC"
+              type="date"
+              id="tccDate"
+              value={tccDate}
+              onChange={(e) => setTccDate(e.target.value)}
+              required
+            />
+            <InputField
+              label="Resumo"
+              type="text"
+              id="abstractText"
+              as='textarea'
+              maxLength={5000}
+              value={abstractText}
+              onChange={(e) => setAbstractText(e.target.value)} 
+              required
+            />
+            <AsyncSelect
+              loadOptions={loadOptions}
+              service={linesOfResearchService}
+              placeholder="Selecione linhas de pesquisa"
+              label="Linhas de Pesquisa"
+              isMulti
+              value={selectedLinesOfResearch}
+              onChange={setSelectedLinesOfResearch}
+              additional={{ page: 0 }}
+              id="selectedLinesOfResearch"
+              required
+            />
+            <AsyncSelect
+              loadOptions={loadMemberOptions}
+              placeholder="Selecione um membro"
+              service={MemberService}
+              value={selectedMember}
+              onChange={setSelectedMember}
+              additional={{ page: 0 }}
+              id="collab"
+              label="Vincular membro"
+              required
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+         Cancelar
+            </Button>
+            <Button variant="success" onClick={handleAddTccSubmit}>
+         Adicionar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

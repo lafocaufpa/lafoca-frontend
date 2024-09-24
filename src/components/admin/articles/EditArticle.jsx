@@ -48,7 +48,7 @@ export default function EditArticle({ articleId }) {
     fetchArticle();
   }, [articleId]);
 
-  const handleArticleSubmit = async (event) => {
+  const handleUpdate = async (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -123,113 +123,109 @@ export default function EditArticle({ articleId }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+      show={show} 
+      onHide={handleClose}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          handleUpdate(e);
+        }
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Editar Artigo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {successMessage && (
-          <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
-        )}
-        {error && (
-          <AlertMessage type="error" message={error} onClose={hideError} />
-        )}
-        <form onSubmit={handleArticleSubmit}>
-          <InputField
-            label="Título"
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <InputField
-            label="Jornal"
-            type="text"
-            id="journal"
-            value={journal}
-            onChange={(e) => setJournal(e.target.value)}
-            required
-          />
-          <InputField
-            label="Resumo"
-            type="text"
-            id="abstractText"
-            as="textarea"
-            value={abstractText}
-            onChange={(e) => setAbstractText(e.target.value)}
-            maxLength={5000}
-            required
-          />
-          <InputField
-            label="Link de Acesso"
-            type="url"
-            id="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)} 
-            maxLength={700}
-            required
-          />
-          <YearSelect
-            id="yearClassId"
-            label="Ano da Turma"
-            value={date}
-            onChange={setDate}
-            placeholder="Selecione o ano"
-          />
-          <AsyncSelect
-            loadOptions={loadOptions}
-            service={linesOfResearchService}
-            placeholder="Selecione linhas de pesquisa"
-            label="Linhas de Pesquisa"
-            isMulti
-            value={selectedLinesOfResearch}
-            onChange={setSelectedLinesOfResearch}
-            additional={{ page: 0 }}
-            id="selectedLinesOfResearch"
-            required
-          />
-          <AsyncSelect
-            loadOptions={loadMemberOptions}
-            placeholder="Selecione colaboradores"
-            service={MemberService}
-            value={selectedMembers}
-            onChange={setSelectedMembers}
-            additional={{ page: 0 }}
-            isMulti
-            id="collab"
-            label="Adicionar colaboradores"
-            required
-          />
-          <label htmlFor="externalMember" className="fw-bold mb-1">Adicionar Membro Externo</label>
-          <input
-            type="text"
-            className="form-control"
-            id="externalMember"
-            value={externalMemberName}
-            onChange={(e) => setExternalMemberName(e.target.value)} 
-            maxLength={255}
-            placeholder="Nome do Membro Externo"
-          />
-          <button
-            type="button"
-            className="btn btn-secondary mt-2"
-            onClick={() => {
-              if (externalMemberName.trim()) {
-                setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
-                setExternalMemberName('');
-              }
-            }}
-          >
-                  Adicionar Membro Externo
-          </button>
-        </form>
+        <InputField
+          label="Título"
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <InputField
+          label="Jornal"
+          type="text"
+          id="journal"
+          value={journal}
+          onChange={(e) => setJournal(e.target.value)}
+          required
+        />
+        <InputField
+          label="Resumo"
+          type="text"
+          id="abstractText"
+          as="textarea"
+          value={abstractText}
+          onChange={(e) => setAbstractText(e.target.value)}
+          maxLength={5000}
+          required
+        />
+        <InputField
+          label="Link de Acesso"
+          type="url"
+          id="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)} 
+          maxLength={700}
+          required
+        />
+        <YearSelect
+          id="yearClassId"
+          label="Ano de publicação"
+          value={date}
+          onChange={setDate}
+          placeholder="Selecione o ano"
+        />
+        <AsyncSelect
+          loadOptions={loadOptions}
+          service={linesOfResearchService}
+          placeholder="Selecione linhas de pesquisa"
+          label="Linhas de Pesquisa"
+          isMulti
+          value={selectedLinesOfResearch}
+          onChange={setSelectedLinesOfResearch}
+          additional={{ page: 0 }}
+          id="selectedLinesOfResearch"
+          required
+        />
+        <AsyncSelect
+          loadOptions={loadMemberOptions}
+          placeholder="Selecione colaboradores"
+          service={MemberService}
+          value={selectedMembers}
+          onChange={setSelectedMembers}
+          additional={{ page: 0 }}
+          isMulti
+          id="collab"
+          label="Adicionar colaboradores"
+          required
+        />
+        <InputField
+          label="Nome do Membro Externo"
+          type="text" 
+          id="externalMember"
+          value={externalMemberName}
+          onChange={(e) => setExternalMemberName(e.target.value)} 
+          maxLength={255}
+        />
+        <Button 
+          variant="success" 
+          onClick={() => {
+            if (externalMemberName.trim()) {
+              setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+              setExternalMemberName('');
+            }
+          }}>
+            Adicionar Membro Externo
+        </Button>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={handleArticleSubmit} disabled={loading}>
+        <Button variant="primary" onClick={(e) => handleUpdate(e)} disabled={loading}>
           {loading ? 'Salvando...' : 'Salvar Alterações'}
         </Button>
       </Modal.Footer>

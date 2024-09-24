@@ -56,12 +56,12 @@ export default function NavBar({ user }) {
       <div className={stylesNavBar.hamburguerLine}></div>
       <div className={`${stylesNavBar.scrollableNav} mb-auto`} style={{ maxHeight: 'calc(80vh)', overflowY: 'auto' }}>
         <nav className={`nav flex-column pt-3 ${stylesNavBar.navbar} ${isActive ? stylesNavBar.active : ''}`} >
-          <NavLink href={url.admin.usuario.home} Icon={IconUsers} onClick={closeMenu}>
-            Usuarios
-          </NavLink>
-
           <NavLink href={url.admin.membro.home} Icon={IconMembers}>
             Membros
+          </NavLink>
+
+          <NavLink href={url.admin.usuario.home} Icon={IconUsers} onClick={closeMenu}>
+            Usuarios
           </NavLink>
 
           <NavLink href={url.admin.linhadepesquisa.home} Icon={IconResearchs}>
@@ -99,7 +99,6 @@ export default function NavBar({ user }) {
           <NavLink href={url.admin.system.info} Icon={IconInfo}>
             Informações do Sistema
           </NavLink>
-          {/* Coomponente profile */}
           <div className={`mt-auto ${stylesNavBar.profile}`}>
             <div className='border-top border-secondary m-auto'></div>
             <div className={'text-center pt-4 pb-3 p-3 d-flex align-items-center justify-content-center'} >

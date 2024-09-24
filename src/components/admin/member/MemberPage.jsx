@@ -7,10 +7,9 @@ import { useRouter } from 'next/navigation';
 import url from '@/routes/url';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
-import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
-import { classService } from '@/services/api/yearClass/YearClasses';
 import InputField from '@/components/inputField/InputField';
 import Pagination from '@/components/pagination/Pagination';
+import SelectYear from '@/components/asyncSelectV2/SelectYear';
 
 export default function MemberPage() {
   const [members, setMembers] = useState([]);
@@ -108,28 +107,6 @@ export default function MemberPage() {
     setMemberToDelete(null);
   };
 
-  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
-    try {
-      const response = await service.list(page, 5, undefined, inputValue);
-      return {
-        options: response.content.map(item => ({
-          value: item.id,
-          label: item.name || item.title || item.year,
-        })),
-        hasMore: !response.lastPage,
-        additional: {
-          page: page + 1,
-        },
-      };
-    } catch (error) {
-      console.error('Error fetching options:', error);
-      return {
-        options: [],
-        hasMore: false,
-      };
-    }
-  };
-
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mt-4 mb-4">
@@ -157,16 +134,12 @@ export default function MemberPage() {
             <span className="ms-2 text-reset">resultados por página</span>
           </div>
           <div className="col-md-4">
-            <AsyncSelect
-              loadOptions={loadOptions}
-              placeholder="Selecione a turma"
-              service={classService}
-              value={yearClassId}
+            <SelectYear 
+              id={'year'}
+              label={'Selecione a Turma'} 
+              placeholder={'Filtrar por ano'}
+              value={yearClassId} 
               onChange={setYearClassId}
-              additional={{ page: 0 }}
-              id="yearClassId"
-              label="Ano da Turma"
-              required
             />
           </div>
           <div className="col-md-4">
@@ -186,7 +159,7 @@ export default function MemberPage() {
               <tr>
                 <th>Nome Completo</th>
                 <th>Função</th>
-                <th>Email</th>
+                <th>E-mail</th>
                 <th>Ano de Entrada</th>
                 <th>Ações</th>
               </tr>

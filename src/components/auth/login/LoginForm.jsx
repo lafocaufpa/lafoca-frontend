@@ -124,7 +124,7 @@ export default function Login() {
                 <form onSubmit={resetPassword}>
                   <InputField label="E-mail" type="email" name="email" />
                   <span className={`${styles.error} ${toggle ? '' : styles.hidden}`}>Verifique sua caixa de mensagem</span>
-                  <Button loading={loading}>Enviar email</Button>
+                  <Button loading={loading}>Enviar e-mail</Button>
                 </form> 
               </div>
               <div className={styles.restorePassword}>

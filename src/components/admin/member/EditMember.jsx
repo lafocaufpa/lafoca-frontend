@@ -15,6 +15,7 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
+import YearSelect from '@/components/admin/adminSelects/YearSelect';
 import PhotoSelector from '@/components/photoSelector/photoSelector';
 
 export default function EditMember({ memberId }) {
@@ -192,7 +193,7 @@ export default function EditMember({ memberId }) {
             required
           />
           <InputField
-            label="Email"
+            label="E-mail"
             type="email"
             id="email"
             value={email}
@@ -220,16 +221,12 @@ export default function EditMember({ memberId }) {
             maxLength={950}
             required
           />
-          <AsyncSelect
-            id="yearClass"
+          <YearSelect
+            id="yearPubli"
             label="Ano da Turma"
-            placeholder="Selecione a turma"
             value={yearClass}
             onChange={setYearClass}
-            service={classService}
-            loadOptions={loadOptions}
-            additionalProps={{ page: 0 }}
-            required
+            placeholder="Selecione o ano"
           />
           <AsyncSelect
             id="functionMemberId"

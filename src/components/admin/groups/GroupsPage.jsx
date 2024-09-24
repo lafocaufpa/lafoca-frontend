@@ -172,6 +172,7 @@ export default function GroupsPage() {
               <tr>
                 <th>Nome</th>
                 <th>Permissões de Acesso</th>
+                <th>Descrição do Grupo</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -180,18 +181,13 @@ export default function GroupsPage() {
                 <tr key={group.id}>
                   <td>{group.name}</td>
                   <td>{group.permissions.map((permission) => permission.name).join(', ')}</td>
+                  <td>{group.description}</td>
                   <td>
                     <button
                       className="btn btn-primary btn-sm me-1"
                       onClick={() => handleEdit(group)}
                     >
                         Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(group.id)}
-                    >
-                        Deletar
                     </button>
                   </td>
                 </tr>

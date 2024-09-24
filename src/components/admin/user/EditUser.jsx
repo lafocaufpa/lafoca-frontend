@@ -188,7 +188,7 @@ export default function EditUser({ userId }) {
         )}
         <form onSubmit={handleUserSubmit}>
           <InputField
-            label="Email"
+            label="E-mail"
             type="email"
             id="email"
             value={email}
