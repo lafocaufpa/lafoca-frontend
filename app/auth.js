@@ -39,13 +39,16 @@ export const {auth, signIn, handlers:{GET,POST}} = NextAuth({
       return token;
     },
     session: async ({session, token}) => {
-      if(session?.user) {
+      if (session && session.user) {
         session.user.role = token.role;
         session.userId = token.sub;
         session.sessionToken = token.jwt;
-        session.user.image = token.picture;
-        session.user.name = token.name;
-        session.user.email = token.email;
+    
+        if (session.user) {
+          session.user.image = token?.picture;
+          session.user.name = token.name;
+          session.user.email = token.email;
+        }
       }
       return session;
     },

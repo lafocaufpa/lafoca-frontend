@@ -49,7 +49,7 @@ export default function Login() {
     try {
       const res = await loginAction(email, password);
       if (res) {
-        router.push(url.admin.usuario.home);
+        router.push(url.admin.usuario.membros);
       } else {
         setLoading(false);
         setToggle(true);

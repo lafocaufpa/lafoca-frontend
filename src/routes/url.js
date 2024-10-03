@@ -46,6 +46,7 @@ const url = {
 
     usuario: {
       home: `${ADMIN}${USUARIO}`,
+      membros: `${ADMIN}${MEMBRO}`,
       editar: (userId) => `editar/${encodeURIComponent(userId)}`,
       adicionar: 'adicionar'
     },

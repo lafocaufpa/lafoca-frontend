@@ -10,7 +10,7 @@ export default async function SideBar() {
     redirect(url.auth.login);
   }
 
-  const user = {urlPhoto: session.user.image, id: session.userId, name: session.user.name, email: session.user.email};
+  const user = {urlPhoto: session?.user?.image, id: session?.userId, name: session?.user?.name, email: session?.user?.email};
 
   return (
     <NavBar user={user}/>

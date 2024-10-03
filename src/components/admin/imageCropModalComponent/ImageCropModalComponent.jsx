@@ -2,12 +2,11 @@
 
 import { readFile } from '@components/utils/HelperCropImage';
 import { useImageCropContext } from '@/providers/ImageCropProvider';
-import Button from '@/components/admin/ImageCropModal/Button';
+import { Button } from 'react-bootstrap';
 import Cropper from '@components/admin/cropper/Cropper';
 import { RotationSlider, ZoomSlider } from '@components/admin/cropper/Sliders';
 import styles from './ImageCropModalComponent.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const ImageCropModalContent = ({ handleDone, handleClose }) => {
   const { setImage, getProcessedImage } = useImageCropContext();
@@ -51,7 +50,7 @@ const ImageCropModalContent = ({ handleDone, handleClose }) => {
         <Button variant="light" className="shadow w-50 mb-4 hover-shadow">
           <label htmlFor="avatarInput" className="d-block mb-0">Escolha outra foto</label>
         </Button>
-        <div className="d-flex gap-2  justify-content-end">
+        <div className="d-flex gap-2 justify-content-end">
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>

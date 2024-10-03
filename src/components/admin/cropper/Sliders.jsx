@@ -1,14 +1,12 @@
 'use client';
 
 import { useImageCropContext } from '@/providers/ImageCropProvider';
-import {
-  ArrowUturnLeftIcon,
-  ArrowUturnRightIcon,
-  MinusIcon,
-  PlusIcon,
-} from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import IconMinus from '@/components/icon/IconMinus';
+import IconPlus from '@/components/icon/IconPlus';
+import ArrowUturnRightIcon from '@/components/icon/ArrowUturnRightIcon';
+import ArrowUturnLeftIcon from '@/components/icon/ArrowUturnLeftIcon';
 
 export const ZoomSlider = ({ className }) => {
   const { zoom, setZoom, handleZoomIn, handleZoomOut, max_zoom, min_zoom, zoom_step } =
@@ -16,7 +14,7 @@ export const ZoomSlider = ({ className }) => {
 
   return (
     <div className={classNames(className, 'd-flex align-items-center justify-content-center gap-2')}>
-      <MinusIcon className="p-1 btn btn-outline-secondary"  width={25} onClick={handleZoomOut} />
+      <IconMinus className="p-1 btn btn-outline-secondary" width={25} onClick={handleZoomOut} />
       <input
         type="range"
         name="zoomRange"
@@ -29,7 +27,7 @@ export const ZoomSlider = ({ className }) => {
         }}
         className="form-range"
       />
-      <PlusIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleZoomIn} />
+      <IconPlus className="p-1 btn btn-outline-secondary" width={25} onClick={handleZoomIn} />
     </div>
   );
 };
@@ -47,10 +45,10 @@ export const RotationSlider = ({ className }) => {
 
   return (
     <div className={classNames(className, 'd-flex align-items-center justify-content-center gap-2')}>
-      <ArrowUturnLeftIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleRotateAntiCw}/>
+      <ArrowUturnLeftIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleRotateAntiCw} />
       <input
         type="range"
-        name="rotationRange"
+        name="rotationRange"  
         min={min_rotation}
         max={max_rotation}
         step={rotation_step}
@@ -60,7 +58,7 @@ export const RotationSlider = ({ className }) => {
         }}
         className="form-range"
       />
-      <ArrowUturnRightIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleRotateCw}/>
+      <ArrowUturnRightIcon className="p-1 btn btn-outline-secondary" width={25} onClick={handleRotateCw} />
     </div>
   );
 };
