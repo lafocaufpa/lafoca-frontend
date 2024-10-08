@@ -15,10 +15,12 @@ import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import Pagination from '@/components/pagination/Pagination';
 import YearSelect from '@/components/admin/adminSelects/YearSelect';
 import { Button, Modal } from 'react-bootstrap';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(5);
@@ -44,13 +46,15 @@ export default function ArticlesPage() {
   const fetchData = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
 
     try {
+      setLoading(true);
       const data = await articleService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
       setArticles(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
-     
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar artigos.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -239,46 +243,48 @@ export default function ArticlesPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)} 
+              onChange={(e) => setSearchTerm(e.target.value)}
               isSearch
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Título</th>
-                <th>Revista</th>
-                <th>URL</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {articles.map((article) => (
-                <tr key={article.id}>
-                  <td>{article.title}</td>
-                  <td>{article.journal}</td>
-                  <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={article.url}  target='_blank' rel="noreferrer">Link</Link></td>
-                  <td>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(article)}
-                    >
-                        Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(article.id)}
-                    >
-                        Deletar
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Título</th>
+                  <th>Revista</th>
+                  <th>URL</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {articles.map((article) => (
+                  <tr key={article.id}>
+                    <td>{article.title}</td>
+                    <td>{article.journal}</td>
+                    <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={article.url} target='_blank' rel="noreferrer">Link</Link></td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(article)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(article.id)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -307,7 +313,7 @@ export default function ArticlesPage() {
               type="text"
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)} 
+              onChange={(e) => setTitle(e.target.value)}
               maxLength={255}
               required
             />
@@ -316,7 +322,7 @@ export default function ArticlesPage() {
               type="text"
               id="journal"
               value={journal}
-              onChange={(e) => setJournal(e.target.value)} 
+              onChange={(e) => setJournal(e.target.value)}
               maxLength={255}
               required
             />
@@ -335,7 +341,7 @@ export default function ArticlesPage() {
               type="text"
               id="url"
               value={url}
-              onChange={(e) => setUrl(e.target.value)} 
+              onChange={(e) => setUrl(e.target.value)}
               maxLength={700}
               required
             />
@@ -372,55 +378,55 @@ export default function ArticlesPage() {
             />
             <InputField
               label="Nome do Membro Externo"
-              type="text" 
+              type="text"
               id="externalMember"
               value={externalMemberName}
-              onChange={(e) => setExternalMemberName(e.target.value)} 
+              onChange={(e) => setExternalMemberName(e.target.value)}
               maxLength={255}
             />
-            <Button 
-              variant="success" 
+            <Button
+              variant="success"
               onClick={() => {
                 if (externalMemberName.trim()) {
                   setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
                   setExternalMemberName('');
                 }
               }}>
-           Adicionar Membro Externo
+              Adicionar Membro Externo
             </Button>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-           Cancelar
+              Cancelar
             </Button>
             <Button variant="success" onClick={handleAddArticleSubmit}>
-           Adicionar
+              Adicionar
             </Button>
           </Modal.Footer>
         </Modal>
       )}
 
       {showConfirmModal && (
-        <Modal show={showConfirmModal} 
-          onHide={handleCancelDelete} 
+        <Modal show={showConfirmModal}
+          onHide={handleCancelDelete}
           centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Confirmar Exclusão</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-        Tem certeza de que deseja excluir este Artigo?
+            Tem certeza de que deseja excluir este Artigo?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCancelDelete}>
-          Cancelar
+              Cancelar
             </Button>
             <Button
               variant="danger"
               ref={deleteButtonRef}
               onClick={handleConfirmDelete}
             >
-          Excluir
+              Excluir
             </Button>
           </Modal.Footer>
         </Modal>

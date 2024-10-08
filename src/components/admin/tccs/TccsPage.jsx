@@ -14,10 +14,12 @@ import Link from 'next/link';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import Pagination from '@/components/pagination/Pagination';
 import { Button, Modal } from 'react-bootstrap';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function TccsPage() {
   const [tccs, setTccs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(5);
@@ -40,12 +42,15 @@ export default function TccsPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, title = '', lineOfResearchId = '') => {
     try {
+      setLoading(true);
       const data = await tccService.list(page, resultsPerPage, undefined, title, lineOfResearchId);
       setTccs(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar TCCs.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -233,46 +238,48 @@ export default function TccsPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)} 
+              onChange={(e) => setSearchTerm(e.target.value)}
               isSearch
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Título</th>
-                <th>Acesso</th>
-                <th>Data de Defesa</th>
-                <th className='text-center'>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tccs.map((tccData) => (
-                <tr key={tccData.id}>
-                  <td>{tccData.title}</td>
-                  <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={tccData.url}  target='_blank' rel="noreferrer">Link</Link></td>
-                  <td>{tccData.date}</td>
-                  <td className='text-center'>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(tccData)}
-                    >
-                        Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(tccData.id)}
-                    >
-                        Deletar
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Título</th>
+                  <th>Acesso</th>
+                  <th>Data de Defesa</th>
+                  <th className='text-center'>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {tccs.map((tccData) => (
+                  <tr key={tccData.id}>
+                    <td>{tccData.title}</td>
+                    <td><Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={tccData.url} target='_blank' rel="noreferrer">Link</Link></td>
+                    <td>{tccData.date}</td>
+                    <td className='text-center'>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(tccData)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(tccData.id)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -281,33 +288,33 @@ export default function TccsPage() {
         />
       </div>
       {showConfirmModal && (
-        <Modal show={showConfirmModal} 
-          onHide={handleCancelDelete} 
+        <Modal show={showConfirmModal}
+          onHide={handleCancelDelete}
           centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Confirmar Exclusão</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-        Tem certeza de que deseja excluir este tcc?
+            Tem certeza de que deseja excluir este tcc?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCancelDelete}>
-          Cancelar
+              Cancelar
             </Button>
             <Button
               variant="danger"
               ref={deleteButtonRef}
               onClick={handleConfirmDelete}
             >
-          Excluir
+              Excluir
             </Button>
           </Modal.Footer>
         </Modal>
       )}
-    
+
       {showAddModal && (
-      
+
         <Modal
           show={showAddModal}
           onHide={() => setShowAddModal(false)}
@@ -355,7 +362,7 @@ export default function TccsPage() {
               as='textarea'
               maxLength={5000}
               value={abstractText}
-              onChange={(e) => setAbstractText(e.target.value)} 
+              onChange={(e) => setAbstractText(e.target.value)}
               required
             />
             <AsyncSelect
@@ -384,10 +391,10 @@ export default function TccsPage() {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-         Cancelar
+              Cancelar
             </Button>
             <Button variant="success" onClick={handleAddTccSubmit}>
-         Adicionar
+              Adicionar
             </Button>
           </Modal.Footer>
         </Modal>
@@ -395,4 +402,3 @@ export default function TccsPage() {
     </div>
   );
 }
-    

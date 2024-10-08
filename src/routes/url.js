@@ -8,7 +8,6 @@ const MEMBRO = '/membro';
 const LINHADEPESQUISA = '/linha-de-pesquisa';
 const FUNCOES = '/funcoes';
 const SKILLS = '/habilidades';
-const CLASSES = '/turmas';
 const SEGURANCA = '/seguranca';
 const INFO = '/info';
 const COOKIESPOLICY = '/cookies';
@@ -68,10 +67,6 @@ const url = {
     habilidades: {
       home: `${ADMIN}${SKILLS}`,
       editar: (skillId) => `editar/${encodeURIComponent(skillId)}`,
-    },
-    turmas : {
-      home: `${ADMIN}${CLASSES}`,
-      editar: (turmaId) => `editar/${encodeURIComponent(turmaId)}`,
     },
     tccs: {
       home: `${ADMIN}${TCCS}`,

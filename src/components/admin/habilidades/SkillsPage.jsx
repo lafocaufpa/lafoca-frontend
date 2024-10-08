@@ -11,10 +11,12 @@ import url from '@/routes/url';
 import Image from 'next/image';
 import Pagination from '@/components/pagination/Pagination';
 import { Button, Modal } from 'react-bootstrap';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function SkillsPage() {
   const [skills, setSkills] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(5);
@@ -31,12 +33,15 @@ export default function SkillsPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {
+      setLoading(true);
       const data = await skillService.list(page, resultsPerPage, 'name,asc', name);
       setSkills(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar habilidades.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -155,41 +160,43 @@ export default function SkillsPage() {
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Imagem</th>
-                <th>Nome</th>
-                <th className='text-center'>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {skills.map((skill) => (
-                <tr key={skill.id}>
-                  <td>
-                    {skill.skillPictureUrl ? <Image src={skill?.skillPictureUrl} alt={skill.name} width={30} height={30} /> : null}
-                  </td>
-                  <td>{skill.name}</td>
-                  <td className='text-center'>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(skill)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(skill.id)}
-                    >
-                      Deletar
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Imagem</th>
+                  <th>Nome</th>
+                  <th className='text-center'>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {skills.map((skill) => (
+                  <tr key={skill.id}>
+                    <td>
+                      {skill.skillPictureUrl ? <Image src={skill?.skillPictureUrl} alt={skill.name} width={30} height={30} /> : null}
+                    </td>
+                    <td>{skill.name}</td>
+                    <td className='text-center'>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(skill)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(skill.id)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -249,12 +256,12 @@ export default function SkillsPage() {
               required
             />
             <InputField
-              label={'Nome da Habilidade'}
+              label={'Ícone da Habilidade'}
               type={'file'} id={'photo'}
               onChange={(e) => setPhoto(e.target.files[0])} />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => {setShowAddModal(false)}}>
+            <Button variant="secondary" onClick={() => { setShowAddModal(false) }}>
               Cancelar
             </Button>
             <Button variant="success" onClick={handleAddSkillSubmit}>

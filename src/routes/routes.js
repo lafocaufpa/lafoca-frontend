@@ -6,7 +6,6 @@ const GROUPS = '/groups';
 const PERMISSIONS = '/permissions';
 const ARTICLES = '/articles';
 const FUNCTIONS = '/functions-member';
-const YEARCLASSES = '/year-classes';
 const SKILLS = '/skills';
 const TCCS = '/tccs';
 const LINESOFRESEARCH = '/lines-of-research';
@@ -142,20 +141,6 @@ const routes = {
     update: (functionId) => `${FUNCTIONS}/${encodeURIComponent(functionId)}`,
     readById: (functionId) => `${FUNCTIONS}/${encodeURIComponent(functionId)}`,
     delete: (functionId) => `${FUNCTIONS}/${encodeURIComponent(functionId)}`,
-  },
-  classes: {
-    list: (page = 0, resultsPerPage = 10, sort = '') => {
-      let url = `${YEARCLASSES}?page=${page}&size=${resultsPerPage}&sort=${sort}`;
-      return url;
-    },
-    listMemberByYearClass: (yearClassId, page = 0, resultsPerPage = 10, sort = '') => {
-      let url = `${YEARCLASSES}/${yearClassId}/members?page=${page}&size=${resultsPerPage}&sort=${sort}`;
-      return url;
-    },
-    add: `${YEARCLASSES}`,
-    update: (classId) => `${YEARCLASSES}/${encodeURIComponent(classId)}`,
-    readById: (classId) => `${YEARCLASSES}/${encodeURIComponent(classId)}`,
-    delete: (classId) => `${YEARCLASSES}/${encodeURIComponent(classId)}`,
   },
   skills: {
     add: `${SKILLS}`,

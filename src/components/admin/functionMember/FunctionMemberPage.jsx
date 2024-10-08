@@ -9,10 +9,12 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import Pagination from '@/components/pagination/Pagination';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 import { Button, Modal } from 'react-bootstrap';
 
 export default function FunctionMemberPage() {
   const [functionMembers, setFunctionMembers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
@@ -31,12 +33,15 @@ export default function FunctionMemberPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {
+      setLoading(true);
       const data = await functionService.list(page, resultsPerPage, 'name,asc', name);
       setFunctionMembers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar membros de função.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -155,44 +160,46 @@ export default function FunctionMemberPage() {
               type="text"
               id="searchTerm"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)} 
+              onChange={(e) => setSearchTerm(e.target.value)}
               isSearch
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {functionMembers.map((member) => (
-                <tr key={member.id}>
-                  <td>{member.name}</td>
-                  <td>{member.description}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(member)}
-                    >
-                        Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(member.id)}
-                    >
-                        Deletar
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {functionMembers.map((member) => (
+                  <tr key={member.id}>
+                    <td>{member.name}</td>
+                    <td>{member.description}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(member)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(member.id)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -222,7 +229,7 @@ export default function FunctionMemberPage() {
               type="text"
               id="name"
               value={name}
-              onChange={(e) => setName(e.target.value)} 
+              onChange={(e) => setName(e.target.value)}
               maxLength={225}
               required
             />
@@ -231,7 +238,7 @@ export default function FunctionMemberPage() {
               type="text"
               id="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)} 
+              onChange={(e) => setDescription(e.target.value)}
               maxLength={225}
               required
             />
@@ -240,36 +247,36 @@ export default function FunctionMemberPage() {
             <Button variant="secondary" onClick={() => {
               setShowAddModal(false);
             }}>
-           Cancelar
+              Cancelar
             </Button>
             <Button variant="success" onClick={handleAddFuncMemberSubmit}>
-           Adicionar
+              Adicionar
             </Button>
           </Modal.Footer>
         </Modal>
       )}
 
       {showConfirmModal && (
-        <Modal show={showConfirmModal} 
-          onHide={handleCancelDelete} 
+        <Modal show={showConfirmModal}
+          onHide={handleCancelDelete}
           centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Confirmar Exclusão</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-        Tem certeza de que deseja excluir esta função?
+            Tem certeza de que deseja excluir esta função?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCancelDelete}>
-          Cancelar
+              Cancelar
             </Button>
             <Button
               variant="danger"
               ref={deleteButtonRef}
               onClick={handleConfirmDelete}
             >
-          Excluir
+              Excluir
             </Button>
           </Modal.Footer>
         </Modal>

@@ -8,11 +8,13 @@ import { userService } from '@/services/api/Users/UserService';
 import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import Pagination from '@/components/pagination/Pagination';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 import { Button, Modal } from 'react-bootstrap';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(10);
@@ -27,12 +29,15 @@ export default function UserPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 10) => {
     try {
+      setLoading(true);
       const data = await userService.list(page, resultsPerPage);
       setUsers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar usuários.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,41 +133,43 @@ export default function UserPage() {
             <span className="ms-2 text-reset">resultados por página</span>
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Grupos</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users?.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.groups.map((group) => group.name).join(', ')}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(user)}
-                    >
-                        Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(user.id)}
-                    >
-                        Deletar
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Grupos</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {users?.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.groups.map((group) => group.name).join(', ')}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(user)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(user.id)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -180,18 +187,18 @@ export default function UserPage() {
             <Modal.Title>Confirmar Exclusão</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          Tem certeza de que deseja excluir esse usuário?
+            Tem certeza de que deseja excluir esse usuário?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCancelDelete}>
-            Cancelar
+              Cancelar
             </Button>
             <Button
               variant="danger"
               ref={deleteButtonRef}
               onClick={handleConfirmDelete}
             >
-            Excluir
+              Excluir
             </Button>
           </Modal.Footer>
         </Modal>

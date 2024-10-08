@@ -11,10 +11,10 @@ import { articleService } from '@/services/api/article/ArticleService';
 import { projectsService } from '@/services/api/Projects/ProjectsService';
 import { functionService } from '@/services/api/function/FunctionService';
 import { skillService } from '@/services/api/skill/SkillService';
-import { classService } from '@/services/api/yearClass/YearClasses';
 import { tccService } from '@/services/api/tcc/TccService';
 
 import PhotoSelector from '@/components/photoSelector/photoSelector';
+import YearSelect from '@/components/admin/adminSelects/YearSelect';
 
 export default function AddMember() {
   const [fullName, setFullName] = useState('');
@@ -176,17 +176,13 @@ export default function AddMember() {
             maxLength={950}
             required
           />
-          <AsyncSelect
-            loadOptions={loadOptions}
-            placeholder="Selecione a turma"
-            service={classService}
-            value={yearClassId}
-            onChange={setYearClassId}
-            additional={{ page: 0 }}
-            id="yearClassId"
-            label="Ano da Turma"
-            required
-          />
+          <YearSelect
+              id="yearPubli"
+              label="Ano da turma"
+              value={yearClassId}
+              onChange={setYearClassId}
+              placeholder="Selecione o ano"
+            />
           <AsyncSelect
             id="functionMemberId"
             label="Função do Membro"

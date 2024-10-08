@@ -10,10 +10,12 @@ import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import PermissionsPage from '../permissions/PermissionsPage';
 import Pagination from '@/components/pagination/Pagination';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(5);
@@ -30,12 +32,15 @@ export default function GroupsPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {
+      setLoading(true);
       const data = await groupService.list(page, resultsPerPage, 'name,asc', name);
       setGroups(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar grupos.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -166,35 +171,37 @@ export default function GroupsPage() {
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nome</th>
-                <th>Permissões de Acesso</th>
-                <th>Descrição do Grupo</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {groups.map((group) => (
-                <tr key={group.id}>
-                  <td>{group.name}</td>
-                  <td>{group.permissions.map((permission) => permission.name).join(', ')}</td>
-                  <td>{group.description}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(group)}
-                    >
-                        Editar
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>Permissões de Acesso</th>
+                  <th>Descrição do Grupo</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {groups.map((group) => (
+                  <tr key={group.id}>
+                    <td>{group.name}</td>
+                    <td>{group.permissions.map((permission) => permission.name).join(', ')}</td>
+                    <td>{group.description}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(group)}
+                      >
+                        Editar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -202,7 +209,7 @@ export default function GroupsPage() {
           getResultMessage={getResultMessage}
         />
       </div>
-      <PermissionsPage/>
+      <PermissionsPage />
       {showAddModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">
@@ -218,7 +225,7 @@ export default function GroupsPage() {
                     type="text"
                     id="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)} 
+                    onChange={(e) => setName(e.target.value)}
                     maxLength={255}
                     required
                   />
@@ -232,7 +239,7 @@ export default function GroupsPage() {
           </div>
         </div>
       )}
-      
+
       {showConfirmModal && (
         <div className="modal show fade" style={{ display: 'block' }}>
           <div className="modal-dialog">
@@ -250,7 +257,7 @@ export default function GroupsPage() {
                   className="btn btn-secondary"
                   onClick={handleCancelDelete}
                 >
-              Cancelar
+                  Cancelar
                 </button>
                 <button
                   type="button"
@@ -259,7 +266,7 @@ export default function GroupsPage() {
                   ref={deleteButtonRef}
                   onKeyDown={handleKeyDown}
                 >
-              Excluir
+                  Excluir
                 </button>
               </div>
             </div>

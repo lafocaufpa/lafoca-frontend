@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { MemberService } from '@/services/api/Members/MembersService';
-import { classService } from '@/services/api/yearClass/YearClasses';
 import { functionService } from '@/services/api/function/FunctionService';
 import { skillService } from '@/services/api/skill/SkillService';
 import { articleService } from '@/services/api/article/ArticleService';

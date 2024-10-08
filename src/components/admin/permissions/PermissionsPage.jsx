@@ -7,9 +7,11 @@ import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import Pagination from '@/components/pagination/Pagination';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function PermissionsPage() {
   const [permissions, setPermissions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
@@ -20,12 +22,15 @@ export default function PermissionsPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, name = '') => {
     try {
+      setLoading(true);
       const data = await permissionService.list(page, resultsPerPage, 'name,asc', name);
       setPermissions(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar permissões.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,24 +90,26 @@ export default function PermissionsPage() {
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-              </tr>
-            </thead>
-            <tbody>
-              {permissions.map((permission) => (
-                <tr key={permission.id}>
-                  <td>{permission.name}</td>
-                  <td>{permission.description}</td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>Descrição</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {permissions.map((permission) => (
+                  <tr key={permission.id}>
+                    <td>{permission.name}</td>
+                    <td>{permission.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

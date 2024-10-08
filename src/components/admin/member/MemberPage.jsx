@@ -10,9 +10,11 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import Pagination from '@/components/pagination/Pagination';
 import SelectYear from '@/components/asyncSelectV2/SelectYear';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function MemberPage() {
   const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
@@ -30,14 +32,18 @@ export default function MemberPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 10, fullName = '', yearClassId = '') => {
     try {
+      setLoading(true);
       const data = await MemberService.list(page, resultsPerPage, 'fullName,asc', fullName, yearClassId);
       setMembers(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar membros.');
+    } finally {
+      setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchData(currentPage, resultsPerPage, searchQuery, yearClassId?.value);
@@ -134,11 +140,11 @@ export default function MemberPage() {
             <span className="ms-2 text-reset">resultados por página</span>
           </div>
           <div className="col-md-4">
-            <SelectYear 
+            <SelectYear
               id={'year'}
-              label={'Selecione a Turma'} 
+              label={'Selecione a Turma'}
               placeholder={'Filtrar por ano'}
-              value={yearClassId} 
+              value={yearClassId}
               onChange={setYearClassId}
             />
           </div>
@@ -148,48 +154,50 @@ export default function MemberPage() {
               type="text"
               id="searchTerm"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)} 
+              onChange={(e) => setSearchQuery(e.target.value)}
               isSearch={true}
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nome Completo</th>
-                <th>Função</th>
-                <th>E-mail</th>
-                <th>Ano de Entrada</th>
-                <th>Ações</th>
+        <LoadingWrapper loading={loading}>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead className="thead-dark">
+            <tr>
+              <th>Nome Completo</th>
+              <th>Função</th>
+              <th>E-mail</th>
+              <th>Ano de Entrada</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map((member) => (
+              <tr key={member.id}>
+                <td>{member.fullName}</td>
+                <td>{member.function}</td>
+                <td>{member.email}</td>
+                <td>{member.yearClass}</td>
+                <td>
+                  <button
+                    className="btn btn-primary btn-sm me-1"
+                    onClick={() => handleEdit(member)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => confirmDelete(member.id)}
+                  >
+                    Deletar
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {members.map((member) => (
-                <tr key={member.id}>
-                  <td>{member.fullName}</td>
-                  <td>{member.function}</td>
-                  <td>{member.email}</td>
-                  <td>{member.yearClass}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(member)}
-                    >
-                        Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(member.id)}
-                    >
-                        Deletar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -197,7 +205,6 @@ export default function MemberPage() {
           getResultMessage={getResultMessage}
         />
       </div>
-
       {showConfirmModal && (
         <div className="modal" tabIndex="-1" style={{ display: 'block' }}>
           <div className="modal-dialog">

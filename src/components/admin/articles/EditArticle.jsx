@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { articleService } from '@/services/api/article/ArticleService';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import { MemberService } from '@/services/api/Members/MembersService';
-import AlertMessage from '@/components/notification/AlertMessage';
 import useNotification from '@/components/notification/useNotification';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import InputField from '@/components/inputField/InputField';

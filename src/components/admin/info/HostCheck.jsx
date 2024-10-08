@@ -36,8 +36,6 @@ const keyMap = {
   'Frontend Processor Info': 'frontendProcessorInfo',
   'Frontend OS Distributor': 'frontendOsDistributor',
   'Frontend OS Description': 'frontendOsDescription',
-  'Frontend OS Release': 'frontendOsRelease',
-  'Frontend OS Codename': 'frontendOsCodename',
   'Database Name': 'dbName',
   'Database Version': 'dbVersion',
   'Database Status': 'dbStatus',
@@ -57,10 +55,7 @@ const translationMap = {
   'RAM Memory': 'Memória RAM',
   'Storage': 'Armazenamento',
   'Processor Info': 'Informações do Processador',
-  'OS Distributor': 'Distribuidor do SO',
   'OS Description': 'Descrição do SO',
-  'OS Release': 'Release do SO',
-  'OS Codename': 'Codinome do SO',
   'Node Version': 'Versão do Node',
   'NPM Version': 'Versão do NPM',
   'React Version': 'Versão do React',
@@ -71,10 +66,7 @@ const translationMap = {
   'Frontend RAM Memory': 'Memória RAM do Frontend',
   'Frontend Storage': 'Armazenamento do Frontend',
   'Frontend Processor Info': 'Informações do Processador do Frontend',
-  'Frontend OS Distributor': 'Distribuidor do SO do Frontend',
   'Frontend OS Description': 'Descrição do SO do Frontend',
-  'Frontend OS Release': 'Release do SO do Frontend',
-  'Frontend OS Codename': 'Codinome do SO do Frontend',
   'Database Name': 'Nome do Banco de Dados',
   'Database Version': 'Versão do Banco de Dados',
   'Database Status': 'Status do Banco de Dados',
@@ -96,7 +88,7 @@ export default function HostCheck() {
       return;
     }
   
-    setIsRestoring(true); // Inicia o estado de carregamento
+    setIsRestoring(true);
   
     try {
       const response = await hostCheckService.restoreBackup(backupFile);
@@ -106,7 +98,7 @@ export default function HostCheck() {
     } catch (err) {
       showError(err.message);
     } finally {
-      setIsRestoring(false); // Termina o estado de carregamento
+      setIsRestoring(false);
     }
   };
   const fetchData = async () => {
@@ -220,8 +212,6 @@ export default function HostCheck() {
     'Processor Info': hostInfo?.backendProcessorInfo,
     'OS Distributor': hostInfo?.backendOsDistributor,
     'OS Description': hostInfo?.backendOsDescription,
-    'OS Release': hostInfo?.backendOsRelease,
-    'OS Codename': hostInfo?.backendOsCodename,
   };
 
   const frontendInfo = {
@@ -237,8 +227,6 @@ export default function HostCheck() {
     'Frontend Processor Info': hostInfo?.frontendProcessorInfo,
     'Frontend OS Distributor': hostInfo?.frontendOsDistributor,
     'Frontend OS Description': hostInfo?.frontendOsDescription,
-    'Frontend OS Release': hostInfo?.frontendOsRelease,
-    'Frontend OS Codename': hostInfo?.frontendOsCodename,
   };
 
 

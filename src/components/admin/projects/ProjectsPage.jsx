@@ -14,10 +14,12 @@ import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 import YearSelect from '@/components/admin/adminSelects/YearSelect';
 import Pagination from '@/components/pagination/Pagination';
 import { Button, Form, Modal } from 'react-bootstrap';
+import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [resultsPerPage, setResultsPerPage] = useState(5);
@@ -42,12 +44,15 @@ export default function ProjectsPage() {
 
   const fetchData = async (page = 0, resultsPerPage = 5, searchTerm = '', lineOfResearchId = '') => {
     try {
+      setLoading(true);
       const data = await projectsService.list(page, resultsPerPage, 'title,asc', searchTerm, lineOfResearchId);
       setProjects(data.content);
       setTotalPages(data.totalPages);
       setTotalResults(data.totalElements);
     } catch (error) {
       showError(error?.userMessage || 'Erro ao buscar projetos.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -248,41 +253,43 @@ export default function ProjectsPage() {
             />
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Ano</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects.map((project) => (
-                <tr key={project.id}>
-                  <td>{project.title}</td>
-                  <td>{truncateText(project.abstractText, 250)}</td>
-                  <td>{project.year}</td>
-                  <td style={{ minWidth: '137px' }}>
-                    <button
-                      className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleEdit(project)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => confirmDelete(project.id)}
-                    >
-                      Excluir
-                    </button>
-                  </td>
+        <LoadingWrapper loading={loading}>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Título</th>
+                  <th>Descrição</th>
+                  <th>Ano</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {projects.map((project) => (
+                  <tr key={project.id}>
+                    <td>{project.title}</td>
+                    <td>{truncateText(project.abstractText, 250)}</td>
+                    <td>{project.year}</td>
+                    <td style={{ minWidth: '137px' }}>
+                      <button
+                        className="btn btn-primary btn-sm me-1"
+                        onClick={() => handleEdit(project)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => confirmDelete(project.id)}
+                      >
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LoadingWrapper>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -310,7 +317,7 @@ export default function ProjectsPage() {
               type="text"
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)} 
+              onChange={(e) => setTitle(e.target.value)}
               maxLength={255}
               required
             />
@@ -344,11 +351,11 @@ export default function ProjectsPage() {
                 as="select"
                 value={modality}
                 onChange={(e) => setModality(e.target.value)}
+                placeholder='Selecione a Modalidade'
                 required
               >
-                <option style={{ color: 'hsl(0, 0%, 50%)' }} value="">
-                Selecione a Modalidade
-                </option>
+
+                <option key='blankChoice' hidden value />
                 <option value="PESQUISA">Pesquisa</option>
                 <option value="ENSINO">Ensino</option>
                 <option value="EXTENSÃO">Extensão</option>
@@ -378,32 +385,32 @@ export default function ProjectsPage() {
               label="Adicionar colaboradores"
               required
             />
-            <InputField 
+            <InputField
               label={'Nome do Membro Externo'}
               type="text"
               id="externalMember"
               value={externalMemberName}
-              onChange={(e) => setExternalMemberName(e.target.value)} 
+              onChange={(e) => setExternalMemberName(e.target.value)}
               maxLength={255}
               placeholder="Nome do Membro Externo"
             />
-            <Button 
-              variant="success" 
+            <Button
+              variant="success"
               onClick={() => {
                 if (externalMemberName.trim()) {
                   setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
                   setExternalMemberName('');
                 }
               }}>
-           Adicionar Membro Externo
+              Adicionar Membro Externo
             </Button>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-           Cancelar
+              Cancelar
             </Button>
             <Button variant="success" onClick={handleAddProjectSubmit}>
-           Adicionar
+              Adicionar
             </Button>
           </Modal.Footer>
         </Modal>
@@ -411,26 +418,26 @@ export default function ProjectsPage() {
       )}
 
       {showConfirmModal && (
-        <Modal show={showConfirmModal} 
-          onHide={handleCancelDelete} 
+        <Modal show={showConfirmModal}
+          onHide={handleCancelDelete}
           centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Confirmar Exclusão</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-        Tem certeza de que deseja excluir este Projeto?
+            Tem certeza de que deseja excluir este Projeto?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCancelDelete}>
-          Cancelar
+              Cancelar
             </Button>
             <Button
               variant="danger"
               ref={deleteButtonRef}
               onClick={handleConfirmDelete}
             >
-          Excluir
+              Excluir
             </Button>
           </Modal.Footer>
         </Modal>

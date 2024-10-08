@@ -76,10 +76,6 @@ export default function NavBar({ user }) {
             Habilidades
           </NavLink>
 
-          <NavLink href={url.admin.turmas.home} Icon={IconClasses}>
-            Turmas
-          </NavLink>
-
           <NavLink href={url.admin.tccs.home} Icon={IconTccs}>
             Tccs
           </NavLink>
