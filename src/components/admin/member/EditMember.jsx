@@ -48,7 +48,7 @@ export default function EditMember({ memberId }) {
         setEmail(member.email);
         setDescription(member.description);
         setBiography(member.biography);
-        setYearClass({ value: member.yearClass.id, label: member.yearClass.year });
+        setYearClass({ value: member.yearClass, label: member.yearClass });
         setFunctionMemberId({ value: member.functionMember.id, label: member.functionMember.name });
         setLinkPortifolio(member.linkPortifolio);
         setLinkLinkedin(member.linkLinkedin);

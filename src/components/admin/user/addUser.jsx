@@ -44,8 +44,6 @@ export default function AddUser() {
   };
 
   const handlePasswordIsValid = (password) => {
-    console.log('Dentro da funcao handlePasswordIsValid: ');
-    console.log(password);
     const passwordError = validatePassword(password);
     if (passwordError) {
       showError(passwordError);

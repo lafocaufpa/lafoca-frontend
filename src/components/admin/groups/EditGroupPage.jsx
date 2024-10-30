@@ -14,6 +14,7 @@ import InputField from '@/components/inputField/InputField';
 
 export default function EditGroup({ groupId }) {
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [error, showError, hideError] = useNotification(null);
   const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
@@ -26,6 +27,7 @@ export default function EditGroup({ groupId }) {
       try {
         const group = await groupService.readById(groupId);
         setName(group?.name);
+        setDescription(group?.description);
         setSelectedPermissions(group.permissions.map(permission => ({ value: permission.id, label: permission.name })));
       } catch (error) {
         showError(error?.userMessage || 'Erro ao carregar grupo.');
@@ -42,6 +44,7 @@ export default function EditGroup({ groupId }) {
     const groupData = {
       name,
       permissionsId: selectedPermissions.map(permission => permission.value),
+      description
     };
 
     try {
@@ -96,7 +99,7 @@ export default function EditGroup({ groupId }) {
             type="text"
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)} 
+            onChange={(e) => setName(e.target.value)}
             maxLength={255}
             required
           />
@@ -110,6 +113,15 @@ export default function EditGroup({ groupId }) {
             onChange={setSelectedPermissions}
             additional={{ page: 0 }}
             id="selectedPermissions"
+            required
+          />
+          <InputField
+            label="Descrição do Grupo"
+            type="text"
+            id="grupo"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            maxLength={50}
             required
           />
         </form>

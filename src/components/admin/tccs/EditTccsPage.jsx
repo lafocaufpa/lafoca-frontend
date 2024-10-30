@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import AlertMessage from '@/components/notification/AlertMessage';
 import Button from 'react-bootstrap/Button';
 import InputField from '@/components/inputField/InputField';
 import { useRouter } from 'next/navigation';
@@ -9,6 +10,7 @@ import { tccService } from '@/services/api/tcc/TccService';
 import { linesOfResearchService } from '@/services/api/linesOfResearch/LinesOfResearchService';
 import { MemberService } from '@/services/api/Members/MembersService';
 import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
+import useNotification from '@/components/notification/useNotification';
 
 export default function EditTccsPage({ tccId }) {
   const [title, setTitle] = useState('');
@@ -21,6 +23,7 @@ export default function EditTccsPage({ tccId }) {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const router = useRouter();
+  const [successMessage, showSuccessMessage, hideSuccessMessage] = useNotification(null);
 
   useEffect(() => {
     const fetchTccData = async () => {
@@ -99,6 +102,7 @@ export default function EditTccsPage({ tccId }) {
 
     try {
       await tccService.update(tccId, data);
+      showSuccessMessage('TCC editado com sucesso!');
       setShow(false);
       setLoading(false);
       router.back();
@@ -127,7 +131,12 @@ export default function EditTccsPage({ tccId }) {
         <Modal.Title>Editar TCC</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {error && <div className="alert alert-danger">{error}</div>}
+      {successMessage && (
+          <AlertMessage type="success" message={successMessage} onClose={hideSuccessMessage} />
+        )}
+        {error && (
+          <AlertMessage type="error" message={error} onClose={hideError} />
+        )}
         <InputField
           label="Título"
           type="text"

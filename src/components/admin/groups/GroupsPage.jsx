@@ -9,12 +9,16 @@ import useNotification from '@/components/notification/useNotification';
 import InputField from '@/components/inputField/InputField';
 import url from '@/routes/url';
 import PermissionsPage from '../permissions/PermissionsPage';
+import { permissionService } from '@/services/api/permission/PermissionService';
 import Pagination from '@/components/pagination/Pagination';
 import LoadingWrapper from '@/components/loadingWrapper/LoadingWrapper';
+import AsyncSelect from '@/components/asyncSelectV2/AsyncSelect';
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
+  const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
@@ -64,6 +68,23 @@ export default function GroupsPage() {
     }
   };
 
+  const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
+    try {
+      const response = await service.list(page, 5, undefined, inputValue);
+      return {
+        options: response.content.map(item => ({
+          value: item.id,
+          label: item.name,
+        })),
+        hasMore: !response.lastPage,
+        additional: { page: page + 1 },
+      };
+    } catch (error) {
+      console.error('Error fetching options:', error);
+      return { options: [], hasMore: false };
+    }
+  };
+
   const handleResultsPerPageChange = (event) => {
     setResultsPerPage(Number(event.target.value));
     setCurrentPage(0);
@@ -89,10 +110,6 @@ export default function GroupsPage() {
     return `Exibindo ${start} a ${end} de ${totalResults} resultados`;
   };
 
-  const confirmDelete = (groupId) => {
-    setGroupToDelete(groupId);
-    setShowConfirmModal(true);
-  };
 
   const handleConfirmDelete = async () => {
     setShowConfirmModal(false);
@@ -120,6 +137,8 @@ export default function GroupsPage() {
   const handleAddGroupSubmit = async () => {
     const groupData = {
       name,
+      permissionsId: selectedPermissions.map(permission => permission.value),
+      description
     };
 
     try {
@@ -227,6 +246,27 @@ export default function GroupsPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     maxLength={255}
+                    required
+                  />
+                  <AsyncSelect
+                    loadOptions={loadOptions}
+                    service={permissionService}
+                    placeholder="Selecione permissões"
+                    label="Permissões"
+                    isMulti
+                    value={selectedPermissions}
+                    onChange={setSelectedPermissions}
+                    additional={{ page: 0 }}
+                    id="selectedPermissions"
+                    required
+                  />
+                  <InputField
+                    label="Descrição do Grupo"
+                    type="text"
+                    id="grupo"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    maxLength={50}
                     required
                   />
                 </form>

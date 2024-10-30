@@ -69,6 +69,9 @@ export const userService = {
       },
     });
   },
+  resetPassword: async (formData) => {
+    await api.put(routes.users.resetPassword, formData);
+  },
   delete: async (userId) => {
     const token = await getCookie();
     const response = await api.delete(routes.users.delete(userId), {

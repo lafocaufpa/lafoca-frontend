@@ -33,6 +33,7 @@ export default function ProjectsPage() {
   const [modality, setModality] = useState('');
   const [selectedLinesOfResearch, setSelectedLinesOfResearch] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
+  const [allCollaborators, setAllCollaborators] = useState([]);
   const [externalMemberName, setExternalMemberName] = useState('');
   const [searchTerm, setSearchTerm] = useState(undefined);
   const [lineId, setLineId] = useState(null);
@@ -126,6 +127,7 @@ export default function ProjectsPage() {
     return text;
   };
 
+
   const loadOptions = async (service, inputValue, loadedOptions, { page }) => {
     try {
       const response = await service.list(page, 5, undefined, inputValue);
@@ -180,7 +182,7 @@ export default function ProjectsPage() {
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
       members: selectedMembers.map(member => ({
         name: member.label,
-        slug: member.value,
+        slug: member.value && member.value.startsWith('external') ? null : member.value,
       })),
     };
 
@@ -309,7 +311,7 @@ export default function ProjectsPage() {
           }}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Adicionar Turma</Modal.Title>
+            <Modal.Title>Adicionar Projeto</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <InputField
@@ -354,7 +356,6 @@ export default function ProjectsPage() {
                 placeholder='Selecione a Modalidade'
                 required
               >
-
                 <option key='blankChoice' hidden value />
                 <option value="PESQUISA">Pesquisa</option>
                 <option value="ENSINO">Ensino</option>
@@ -378,7 +379,7 @@ export default function ProjectsPage() {
               placeholder="Selecione colaboradores"
               service={MemberService}
               value={selectedMembers}
-              onChange={setSelectedMembers}
+              onChange={setSelectedMembers} 
               additional={{ page: 0 }}
               isMulti
               id="collab"
@@ -398,7 +399,7 @@ export default function ProjectsPage() {
               variant="success"
               onClick={() => {
                 if (externalMemberName.trim()) {
-                  setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+                  setSelectedMembers([...selectedMembers, { label: externalMemberName, value: ('external-' + new Date().getMilliseconds()) }]);
                   setExternalMemberName('');
                 }
               }}>

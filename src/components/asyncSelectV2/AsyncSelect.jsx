@@ -1,7 +1,8 @@
 import { AsyncPaginate } from 'react-select-async-paginate';
 
 
-const AsyncSelect = ({ service, id, label, loadOptions, additionalProps, ...props }) => {
+const AsyncSelect = ({ service, id, label, loadOptions, additionalProps,...props }) => {
+
   const loadOptionsHandler = (inputValue, loadedOptions, additional) => {
     return loadOptions(service, inputValue, loadedOptions, additional);
   };

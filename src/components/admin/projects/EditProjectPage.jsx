@@ -62,7 +62,7 @@ export default function EditProject({ projectId }) {
       lineOfResearchIds: selectedLinesOfResearch.map(line => line.value),
       members: selectedMembers.map(member => ({
         name: member.label,
-        slug: member.value,
+        slug: member.value && member.value.startsWith('external') ? null : member.value,
       })),
     };
 
@@ -228,7 +228,7 @@ export default function EditProject({ projectId }) {
           variant="success" 
           onClick={() => {
             if (externalMemberName.trim()) {
-              setSelectedMembers([...selectedMembers, { label: externalMemberName, value: null }]);
+              setSelectedMembers([...selectedMembers, { label: externalMemberName, value: ('external-' + new Date().getMilliseconds()) }]);
               setExternalMemberName('');
             }
           }}>
